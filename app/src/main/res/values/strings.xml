@@ -13,8 +13,11 @@
     <string name="nav_header_subtitle">afuentes@live.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="menu_configuracion">Configuración</string>
+    <string name="menu_compras">Mis Compras</string>
+    <string name="menu_home">Inicio</string>
+    <string name="nav_administracion">Administración</string>
+    <string name="nav_producto">Productos</string>
+    <string name="nav_categoria">Categorías</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
 </resources>
