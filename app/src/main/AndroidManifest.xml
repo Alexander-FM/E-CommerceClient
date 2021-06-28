@@ -14,10 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppMovil">
+        <activity android:name=".activity.RegistrarUsuarioActivity"></activity>
         <activity
             android:name=".activity.InicioActivity"
             android:label="@string/title_activity_inicio"
-            android:theme="@style/Theme.AppMovil.NoActionBar"/>
+            android:theme="@style/Theme.AppMovil.NoActionBar" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
