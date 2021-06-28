@@ -3,7 +3,8 @@ package com.alexandertutoriales.cliente.ecommerce.entity.service;
 public class Cliente {
     private int id;
     private String nombres;
-    private String apellidos;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String tipoDoc;
     private String numDoc;
     private String direccionEnvio;
@@ -26,14 +27,6 @@ public class Cliente {
 
     public void setNombres(String nombres) {
         this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
     }
 
     public String getTipoDoc() {
@@ -90,5 +83,21 @@ public class Cliente {
 
     public void setFoto(DocumentoAlmacenado foto) {
         this.foto = foto;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 }

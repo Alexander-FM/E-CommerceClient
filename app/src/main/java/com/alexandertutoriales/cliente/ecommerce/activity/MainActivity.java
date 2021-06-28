@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtMail, edtPassword;
     private Button btnIniciarSesion;
     private UsuarioViewModel viewModel;
+    private TextView txtRegistrarUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        txtRegistrarUsuario = findViewById(R.id.txtRegistrarUsuario);
         edtPassword = findViewById(R.id.edtPassword);
         edtMail = findViewById(R.id.edtMail);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
@@ -68,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                     toastIncorrecto(response.getMessage());
                 }
             });
+        });
+        txtRegistrarUsuario.setOnClickListener(v -> {
+            Intent i = new Intent(this, RegistrarUsuarioActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         });
     }
 
