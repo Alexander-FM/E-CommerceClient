@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.api;
 
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -21,6 +22,7 @@ public class ConfigApi {
     private static String token = "";
 
     private static UsuarioApi usuarioApi;
+    private static ClienteApi clienteApi;
 
     static {
         initClient();
@@ -70,6 +72,12 @@ public class ConfigApi {
             usuarioApi = retrofit.create(UsuarioApi.class);
         }
         return usuarioApi;
+    }
+    public static ClienteApi getClienteApi(){
+        if(clienteApi == null){
+            clienteApi = retrofit.create(ClienteApi.class);
+        }
+        return clienteApi;
     }
 }
 

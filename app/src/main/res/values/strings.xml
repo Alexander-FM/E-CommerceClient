@@ -19,5 +19,28 @@
     <string name="nav_administracion">Administración</string>
     <string name="nav_producto">Productos</string>
     <string name="nav_categoria">Categorías</string>
-
+    <string-array name="tipoDoc">
+        <item>DNI</item>
+        <item>RUC</item>
+        <item>CARNET EXT.</item>
+        <item>PASAPORTE</item>
+    </string-array>
+    <string-array name="departamentos">
+        <item>Lambayeque</item>
+        <item>Piura</item>
+        <item>Tumbes</item>
+        <item>Lima</item>
+    </string-array>
+    <string-array name="provincias">
+        <item>Chiclayo</item>
+        <item>Lambayeque</item>
+        <item>Ferreñafe</item>
+    </string-array>
+    <string-array name="distritos">
+        <item>Ferreñafe</item>
+        <item>Pueblo Nuevo</item>
+        <item>Mesones Muro</item>
+        <item>Inkahuasi</item>
+        <item>Kañaris</item>
+    </string-array>
 </resources>

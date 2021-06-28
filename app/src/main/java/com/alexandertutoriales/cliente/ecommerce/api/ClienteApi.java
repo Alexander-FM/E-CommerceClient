@@ -5,6 +5,7 @@ import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -14,5 +15,6 @@ public interface ClienteApi {
     String base = "api/cliente";
     //RUTA DEL SERVICIO + LA RUTA DEL MÉTODO
     @POST
-    Call<GenericResponse<Cliente>> guardarCliente(@Field("email") String email, @Field("pass") String contrasenia);
+    Call<GenericResponse<Cliente>> guardarCliente(@Body Cliente c);
+
 }

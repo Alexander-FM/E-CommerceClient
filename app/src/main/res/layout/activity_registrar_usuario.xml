@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C6CCD6"
     android:orientation="vertical"
     tools:context=".activity.RegistrarUsuarioActivity">
 
@@ -113,7 +114,9 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingStart="10dp"
-                            android:paddingEnd="10dp">
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -131,7 +134,8 @@
                             android:layout_below="@+id/linearTitleUser"
                             android:orientation="vertical"
                             android:paddingStart="10dp"
-                            android:paddingEnd="10dp">
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -208,16 +212,17 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="10dp"
                                     android:layout_weight="1"
-                                    android:hint="Tipo Identificación">
+                                    android:hint="Tipo Identificación"
+                                    app:startIconDrawable="@drawable/ic_tipo_doc">
 
-                                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                                        android:id="@+id/customerTextView"
+                                    <AutoCompleteTextView
+                                        android:id="@+id/dropdownTipoDoc"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:clickable="true"
                                         android:fontFamily="@font/san_francisco"
-                                        android:textSize="15sp"
-                                        tools:ignore="KeyboardInaccessibleWidget" />
+                                        android:inputType="none"
+                                        android:textSize="15sp" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <com.google.android.material.textfield.TextInputLayout
@@ -234,10 +239,121 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/san_francisco"
+                                        android:inputType="number"
                                         android:textSize="15sp" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInputDepartamento"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:hint="Departamento"
+                                    app:startIconDrawable="@drawable/ic_ubicacion">
+
+                                    <AutoCompleteTextView
+                                        android:id="@+id/dropdownDepartamento"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:clickable="true"
+                                        android:fontFamily="@font/san_francisco"
+                                        android:inputType="none"
+                                        android:textSize="15sp" />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInputProvincia"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Provincia"
+                                    app:startIconDrawable="@drawable/ic_ubicacion">
+
+                                    <AutoCompleteTextView
+                                        android:id="@+id/dropdownProvincia"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:clickable="true"
+                                        android:fontFamily="@font/san_francisco"
+                                        android:inputType="none"
+                                        android:textSize="15sp" />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInputDistrito"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:hint="Distrito"
+                                    app:startIconDrawable="@drawable/ic_ubicacion">
+
+                                    <AutoCompleteTextView
+                                        android:id="@+id/dropdownDistrito"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:clickable="true"
+                                        android:fontFamily="@font/san_francisco"
+                                        android:inputType="none"
+                                        android:textSize="15sp"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInputTelefonoU"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="Teléfono"
+                                    app:startIconDrawable="@drawable/ic_phone">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edtTelefonoU"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/san_francisco"
+                                        android:inputType="number"
+                                        android:textSize="15sp" />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInputDireccionU"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Dirección"
+                                    app:startIconDrawable="@drawable/ic_person_direccion">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edtDireccionU"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/san_francisco"
+                                        android:textSize="15sp" />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -267,7 +383,9 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingStart="10dp"
-                            android:paddingEnd="10dp">
+                            android:paddingTop="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -285,7 +403,8 @@
                             android:layout_below="@+id/linearTitleCredenciales"
                             android:orientation="vertical"
                             android:paddingStart="10dp"
-                            android:paddingEnd="10dp">
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -323,6 +442,16 @@
                                         android:fontFamily="@font/san_francisco"
                                         android:textSize="15sp" />
                                 </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnGuardarDatos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_marginTop="5dp"
+                                    android:drawableEnd="@drawable/ic_save"
+                                    android:fontFamily="@font/san_francisco"
+                                    android:text="Guardar Datos"
+                                    android:textColor="@color/white" />
                             </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
