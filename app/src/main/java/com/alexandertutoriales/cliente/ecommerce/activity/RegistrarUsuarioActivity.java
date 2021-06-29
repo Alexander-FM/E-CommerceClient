@@ -184,6 +184,70 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
 
             }
         });
+        dropdownTipoDoc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputTipoDoc.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        dropdownDepartamento.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputDepartamento.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        dropdownProvincia.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputProvincia.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        dropdownDistrito.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputDistrito.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void registrarUsuario() {
@@ -217,7 +281,8 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
 
     private boolean validar() {
         boolean retorno = true;
-        String nombres, apellidoPaterno, apellidoMaterno, numDoc, telefono, direccion, correo, clave;
+        String nombres, apellidoPaterno, apellidoMaterno, numDoc, telefono, direccion, correo, clave,
+                dropTipoDoc, dropDepartamento, dropProvincia, dropDistrito;
         nombres = edtNameUser.getText().toString();
         apellidoPaterno = edtApellidoPaternoU.getText().toString();
         apellidoMaterno = edtApellidoMaternoU.getText().toString();
@@ -226,6 +291,10 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         direccion = edtDireccionU.getText().toString();
         correo = edtEmailUser.getText().toString();
         clave = edtPasswordUser.getText().toString();
+        dropTipoDoc = dropdownTipoDoc.getText().toString();
+        dropDepartamento = dropdownDepartamento.getText().toString();
+        dropProvincia = dropdownProvincia.getText().toString();
+        dropDistrito = dropdownDistrito.getText().toString();
         if (nombres.isEmpty()) {
             txtInputNameUser.setError("Ingresar nombres");
             retorno = false;
@@ -273,6 +342,30 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             retorno = false;
         } else {
             txtInputPasswordUser.setErrorEnabled(false);
+        }
+        if (dropTipoDoc.isEmpty()) {
+            txtInputTipoDoc.setError("Seleccionar Tipo Doc");
+            retorno = false;
+        } else {
+            txtInputTipoDoc.setErrorEnabled(false);
+        }
+        if (dropDepartamento.isEmpty()) {
+            txtInputDepartamento.setError("Seleccionar Departamento");
+            retorno = false;
+        } else {
+            txtInputDepartamento.setErrorEnabled(false);
+        }
+        if (dropProvincia.isEmpty()) {
+            txtInputProvincia.setError("Seleccionar Provincia");
+            retorno = false;
+        } else {
+            txtInputProvincia.setErrorEnabled(false);
+        }
+        if (dropDistrito.isEmpty()) {
+            txtInputDistrito.setError("Seleccionar Distrito");
+            retorno = false;
+        } else {
+            txtInputDistrito.setErrorEnabled(false);
         }
         return retorno;
     }
