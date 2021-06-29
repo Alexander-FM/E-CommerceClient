@@ -15,9 +15,9 @@ import org.jetbrains.annotations.NotNull;
 public class ClienteViewModel extends AndroidViewModel {
     private final ClienteRepository repository;
 
-    public ClienteViewModel(@NonNull @NotNull Application application, ClienteRepository repository) {
+    public ClienteViewModel(@NonNull Application application) {
         super(application);
-        this.repository = repository;
+        this.repository = ClienteRepository.getInstance();
     }
 
     public LiveData<GenericResponse<Cliente>> guardarCliente(Cliente c) {

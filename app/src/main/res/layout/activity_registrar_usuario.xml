@@ -311,7 +311,7 @@
                                         android:clickable="true"
                                         android:fontFamily="@font/san_francisco"
                                         android:inputType="none"
-                                        android:textSize="15sp"/>
+                                        android:textSize="15sp" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <com.google.android.material.textfield.TextInputLayout
@@ -442,6 +442,7 @@
                                         android:fontFamily="@font/san_francisco"
                                         android:textSize="15sp" />
                                 </com.google.android.material.textfield.TextInputLayout>
+
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/btnGuardarDatos"
                                     android:layout_width="wrap_content"
