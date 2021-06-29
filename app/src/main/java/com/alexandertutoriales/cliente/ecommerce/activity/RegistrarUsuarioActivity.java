@@ -2,6 +2,7 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -44,6 +45,13 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_usuario);
+        //TOCAR EL ICONO PARA VOLVER ATRÁS.
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
+        toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
+            this.finish();
+            this.overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
+        });
         this.init();
         this.initViewModel();
         this.spinners();
@@ -184,6 +192,38 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
 
             }
         });
+        edtEmailUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputEmailUser.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtPasswordUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputPasswordUser.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         dropdownTipoDoc.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -269,6 +309,9 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                 this.clienteViewModel.guardarCliente(c).observe(this, response -> {
                     if (response.getRpta() == 1) {
                         successMessage("Registro realizado con éxito 😀 " + response.getMessage() + " ahora inicia sesión para continuar");
+                        limpiarCampos();
+                    }else{
+                        errorMessage("Oh no! " + response.getMessage());
                     }
                 });
             } catch (Exception e) {
@@ -428,5 +471,19 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         new SweetAlertDialog(this,
                 SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
                 .setContentText(message).setConfirmText("Ok").show();
+    }
+    private void limpiarCampos(){
+        edtNameUser.setText("");
+        edtApellidoPaternoU.setText("");
+        edtApellidoMaternoU.setText("");
+        edtTelefonoU.setText("");
+        edtDireccionU.setText("");
+        edtNumDocU.setText("");
+        dropdownDistrito.setText("");
+        dropdownTipoDoc.setText("");
+        dropdownDepartamento.setText("");
+        dropdownProvincia.setText("");
+        edtEmailUser.setText("");
+        edtPasswordUser.setText("");
     }
 }
