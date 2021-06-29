@@ -14,7 +14,7 @@ public interface ClienteApi {
     //RUTA DEL SERVICIO
     String base = "api/cliente";
     //RUTA DEL SERVICIO + LA RUTA DEL MÉTODO
-    @POST
+    @POST(base)
     Call<GenericResponse<Cliente>> guardarCliente(@Body Cliente c);
 
 }

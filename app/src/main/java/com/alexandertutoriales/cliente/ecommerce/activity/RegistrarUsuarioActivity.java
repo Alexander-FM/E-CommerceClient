@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -85,6 +87,103 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         btnGuardarDatos.setOnClickListener(v -> {
             registrarUsuario();
         });
+        ///ONCHANGE LISTENEER A LOS EDITEXT
+        edtNameUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputNameUser.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtApellidoPaternoU.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputApellidoPaternoU.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtApellidoMaternoU.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputApellidoMaternoU.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtNumDocU.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputNumeroDocU.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtTelefonoU.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputTelefonoU.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edtDireccionU.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                txtInputDireccionU.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void registrarUsuario() {
@@ -104,9 +203,8 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                 c.setDireccionEnvio(edtDireccionU.getText().toString());
                 c.setId(0);
                 this.clienteViewModel.guardarCliente(c).observe(this, response -> {
-                    Toast.makeText(this, response.getMessage(), Toast.LENGTH_LONG).show();
                     if (response.getRpta() == 1) {
-                        successMessage("Registro realizado con éxito 😀, ahora inicia sesión para continuar");
+                        successMessage("Registro realizado con éxito 😀 " + response.getMessage() + " ahora inicia sesión para continuar");
                     }
                 });
             } catch (Exception e) {
@@ -175,12 +273,6 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             retorno = false;
         } else {
             txtInputPasswordUser.setErrorEnabled(false);
-        }
-        if (dropdownTipoDoc.getListSelection() == 0) {
-            txtInputTipoDoc.setError("Seleccionar un elemento de la lista");
-            retorno = false;
-        } else {
-            txtInputTipoDoc.setErrorEnabled(false);
         }
         return retorno;
     }
