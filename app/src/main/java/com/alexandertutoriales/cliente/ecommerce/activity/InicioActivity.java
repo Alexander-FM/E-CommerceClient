@@ -88,8 +88,7 @@ public class InicioActivity extends AppCompatActivity {
                     .downloader(new OkHttp3Downloader(ConfigApi.getClient()))
                     .build();
             picasso.load(url)
-                    //.networkPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                    .error(R.drawable.image_not_found)
+                    //.networkPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.foto_rota)
                     .into(imgFoto);
         }
     }
