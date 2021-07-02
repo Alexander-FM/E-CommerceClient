@@ -37,7 +37,8 @@ public class ClienteRepository {
 
             @Override
             public void onFailure(Call<GenericResponse<Cliente>> call, Throwable t) {
-                System.out.println("Ocurrio un error al intentar registrarse : " + t.getMessage());
+                mld.setValue(new GenericResponse());
+                System.err.println("Ocurrio un error al intentar registrarse : " + t.getMessage());
                 t.printStackTrace();
             }
         });

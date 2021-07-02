@@ -23,6 +23,7 @@ public class ConfigApi {
 
     private static UsuarioApi usuarioApi;
     private static ClienteApi clienteApi;
+    private static DocumentoAlmacenadoApi daApi;
 
     static {
         initClient();
@@ -73,11 +74,19 @@ public class ConfigApi {
         }
         return usuarioApi;
     }
-    public static ClienteApi getClienteApi(){
-        if(clienteApi == null){
+
+    public static ClienteApi getClienteApi() {
+        if (clienteApi == null) {
             clienteApi = retrofit.create(ClienteApi.class);
         }
         return clienteApi;
+    }
+
+    public static DocumentoAlmacenadoApi getDocumentoAlmacenadoApi() {
+        if (daApi == null) {
+            daApi = retrofit.create(DocumentoAlmacenadoApi.class);
+        }
+        return daApi;
     }
 }
 

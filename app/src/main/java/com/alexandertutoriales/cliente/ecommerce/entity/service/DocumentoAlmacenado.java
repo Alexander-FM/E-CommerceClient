@@ -1,12 +1,17 @@
 package com.alexandertutoriales.cliente.ecommerce.entity.service;
 
+import okhttp3.MultipartBody;
+import retrofit2.http.Multipart;
+
 public class DocumentoAlmacenado {
     private long id;
     private String nombre;
+    private String fileName;
     private String extension;
     private String estado;
     private boolean eliminado;
     private String urlFile;
+    private MultipartBody.Part file;
 
     public long getId() {
         return id;
@@ -22,6 +27,14 @@ public class DocumentoAlmacenado {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getExtension() {
@@ -54,5 +67,13 @@ public class DocumentoAlmacenado {
 
     public void setUrlFile(String urlFile) {
         this.urlFile = urlFile;
+    }
+
+    public MultipartBody.Part getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartBody.Part file) {
+        this.file = file;
     }
 }

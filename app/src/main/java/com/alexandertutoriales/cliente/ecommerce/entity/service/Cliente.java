@@ -14,6 +14,14 @@ public class Cliente {
     private String telefono;
     private DocumentoAlmacenado foto;
 
+    public Cliente() {
+
+    }
+
+    public Cliente(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

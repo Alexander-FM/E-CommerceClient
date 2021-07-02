@@ -22,4 +22,8 @@ public class UsuarioViewModel extends AndroidViewModel {
     public LiveData<GenericResponse<Usuario>> login(String email, String pass) {
         return this.repository.login(email, pass);
     }
+
+    public LiveData<GenericResponse<Usuario>> save(Usuario u) {
+        return this.repository.save(u);
+    }
 }

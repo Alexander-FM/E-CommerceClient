@@ -2,36 +2,43 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.ClienteViewModel;
+import com.alexandertutoriales.cliente.ecommerce.viewmodel.DocumentoAlmacenadoViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.UsuarioViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.time.LocalDateTime;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class RegistrarUsuarioActivity extends AppCompatActivity {
+    private File f;
     private ClienteViewModel clienteViewModel;
     private UsuarioViewModel usuarioViewModel;
+    private DocumentoAlmacenadoViewModel documentoAlmacenadoViewModel;
     private Button btnSubirImagen, btnGuardarDatos;
     private CircleImageView imageUser;
     private AutoCompleteTextView dropdownTipoDoc, dropdownDepartamento, dropdownProvincia, dropdownDistrito;
@@ -45,13 +52,6 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_usuario);
-        //TOCAR EL ICONO PARA VOLVER ATRÁS.
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
-        toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
-            this.finish();
-            this.overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
-        });
         this.init();
         this.initViewModel();
         this.spinners();
@@ -89,11 +89,11 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         txtInputPasswordUser = findViewById(R.id.txtInputPasswordUser);
         //Asignar un ONCLICK al boton subir imagen
         btnSubirImagen.setOnClickListener(v -> {
-            cargarImagen();
+            this.cargarImagen();
         });
         //Asignar un ONCLICK al boton guardarImagen
         btnGuardarDatos.setOnClickListener(v -> {
-            registrarUsuario();
+            this.registrarUsuario();
         });
         ///ONCHANGE LISTENEER A LOS EDITEXT
         edtNameUser.addTextChangedListener(new TextWatcher() {
@@ -192,38 +192,6 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
 
             }
         });
-        edtEmailUser.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputEmailUser.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        edtPasswordUser.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                txtInputPasswordUser.setErrorEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         dropdownTipoDoc.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -306,14 +274,42 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                 c.setTelefono(edtTelefonoU.getText().toString());
                 c.setDireccionEnvio(edtDireccionU.getText().toString());
                 c.setId(0);
-                this.clienteViewModel.guardarCliente(c).observe(this, response -> {
+                LocalDateTime ldt = LocalDateTime.now();
+                RequestBody rb = RequestBody.create(f, MediaType.parse("multipart/form-data")), somedata;
+                String filename = "" + ldt.getDayOfMonth() + ldt.getMonthValue() + 1 + ldt.getYear() + ldt.getHour() + ldt.getMinute() + ldt.getSecond();
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
+                somedata = RequestBody.create("profilePh" + filename, MediaType.parse("text/plain"));
+                this.documentoAlmacenadoViewModel.save(part, somedata).observe(this, response -> {
                     if (response.getRpta() == 1) {
-                        successMessage("Registro realizado con éxito 😀 " + response.getMessage() + " ahora inicia sesión para continuar");
-                        limpiarCampos();
-                    }else{
-                        errorMessage("Oh no! " + response.getMessage());
+                        this.clienteViewModel.guardarCliente(c).observe(this, cresponse -> {
+                            if (cresponse.getRpta() == 1) {
+                                //successMessage("Registro realizado con éxito 😀 " + response.getMessage() + " ahora inicia sesión para continuar");
+                                Toast.makeText(this, response.getMessage() + ",ahora procederemos a registrar sus credenciales de inciio de sesión", Toast.LENGTH_SHORT).show();
+                                int idC = cresponse.getBody().getId();
+                                Usuario u = new Usuario();
+                                u.setEmail(edtEmailUser.getText().toString());
+                                u.setClave(edtPasswordUser.getText().toString());
+                                u.setVigencia(true);
+                                u.setCliente(new Cliente(idC));
+                                this.usuarioViewModel.save(u).observe(this, uResponse -> {
+                                    Toast.makeText(this, uResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                    if (uResponse.getRpta() == 1) {
+                                        Toast.makeText(this, "sus datos y credenciales de incio de sesión fueron creados correctamente", Toast.LENGTH_SHORT).show();
+                                        this.finish();
+                                    } else {
+                                        Toast.makeText(this, "No se han podido registrar los datos,inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(this, "No se han podido registrar los datos,inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(this, "No se han podido registrar los datos,inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
                     }
+
                 });
+
             } catch (Exception e) {
                 warningMessage("Se ha producido un error: " + e.getMessage());
             }
@@ -321,6 +317,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             errorMessage("Por favor, complete todos los campos del formulario.");
         }
     }
+
 
     private boolean validar() {
         boolean retorno = true;
@@ -438,7 +435,9 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     private void initViewModel() {
         final ViewModelProvider vmp = new ViewModelProvider(this);
         this.clienteViewModel = vmp.get(ClienteViewModel.class);
-        //this.usuarioViewModel = vmp.get(UsuarioViewModel.class);
+        this.usuarioViewModel = vmp.get(UsuarioViewModel.class);
+        this.documentoAlmacenadoViewModel = vmp.get(DocumentoAlmacenadoViewModel.class);
+
     }
 
     private void cargarImagen() {
@@ -451,8 +450,10 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Uri path = data.getData();
-            imageUser.setImageURI(path);
+            Uri uri = data.getData();
+            final String realPath = getRealPathFromURI(uri);
+            this.f = new File(realPath);
+            this.imageUser.setImageURI(uri);
         }
     }
 
@@ -472,18 +473,18 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                 SweetAlertDialog.WARNING_TYPE).setTitleText("Notificación del Sistema")
                 .setContentText(message).setConfirmText("Ok").show();
     }
-    private void limpiarCampos(){
-        edtNameUser.setText("");
-        edtApellidoPaternoU.setText("");
-        edtApellidoMaternoU.setText("");
-        edtTelefonoU.setText("");
-        edtDireccionU.setText("");
-        edtNumDocU.setText("");
-        dropdownDistrito.setText("");
-        dropdownTipoDoc.setText("");
-        dropdownDepartamento.setText("");
-        dropdownProvincia.setText("");
-        edtEmailUser.setText("");
-        edtPasswordUser.setText("");
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 }

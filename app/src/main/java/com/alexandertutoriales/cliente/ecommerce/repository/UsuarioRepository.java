@@ -38,8 +38,26 @@ public class UsuarioRepository {
 
             @Override
             public void onFailure(Call<GenericResponse<Usuario>> call, Throwable t) {
-                mld.setValue(new GenericResponse<Usuario>());
-                System.out.println("Se ha producido un error al iniciar sesión:" + t.getMessage());
+                mld.setValue(new GenericResponse());
+                System.err.println("Se ha producido un error al iniciar sesión:" + t.getMessage());
+                t.printStackTrace();
+            }
+        });
+        return mld;
+    }
+
+    public LiveData<GenericResponse<Usuario>> save(Usuario u) {
+        final MutableLiveData<GenericResponse<Usuario>> mld = new MutableLiveData<>();
+        this.api.save(u).enqueue(new Callback<GenericResponse<Usuario>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<Usuario>> call, Response<GenericResponse<Usuario>> response) {
+                mld.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<Usuario>> call, Throwable t) {
+                mld.setValue(new GenericResponse());
+                System.err.println("Se ha producido un error al iniciar sesión:" + t.getMessage());
                 t.printStackTrace();
             }
         });
