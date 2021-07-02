@@ -15,7 +15,6 @@ public class Cliente {
     private DocumentoAlmacenado foto;
 
     public Cliente() {
-
     }
 
     public Cliente(int id) {

@@ -1,6 +1,5 @@
 package com.alexandertutoriales.cliente.ecommerce.api;
 
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -17,12 +16,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfigApi {
-    private static final String baseUrlE = "http://10.0.2.2:9090";
+    public static final String baseUrlE = "http://10.0.2.2:9090";
     private static Retrofit retrofit;
     private static String token = "";
 
     private static UsuarioApi usuarioApi;
     private static ClienteApi clienteApi;
+    private static PlatilloApi platilloApi;
     private static DocumentoAlmacenadoApi daApi;
 
     static {
@@ -74,14 +74,18 @@ public class ConfigApi {
         }
         return usuarioApi;
     }
-
-    public static ClienteApi getClienteApi() {
-        if (clienteApi == null) {
+    public static ClienteApi getClienteApi(){
+        if(clienteApi == null){
             clienteApi = retrofit.create(ClienteApi.class);
         }
         return clienteApi;
     }
-
+    public static PlatilloApi getPlatilloApi(){
+        if(platilloApi == null){
+            platilloApi = retrofit.create(PlatilloApi.class);
+        }
+        return platilloApi;
+    }
     public static DocumentoAlmacenadoApi getDocumentoAlmacenadoApi() {
         if (daApi == null) {
             daApi = retrofit.create(DocumentoAlmacenadoApi.class);

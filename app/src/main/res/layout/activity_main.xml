@@ -117,6 +117,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/san_francisco"
             android:textSize="18sp"
+            android:textColor="@color/purple_500"
             android:textStyle="bold"
             android:gravity="center|center_horizontal"
             android:text="@string/label_nuevoUser"/>

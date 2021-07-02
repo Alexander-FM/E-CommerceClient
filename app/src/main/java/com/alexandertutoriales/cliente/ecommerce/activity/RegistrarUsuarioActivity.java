@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.DocumentoAlmacenado;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.ClienteViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.DocumentoAlmacenadoViewModel;
@@ -274,30 +275,32 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                 c.setTelefono(edtTelefonoU.getText().toString());
                 c.setDireccionEnvio(edtDireccionU.getText().toString());
                 c.setId(0);
-                LocalDateTime ldt = LocalDateTime.now();
-                RequestBody rb = RequestBody.create(f, MediaType.parse("multipart/form-data")), somedata;
-                String filename = "" + ldt.getDayOfMonth() + ldt.getMonthValue() + 1 + ldt.getYear() + ldt.getHour() + ldt.getMinute() + ldt.getSecond();
+                LocalDateTime ldt = LocalDateTime.now();//Para generar un nombre al archivo en base a la fecha, hora, año
+                RequestBody rb = RequestBody.create(f, MediaType.parse("multipart/form-data")), somedata;//Les estamos enviando un archivo (imagen) desde el formulario
+                String filename = "" + ldt.getDayOfMonth() + (ldt.getMonthValue() + 1) + ldt.getYear() + ldt.getHour() + ldt.getMinute() + ldt.getSecond();//Asignarle un nombre al archivo
                 MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
-                somedata = RequestBody.create("profilePh" + filename, MediaType.parse("text/plain"));
+                somedata = RequestBody.create("profilePh" + filename, MediaType.parse("text/plain"));//Le estamos enviando un nombre al archivo.
                 this.documentoAlmacenadoViewModel.save(part, somedata).observe(this, response -> {
                     if (response.getRpta() == 1) {
+                        c.setFoto(new DocumentoAlmacenado());
+                        c.getFoto().setId(response.getBody().getId());//Asignamos la foto al cliente
                         this.clienteViewModel.guardarCliente(c).observe(this, cresponse -> {
                             if (cresponse.getRpta() == 1) {
                                 //successMessage("Registro realizado con éxito 😀 " + response.getMessage() + " ahora inicia sesión para continuar");
-                                Toast.makeText(this, response.getMessage() + ",ahora procederemos a registrar sus credenciales de inciio de sesión", Toast.LENGTH_SHORT).show();
-                                int idC = cresponse.getBody().getId();
+                                Toast.makeText(this, response.getMessage() + ", ahora procederemos a registrar sus credenciales de inciio de sesión", Toast.LENGTH_SHORT).show();
+                                int idC = cresponse.getBody().getId();//Obtener el id del cliente registrado
                                 Usuario u = new Usuario();
                                 u.setEmail(edtEmailUser.getText().toString());
                                 u.setClave(edtPasswordUser.getText().toString());
                                 u.setVigencia(true);
-                                u.setCliente(new Cliente(idC));
+                                u.setCliente(new Cliente(idC));//Aquí hay un constructor en la entidad Cliente que como parámetro recibe un id.
                                 this.usuarioViewModel.save(u).observe(this, uResponse -> {
                                     Toast.makeText(this, uResponse.getMessage(), Toast.LENGTH_SHORT).show();
                                     if (uResponse.getRpta() == 1) {
-                                        Toast.makeText(this, "sus datos y credenciales de incio de sesión fueron creados correctamente", Toast.LENGTH_SHORT).show();
-                                        this.finish();
+                                        Toast.makeText(this, "Sus datos y credenciales de incio de sesión fueron creados correctamente", Toast.LENGTH_SHORT).show();
+                                        this.finish();//Cerramos la actividad y volvemos al login.
                                     } else {
-                                        Toast.makeText(this, "No se han podido registrar los datos,inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(this, "No se han podido registrar los datos, inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } else {
@@ -305,9 +308,8 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        Toast.makeText(this, "No se han podido registrar los datos,inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "No se han podido registrar los datos, inténtelo nuevamente en unos minutos", Toast.LENGTH_SHORT).show();
                     }
-
                 });
 
             } catch (Exception e) {

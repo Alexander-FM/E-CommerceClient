@@ -76,4 +76,5 @@ public class DocumentoAlmacenado {
     public void setFile(MultipartBody.Part file) {
         this.file = file;
     }
+
 }
