@@ -6,11 +6,22 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
+import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.databinding.ActivityInicioBinding;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
+import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
+import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -19,6 +30,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.sql.Date;
+import java.sql.Time;
 
 
 public class InicioActivity extends AppCompatActivity {
@@ -47,6 +61,37 @@ public class InicioActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadData();
+    }
+
+    private void loadData() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final Gson g = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Time.class, new TimeSerializer())
+                .create();
+        String usuarioJson = sp.getString("UsuarioJson", null);
+        if (usuarioJson != null) {
+            final Usuario u = g.fromJson(usuarioJson, Usuario.class);
+            final View vistaheader = binding.navView.getHeaderView(0);
+            final TextView tvNombre = vistaheader.findViewById(R.id.tvNombre), tvCorreo = vistaheader.findViewById(R.id.tvCorreo);
+            final ImageView imgFoto = vistaheader.findViewById(R.id.imgFotoPerfil);
+            tvNombre.setText(u.getCliente().getNombreCompleto());
+            tvCorreo.setText(u.getEmail());
+            String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + u.getCliente().getFoto().getFileName();
+            final Picasso picasso = new Picasso.Builder(this)
+                    .downloader(new OkHttp3Downloader(ConfigApi.getClient()))
+                    .build();
+            picasso.load(url)
+                    //.networkPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                    .error(R.drawable.image_not_found)
+                    .into(imgFoto);
+        }
     }
 
     @Override
@@ -81,5 +126,10 @@ public class InicioActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

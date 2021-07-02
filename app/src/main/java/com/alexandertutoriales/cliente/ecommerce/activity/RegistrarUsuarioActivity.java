@@ -1,10 +1,15 @@
 package com.alexandertutoriales.cliente.ecommerce.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +30,8 @@ import com.alexandertutoriales.cliente.ecommerce.viewmodel.ClienteViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.DocumentoAlmacenadoViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.UsuarioViewModel;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -48,6 +55,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     private TextInputLayout txtInputNameUser, txtInputApellidoPaternoU, txtInputApellidoMaternoU,
             txtInputTipoDoc, txtInputNumeroDocU, txtInputDepartamento, txtInputProvincia,
             txtInputDistrito, txtInputTelefonoU, txtInputDireccionU, txtInputEmailUser, txtInputPasswordUser;
+    private final static int LOCATION_REQUEST_CODE = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,32 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         this.init();
         this.initViewModel();
         this.spinners();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    LOCATION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Gracias por conceder los permisos para leer el almacenamiento 😀,estos permisos son necesarios para poder escoger tu foto de perfil", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "No podemos realizar el registro si no nos concedes los permisos para leer el almacenamiento 😥,estos permisos son necesarios para poder escoger tu foto de perfil", Toast.LENGTH_LONG).show();
+                    this.finish();
+                }
+                break;
+        }
     }
 
     public void init() {
@@ -337,6 +371,10 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         dropDepartamento = dropdownDepartamento.getText().toString();
         dropProvincia = dropdownProvincia.getText().toString();
         dropDistrito = dropdownDistrito.getText().toString();
+        if(this.f==null){
+            errorMessage("debe selecionar una foto de perfil");
+            retorno=false;
+        }
         if (nombres.isEmpty()) {
             txtInputNameUser.setError("Ingresar nombres");
             retorno = false;

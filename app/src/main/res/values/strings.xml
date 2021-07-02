@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppMovil</string>
+    <string name="app_name">Cevichería Alexander</string>
     <string name="label_usuario">Correo Electrónico</string>
     <string name="label_password">Contraseña</string>
     <string name="label_start_session">Iniciar Sesión</string>
