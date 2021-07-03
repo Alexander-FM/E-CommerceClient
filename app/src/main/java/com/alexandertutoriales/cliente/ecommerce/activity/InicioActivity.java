@@ -34,6 +34,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.sql.Date;
 import java.sql.Time;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class InicioActivity extends AppCompatActivity {
 
@@ -80,7 +82,7 @@ public class InicioActivity extends AppCompatActivity {
             final Usuario u = g.fromJson(usuarioJson, Usuario.class);
             final View vistaheader = binding.navView.getHeaderView(0);
             final TextView tvNombre = vistaheader.findViewById(R.id.tvNombre), tvCorreo = vistaheader.findViewById(R.id.tvCorreo);
-            final ImageView imgFoto = vistaheader.findViewById(R.id.imgFotoPerfil);
+            final CircleImageView imgFoto = vistaheader.findViewById(R.id.imgFotoPerfil);
             tvNombre.setText(u.getCliente().getNombreCompleto());
             tvCorreo.setText(u.getEmail());
             String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + u.getCliente().getFoto().getFileName();
@@ -88,6 +90,7 @@ public class InicioActivity extends AppCompatActivity {
                     .downloader(new OkHttp3Downloader(ConfigApi.getClient()))
                     .build();
             picasso.load(url)
+                    .error(R.drawable.image_not_found)
                     //.networkPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.foto_rota)
                     .into(imgFoto);
         }
