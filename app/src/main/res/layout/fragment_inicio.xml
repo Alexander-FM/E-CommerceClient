@@ -47,7 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/san_francisco"
                 android:text="Categorías"
@@ -58,31 +57,32 @@
                 android:id="@+id/gvCategorias"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="8dp"
                 android:numColumns="3"
                 android:verticalSpacing="7dp" />
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/san_francisco"
                 android:text="Platillos Recomendados"
                 android:textColor="#fff"
                 android:textSize="24dp" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvPlatillosRecomendados"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_alignParentBottom="true"/>
+
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

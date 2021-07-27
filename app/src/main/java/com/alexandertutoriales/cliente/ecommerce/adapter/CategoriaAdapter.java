@@ -1,6 +1,7 @@
 package com.alexandertutoriales.cliente.ecommerce.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
+import com.alexandertutoriales.cliente.ecommerce.activity.ListarPlatillosPorCategoriaActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
 import com.squareup.picasso.OkHttp3Downloader;
@@ -47,6 +49,11 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria> {
                 .error(R.drawable.image_not_found)
                 .into(imgCategoria);
         txtNombreCategoria.setText(c.getNombre());
+        convertView.setOnClickListener(v -> {
+            Intent i = new Intent(getContext(), ListarPlatillosPorCategoriaActivity.class);
+            i.putExtra("idC", c.getId());//Obtenemos el idCategoria
+            getContext().startActivity(i);//Iniciamos la actividad y enviamos el idCategoria
+        });
         return convertView;
     }
 }
