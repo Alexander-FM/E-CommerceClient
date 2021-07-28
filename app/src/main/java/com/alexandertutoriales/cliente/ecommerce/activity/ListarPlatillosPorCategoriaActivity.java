@@ -3,6 +3,7 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
     private PlatilloViewModel platilloViewModel;
     private PlatillosPorCategoriaAdapter adapter;
+    private List<Platillo> platillos = new ArrayList<>();
     private RecyclerView rcvPlatillosPorCategoria;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,6 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
             this.finish();
             this.overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
         });
-        rcvPlatillosPorCategoria = findViewById(R.id.rcvPlatillosPorCategoria);
     }
 
     private void initViewModel() {
@@ -48,8 +49,12 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        adapter = new PlatillosPorCategoriaAdapter(new ArrayList<>());
+        adapter = new PlatillosPorCategoriaAdapter(platillos);
+        rcvPlatillosPorCategoria = findViewById(R.id.rcvPlatillosPorCategoria);
         rcvPlatillosPorCategoria.setAdapter(adapter);
+        rcvPlatillosPorCategoria.setLayoutManager(new LinearLayoutManager(this));
+        //Si quieres hacer un lista horizontal comentar la linea 55 y descomenta la linea 57
+        //rcvPlatillosPorCategoria.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void loadData() {

@@ -61,7 +61,7 @@ public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<Platillos
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.imgPlatilloC = itemView.findViewById(R.id.imgPlatilloC);
-            this.namePlatilloC = itemView.findViewById(R.id.namePlatillo);
+            this.namePlatilloC = itemView.findViewById(R.id.namePlatilloC);
             this.txtPricePlatilloC = itemView.findViewById(R.id.txtPricePlatilloC);
             this.btnOrdenarPC = itemView.findViewById(R.id.btnOrdenarPC);
         }
