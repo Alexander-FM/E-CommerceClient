@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppMovil">
-        <activity android:name=".activity.ListarPlatillosPorCategoriaActivity"></activity>
+        <activity android:name=".activity.DetallePlatilloActivity"></activity>
+        <activity android:name=".activity.ListarPlatillosPorCategoriaActivity" />
         <activity android:name=".activity.ui.compras.DetalleMisComprasActivity" />
         <activity android:name=".activity.RegistrarUsuarioActivity" />
         <activity

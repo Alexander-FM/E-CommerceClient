@@ -1,16 +1,12 @@
 package com.alexandertutoriales.cliente.ecommerce.activity.ui.inicio;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,17 +19,14 @@ import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.CategoriaAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatillosRecomendadosAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.SliderAdapter;
-import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.entity.SliderItem;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.CategoriaViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PlatilloViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-import com.squareup.picasso.OkHttp3Downloader;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InicioFragment extends Fragment {
+public class InicioFragment extends Fragment implements Communication {
     private PlatilloViewModel platilloViewModel;
     private CategoriaViewModel categoriaViewModel;
     private CategoriaAdapter categoriaAdapter;
@@ -76,7 +69,7 @@ public class InicioFragment extends Fragment {
     }
 
     private void initAdapter() {
-        adapter = new PlatillosRecomendadosAdapter(platillos);
+        adapter = new PlatillosRecomendadosAdapter(platillos, this);
         rcvPlatillosRecomendados.setAdapter(adapter);
         sliderAdapter = new SliderAdapter(getContext());
         svCarrusel.setSliderAdapter(sliderAdapter);
@@ -117,4 +110,9 @@ public class InicioFragment extends Fragment {
     }
 
 
+    @Override
+    public void showDetails(Intent i) {
+        getActivity().startActivity(i);
+        getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
+    }
 }

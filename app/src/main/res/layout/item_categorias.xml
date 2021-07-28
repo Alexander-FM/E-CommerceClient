@@ -7,7 +7,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/crdCategoria"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:elevation="8dp"
@@ -20,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/imgCategoria"
-                android:layout_width="150dp"
-                android:layout_height="130dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/food_img2" />
 
@@ -34,7 +34,7 @@
                 android:layout_alignRight="@+id/imgCategoria"
                 android:layout_alignBottom="@+id/imgCategoria"
                 android:fontFamily="@font/poppins_medium"
-                android:textSize="20dp"
+                android:textSize="18sp"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:text="Categoría 1"

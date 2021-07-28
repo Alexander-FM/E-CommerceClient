@@ -10,15 +10,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.MisComprasAdapter;
-import com.alexandertutoriales.cliente.ecommerce.communication.MisComprasCommunication;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
+import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
@@ -33,7 +31,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 
-public class MisComprasFragment extends Fragment implements MisComprasCommunication {
+public class MisComprasFragment extends androidx.fragment.app.Fragment implements Communication {
     private PedidoViewModel viewModel;
     private RecyclerView rcvPedidos;
     private MisComprasAdapter adapter;

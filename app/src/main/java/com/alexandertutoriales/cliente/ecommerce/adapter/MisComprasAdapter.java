@@ -5,15 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.DetalleMisComprasActivity;
-import com.alexandertutoriales.cliente.ecommerce.communication.MisComprasCommunication;
+import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
@@ -28,10 +26,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.ViewHolder> {
-    private final MisComprasCommunication communication;
+    private final Communication communication;
     private final List<PedidoConDetallesDTO> pedidos;
 
-    public MisComprasAdapter(List<PedidoConDetallesDTO> pedidos, MisComprasCommunication communication) {
+    public MisComprasAdapter(List<PedidoConDetallesDTO> pedidos, Communication communication) {
         this.pedidos = pedidos;
         this.communication = communication;
     }
@@ -84,7 +82,7 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                         .registerTypeAdapter(Time.class, new TimeSerializer())
                         .create();
                 i.putExtra("detailsPurchases", g.toJson(dto.getDetallePedidos()));
-                communication.showDetails(i);
+                communication.showDetails(i);//Esto es solo para dar una animación.
             });
         }
     }

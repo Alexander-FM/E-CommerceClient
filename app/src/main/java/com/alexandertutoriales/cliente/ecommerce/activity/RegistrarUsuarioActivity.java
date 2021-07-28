@@ -3,6 +3,7 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -93,6 +94,12 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     }
 
     public void init() {
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
+        toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
+            this.finish();
+            this.overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
+        });
         btnGuardarDatos = findViewById(R.id.btnGuardarDatos);
         btnSubirImagen = findViewById(R.id.btnSubirImagen);
         imageUser = findViewById(R.id.imageUser);

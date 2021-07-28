@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
@@ -31,7 +32,8 @@ public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<Platillos
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_productos_por_categoria, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_productos_por_categoria,
+                parent, false);
         return new ViewHolder(view);
     }
 

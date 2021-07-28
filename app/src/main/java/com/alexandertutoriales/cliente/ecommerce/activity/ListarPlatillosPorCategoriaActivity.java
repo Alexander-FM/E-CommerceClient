@@ -21,9 +21,7 @@ import java.util.List;
 public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
     private PlatilloViewModel platilloViewModel;
     private PlatillosPorCategoriaAdapter adapter;
-    private List<Platillo> platilloList = new ArrayList<>();
     private RecyclerView rcvPlatillosPorCategoria;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +48,7 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        adapter = new PlatillosPorCategoriaAdapter(platilloList);
+        adapter = new PlatillosPorCategoriaAdapter(new ArrayList<>());
         rcvPlatillosPorCategoria.setAdapter(adapter);
     }
 

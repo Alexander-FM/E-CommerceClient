@@ -55,9 +55,10 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_margin="8dp"
                     android:id="@+id/rcvPlatillosPorCategoria"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

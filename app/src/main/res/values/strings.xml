@@ -20,6 +20,11 @@
     <string name="nav_producto">Productos</string>
     <string name="nav_categoria">Categorías</string>
     <string name="titulo_men">En el menú de hoy</string>
+    <string name="descripcion_platillo">Esta rica ensalada norteña viene acompañada con su rica
+        lechuga, tomates, cebollas, choclos fresca, además incluye su buen refrescos para acompañar este exquisito
+        platillo preparado por nuestros grandes chef norteños del Perú.</string>
+    <string name="add_cart">Añadir al carrito</string>
+    <string name="buy_item">Comprar</string>
     <string-array name="tipoDoc">
         <item>DNI</item>
         <item>RUC</item>
