@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
@@ -23,11 +26,17 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class DetallePlatilloActivity extends AppCompatActivity {
     private ImageView imgPlatilloDetalle;
     private Button btnAgregarCarrito, btnComprar;
     private TextView tvNamePlatilloDetalle, tvPrecioPlatilloDetalle, tvDescripcionPlatilloDetalle;
-
+    final Gson g = new GsonBuilder()
+            .registerTypeAdapter(Date.class, new DateSerializer())
+            .registerTypeAdapter(Time.class, new TimeSerializer())
+            .create();
+    Platillo platillo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +64,7 @@ public class DetallePlatilloActivity extends AppCompatActivity {
     private void loadData() {
         final String detalleString = this.getIntent().getStringExtra("detallePlatillo");
         if (detalleString != null) {
-            final Gson g = new GsonBuilder()
-                    .registerTypeAdapter(Date.class, new DateSerializer())
-                    .registerTypeAdapter(Time.class, new TimeSerializer())
-                    .create();
-            Platillo platillo = g.fromJson(detalleString, Platillo.class);
+            platillo = g.fromJson(detalleString, Platillo.class);
             this.tvNamePlatilloDetalle.setText(platillo.getNombre());
             this.tvPrecioPlatilloDetalle.setText(String.format(Locale.ENGLISH, "S/%.2f", platillo.getPrecio()));
             this.tvDescripcionPlatilloDetalle.setText(platillo.getDescripcionPlatillo());
@@ -75,5 +80,20 @@ public class DetallePlatilloActivity extends AppCompatActivity {
             System.out.println("Error al obtener los detalles del platillo");
         }
 
+        //Agregar platillos al carrito
+        this.btnAgregarCarrito.setOnClickListener(v -> {
+            DetallePedido detallePedido = new DetallePedido();
+            detallePedido.setPlatillo(platillo);
+            detallePedido.setCantidad(1);
+            detallePedido.setPrecio(platillo.getPrecio());
+            successMessage(Carrito.agregarPlatillos(detallePedido));
+        });
+
+    }
+
+    public void successMessage(String message) {
+        new SweetAlertDialog(this,
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                .setContentText(message).show();
     }
 }
