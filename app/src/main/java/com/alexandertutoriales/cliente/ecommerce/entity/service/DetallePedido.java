@@ -46,4 +46,8 @@ public class DetallePedido {
     public void setPlatillo(Platillo platillo) {
         this.platillo = platillo;
     }
+
+    public double getTotal() {
+        return this.cantidad * this.precio;
+    }
 }
