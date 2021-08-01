@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.CarritoComunication;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -28,8 +28,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarritoAdapter.ViewHolder> {
 
-    private List<DetallePedido> detalles = new ArrayList<>();
-    private CarritoComunication c;
+    private final List<DetallePedido> detalles;
+    private final CarritoComunication c;
     private static int valor = 1;
 
     public PlatilloCarritoAdapter(List<DetallePedido> detalles, CarritoComunication c) {
@@ -40,7 +40,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_platillos_carrito, parent, false);
+        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_platillos_carrito, parent, false);
         return new ViewHolder(v, this.c);
     }
 
@@ -62,11 +62,11 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
 
     }
 
-    protected static class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlatilloDC, btnDecrease, btnAdd, btnEliminarPCarrito;
         private final EditText edtCantidad;
         private final TextView tvNombrePlatilloDC, tvPrecioPDC;
-        private CarritoComunication c;
+        private final CarritoComunication c;
 
         public ViewHolder(@NonNull View itemView, CarritoComunication c) {
             super(itemView);
@@ -99,16 +99,21 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             //Actualizar Cantidad del Carrito
             btnAdd.setOnClickListener(v -> {
                 if (valor != 10) {//Si el valor todavía no llega a 10, que siga aumentando
-                    edtCantidad.setText(String.valueOf(++valor));
+                    valor++;
+                    edtCantidad.setText(String.valueOf(valor));
                     dp.setCantidad(valor);
-                    c.actualizarCantidad(dp);
+                    Carrito.agregarPlatillos(dp);
+                    PlatilloCarritoAdapter.this.notifyDataSetChanged();
+                    //c.actualizarCantidad(dp);
                 }
             });
             btnDecrease.setOnClickListener(v -> {
                 if (valor != 1) {
-                    edtCantidad.setText(String.valueOf(--valor));
+                    valor--;
+                    edtCantidad.setText(String.valueOf(valor));
                     dp.setCantidad(valor);
-                    c.actualizarCantidad(dp);
+                    PlatilloCarritoAdapter.this.notifyDataSetChanged();
+                    //c.actualizarCantidad(dp);
                 }
             });
         }

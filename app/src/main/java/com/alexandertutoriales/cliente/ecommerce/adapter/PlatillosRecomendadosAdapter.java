@@ -7,18 +7,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.DetallePlatilloActivity;
-import com.alexandertutoriales.cliente.ecommerce.activity.ListarPlatillosPorCategoriaActivity;
-import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.DetalleMisComprasActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;

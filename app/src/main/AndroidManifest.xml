@@ -16,7 +16,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppMovil">
+        android:theme="@style/Theme.AppMovil"
+        android:usesCleartextTraffic="true">
         <activity android:name=".activity.PlatillosCarritoActivity"></activity>
         <activity android:name=".activity.DetallePlatilloActivity" />
         <activity android:name=".activity.ListarPlatillosPorCategoriaActivity" />

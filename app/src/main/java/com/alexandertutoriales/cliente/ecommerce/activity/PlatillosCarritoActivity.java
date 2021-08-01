@@ -2,7 +2,6 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,19 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
-import com.alexandertutoriales.cliente.ecommerce.activity.ui.inicio.InicioFragment;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatilloCarritoAdapter;
 import com.alexandertutoriales.cliente.ecommerce.communication.CarritoComunication;
-import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.GenerarPedidoDTO;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
-import com.alexandertutoriales.cliente.ecommerce.viewmodel.ClienteViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PedidoViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,8 +37,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 public class PlatillosCarritoActivity extends AppCompatActivity implements CarritoComunication {
     private PedidoViewModel pedidoViewModel;
     private PlatilloCarritoAdapter adapter;
@@ -54,6 +46,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
             .registerTypeAdapter(Date.class, new DateSerializer())
             .registerTypeAdapter(Time.class, new TimeSerializer())
             .create();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,10 +70,10 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
             String pref = preferences.getString("UsuarioJson", "");
             Usuario u = g.fromJson(pref, Usuario.class);
             int idC = u.getCliente().getId();
-            if(idC!= 0){
+            if (idC != 0) {
                 toastCorrecto("Hay un Usuario en sesion, registrando venta...");
                 registrarPedido(idC);
-            }else{
+            } else {
                 toastIncorrecto("No ha iniciado sesión, se le redirigirá al login");
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
@@ -109,13 +102,13 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         dto.getCliente().setId(idC);
         dto.setDetallePedido(detallePedidos);
         this.pedidoViewModel.guardarPedido(dto).observe(this, response -> {
-            if(response.getRpta() == 1){
+            if (response.getRpta() == 1) {
                 toastCorrecto("Pedido registrado con éxito");
                 Carrito.limpiar();
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
-            }else{
+            } else {
                 toastIncorrecto("Demonios!, No se pudo registrar el pedido");
             }
         });
@@ -133,12 +126,6 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
     public void eliminarDetalle(int idP) {
         Carrito.eliminar(idP);
         this.adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void actualizarCantidad(DetallePedido dp) {
-        Carrito.agregarPlatillos(dp);
-        this.adapter.updateItems(Carrito.getDetallePedidos());
     }
 
     public void toastIncorrecto(String texto) {
