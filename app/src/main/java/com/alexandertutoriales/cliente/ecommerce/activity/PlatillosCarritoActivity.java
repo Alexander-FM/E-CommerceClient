@@ -27,6 +27,7 @@ import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.GenerarPedidoDTO;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
@@ -73,8 +74,10 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         btnFinalizarCompra = findViewById(R.id.btnFinalizarCompra);
         btnFinalizarCompra.setOnClickListener(v -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            int idC = preferences.getInt("idC", 2);
-            if(idC != 0){
+            String pref = preferences.getString("UsuarioJson", "");
+            Usuario u = g.fromJson(pref, Usuario.class);
+            int idC = u.getCliente().getId();
+            if(idC!= 0){
                 toastCorrecto("Hay un Usuario en sesion, registrando venta...");
                 registrarPedido(idC);
             }else{
@@ -100,7 +103,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         ArrayList<DetallePedido> detallePedidos = Carrito.getDetallePedidos();
         GenerarPedidoDTO dto = new GenerarPedidoDTO();
         java.util.Date date = new java.util.Date();
-        dto.getPedido().setFechaCompra(new java.sql.Date(date.getTime()));
+        dto.getPedido().setFechaCompra(new Date(date.getTime()));
         dto.getPedido().setAnularPedido(false);
         dto.getPedido().setMonto(getTotalV(detallePedidos));
         dto.getCliente().setId(idC);
@@ -109,7 +112,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
             if(response.getRpta() == 1){
                 toastCorrecto("Pedido registrado con éxito");
                 Carrito.limpiar();
-                startActivity(new Intent(PlatillosCarritoActivity.this, InicioFragment.class));
+                finish();
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
             }else{
@@ -130,6 +133,12 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
     public void eliminarDetalle(int idP) {
         Carrito.eliminar(idP);
         this.adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void actualizarCantidad(DetallePedido dp) {
+        Carrito.agregarPlatillos(dp);
+        this.adapter.updateItems(Carrito.getDetallePedidos());
     }
 
     public void toastIncorrecto(String texto) {

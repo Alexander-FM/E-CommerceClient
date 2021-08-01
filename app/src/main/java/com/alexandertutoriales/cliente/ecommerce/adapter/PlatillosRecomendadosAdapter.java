@@ -18,6 +18,8 @@ import com.alexandertutoriales.cliente.ecommerce.activity.ListarPlatillosPorCate
 import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.DetalleMisComprasActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
@@ -31,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<PlatillosRecomendadosAdapter.ViewHolder> {
     private final Communication communication;
@@ -86,8 +90,13 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
                     .into(imgPlatillo);
             namePlatillo.setText(p.getNombre());
             btnOrdenar.setOnClickListener(v -> {
-                Toast.makeText(this.itemView.getContext(), "Hola, hijo de puta", Toast.LENGTH_SHORT).show();
+                DetallePedido detallePedido = new DetallePedido();
+                detallePedido.setPlatillo(p);
+                detallePedido.setCantidad(1);
+                detallePedido.setPrecio(p.getPrecio());
+                successMessage(Carrito.agregarPlatillos(detallePedido));
             });
+            //Cuando pulses sobre la tarjeta te aparecerá el detalle de ese platillo
             itemView.setOnClickListener(v -> {
                 final Intent i = new Intent(itemView.getContext(), DetallePlatilloActivity.class);
                 final Gson g = new GsonBuilder()
@@ -98,5 +107,11 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
                 communication.showDetails(i);//Esto es solo para dar una animación.
             });
         }
+        public void successMessage(String message) {
+            new SweetAlertDialog(itemView.getContext(),
+                    SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                    .setContentText(message).show();
+        }
     }
+
 }

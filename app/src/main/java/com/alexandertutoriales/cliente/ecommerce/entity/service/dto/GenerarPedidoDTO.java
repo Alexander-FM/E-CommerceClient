@@ -11,6 +11,12 @@ public class GenerarPedidoDTO {
     private ArrayList<DetallePedido> detallePedido;
     private Cliente cliente;
 
+    //Generar un constructor vacío e instanciar los objetos para no inicializarlos después.
+    public GenerarPedidoDTO() {
+        this.pedido = new Pedido();
+        this.detallePedido = new ArrayList<>();
+        this.cliente = new Cliente();
+    }
 
     public Pedido getPedido() {
         return pedido;

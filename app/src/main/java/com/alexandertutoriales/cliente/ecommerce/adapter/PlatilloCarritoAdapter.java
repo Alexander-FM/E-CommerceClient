@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.CarritoComunication;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
@@ -29,6 +30,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
 
     private List<DetallePedido> detalles = new ArrayList<>();
     private CarritoComunication c;
+    private static int valor = 1;
 
     public PlatilloCarritoAdapter(List<DetallePedido> detalles, CarritoComunication c) {
         this.detalles = detalles;
@@ -52,6 +54,14 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         return this.detalles.size();
     }
 
+    //Actualizamos la cantidad del carrito.
+    public void updateItems(ArrayList<DetallePedido> detallePedidos) {
+        this.detalles.clear();
+        this.detalles.addAll(detallePedidos);
+        this.notifyDataSetChanged();
+
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPlatilloDC, btnDecrease, btnAdd, btnEliminarPCarrito;
         private final EditText edtCantidad;
@@ -72,8 +82,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
 
         public void setItem(final DetallePedido dp) {
             this.tvNombrePlatilloDC.setText(dp.getPlatillo().getNombre());
-            this.tvPrecioPDC.setText(String.format(Locale.ENGLISH, "S/%.2f",
-                    dp.getPrecio()));
+            this.tvPrecioPDC.setText(String.format(Locale.ENGLISH, "S/%.2f", dp.getPrecio()));
             this.edtCantidad.setText(Integer.toString(dp.getCantidad()));
             String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + dp.getPlatillo().getFoto().getFileName();
             Picasso picasso = new Picasso.Builder(itemView.getContext())
@@ -86,6 +95,21 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             this.btnEliminarPCarrito.setOnClickListener(v -> {
                 toastCorrecto("Platillo eliminado exitosamente");
                 c.eliminarDetalle(dp.getPlatillo().getId());
+            });
+            //Actualizar Cantidad del Carrito
+            btnAdd.setOnClickListener(v -> {
+                if (valor != 10) {//Si el valor todavía no llega a 10, que siga aumentando
+                    edtCantidad.setText(String.valueOf(++valor));
+                    dp.setCantidad(valor);
+                    c.actualizarCantidad(dp);
+                }
+            });
+            btnDecrease.setOnClickListener(v -> {
+                if (valor != 1) {
+                    edtCantidad.setText(String.valueOf(--valor));
+                    dp.setCantidad(valor);
+                    c.actualizarCantidad(dp);
+                }
             });
         }
 
