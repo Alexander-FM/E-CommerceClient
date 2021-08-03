@@ -73,7 +73,7 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
             txtValueCodPurchases.setText("C000" + Integer.toString(dto.getPedido().getId()));
             txtValueDatePurchases.setText((dto.getPedido().getFechaCompra()).toString());
             txtValueAmount.setText(String.format(Locale.ENGLISH, "S/%.2f", dto.getPedido().getMonto()));
-            txtValueOrder.setText(dto.getPedido().isAnularPedido() ? "Despachado, en proceso de envio" : "Pedido cancelado");
+            txtValueOrder.setText(dto.getPedido().isAnularPedido() ? "Pedido cancelado" : "Despachado, en proceso de envio...");
 
             itemView.setOnClickListener(v -> {
                 final Intent i = new Intent(itemView.getContext(), DetalleMisComprasActivity.class);
