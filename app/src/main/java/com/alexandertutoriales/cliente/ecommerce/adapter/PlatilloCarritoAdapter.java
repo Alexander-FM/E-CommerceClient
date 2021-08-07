@@ -83,7 +83,8 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         public void setItem(final DetallePedido dp) {
             this.tvNombrePlatilloDC.setText(dp.getPlatillo().getNombre());
             this.tvPrecioPDC.setText(String.format(Locale.ENGLISH, "S/%.2f", dp.getPrecio()));
-            this.edtCantidad.setText(Integer.toString(dp.getCantidad()));
+            int cant=dp.getCantidad();
+            this.edtCantidad.setText(Integer.toString(cant));
             String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + dp.getPlatillo().getFoto().getFileName();
             Picasso picasso = new Picasso.Builder(itemView.getContext())
                     .downloader(new OkHttp3Downloader(ConfigApi.getClient()))
@@ -98,20 +99,21 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             });
             //Actualizar Cantidad del Carrito
             btnAdd.setOnClickListener(v -> {
-                if (valor != 10) {//Si el valor todavía no llega a 10, que siga aumentando
-                    valor++;
-                    edtCantidad.setText(String.valueOf(valor));
-                    dp.setCantidad(valor);
-                    Carrito.agregarPlatillos(dp);
+                if (dp.getCantidad() != 10) {//Si el valor todavía no llega a 10, que siga aumentando
+                    //valor++;
+                    dp.addOne();
+                    //edtCantidad.setText(String.valueOf(valor));
+                    //dp.setCantidad(valor);
+                    //Carrito.agregarPlatillos(dp);
                     PlatilloCarritoAdapter.this.notifyDataSetChanged();
                     //c.actualizarCantidad(dp);
                 }
             });
             btnDecrease.setOnClickListener(v -> {
-                if (valor != 1) {
-                    valor--;
-                    edtCantidad.setText(String.valueOf(valor));
-                    dp.setCantidad(valor);
+                if (dp.getCantidad() != 1) {
+                    //valor--;
+                    //edtCantidad.setText(String.valueOf(valor));
+                    dp.removeOne();
                     PlatilloCarritoAdapter.this.notifyDataSetChanged();
                     //c.actualizarCantidad(dp);
                 }

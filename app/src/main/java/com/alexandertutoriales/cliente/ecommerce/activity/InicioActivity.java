@@ -46,7 +46,6 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityInicioBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -142,6 +141,5 @@ public class InicioActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
     }
 }
