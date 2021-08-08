@@ -39,7 +39,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class InicioActivity extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
 
