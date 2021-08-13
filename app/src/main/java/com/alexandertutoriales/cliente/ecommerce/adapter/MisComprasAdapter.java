@@ -102,16 +102,16 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                     .setContentText("¿Estás seguro de cancelar el pedido solicitado?, Una vez cancelado no podrás deshacer los cambios")
                     .setCancelText("No, Cancelar!").setConfirmText("Sí, Confirmar")
                     .showCancelButton(true)
-                    .setCancelClickListener(sDialog -> {
+                    .setConfirmClickListener(sDialog -> {
                 sDialog.dismissWithAnimation();
-                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Operación cancelada")
+                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo")
+                        .setContentText(anularPedidoComunication.anularPedido(id))
+                        .show();
+            }).setCancelClickListener(sDialog -> {
+                sDialog.dismissWithAnimation();
+                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Operación Cancelada !")
                         .setContentText("No cancelaste ningún pedido")
                         .show();
-            }).setConfirmClickListener(sDialog -> {
-                anularPedidoComunication.anularPedido(id);
-                sDialog.dismissWithAnimation();
-                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo !")
-                        .setContentText("El pedido ha sido cancelado");
             }).show();
         }
     }

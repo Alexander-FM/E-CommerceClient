@@ -89,11 +89,12 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
     }
 
     @Override
-    public void anularPedido(int id) {
+    public String anularPedido(int id) {
         this.viewModel.anularPedido(id).observe(getViewLifecycleOwner(), response -> {
             if(response.getRpta() == 1){
                 loadData();
             }
         });
+        return "El pedido ha sido cancelado";
     }
 }
