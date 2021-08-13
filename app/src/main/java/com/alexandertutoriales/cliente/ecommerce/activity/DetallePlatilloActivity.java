@@ -34,7 +34,7 @@ public class DetallePlatilloActivity extends AppCompatActivity {
             .registerTypeAdapter(Date.class, new DateSerializer())
             .registerTypeAdapter(Time.class, new TimeSerializer())
             .create();
-    Platillo platillo;
+    private Platillo platillo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

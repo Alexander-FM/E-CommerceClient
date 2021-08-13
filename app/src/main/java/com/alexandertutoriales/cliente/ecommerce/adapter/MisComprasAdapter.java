@@ -89,12 +89,9 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                 i.putExtra("detailsPurchases", g.toJson(dto.getDetallePedidos()));
                 communication.showDetails(i);//Esto es solo para dar una animación.
             });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    anularPedido(dto.getPedido().getId());
-                    return true;
-                }
+            itemView.setOnLongClickListener(v -> {
+                anularPedido(dto.getPedido().getId());
+                return true;
             });
         }
         private void anularPedido(int id) {

@@ -34,7 +34,7 @@ public class PedidoRepository {
 
     public LiveData<GenericResponse<List<PedidoConDetallesDTO>>> listarPedidosPorCliente(int idCli){
         final MutableLiveData<GenericResponse<List<PedidoConDetallesDTO>>> mld = new MutableLiveData<>();
-        this.api.listarPedidosPorCliente(idCli).enqueue(new Callback<GenericResponse<List<PedidoConDetallesDTO>>>() {
+        this.api.listarPedidosPorCliente(idCli).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<GenericResponse<List<PedidoConDetallesDTO>>> call, Response<GenericResponse<List<PedidoConDetallesDTO>>> response) {
                 mld.setValue(response.body());
@@ -53,7 +53,7 @@ public class PedidoRepository {
     //GUARDAR PEDIDO CON DETALLES
     public LiveData<GenericResponse<GenerarPedidoDTO>> save(GenerarPedidoDTO dto) {
         MutableLiveData<GenericResponse<GenerarPedidoDTO>> data = new MutableLiveData<>();
-        api.guardarPedido(dto).enqueue(new Callback<GenericResponse<GenerarPedidoDTO>>() {
+        api.guardarPedido(dto).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<GenericResponse<GenerarPedidoDTO>> call, Response<GenericResponse<GenerarPedidoDTO>> response) {
                 if (response.isSuccessful()) {
@@ -73,10 +73,10 @@ public class PedidoRepository {
     //ANULAR PEDIDO
     public LiveData<GenericResponse<Pedido>> anularPedido(int id){
         MutableLiveData<GenericResponse<Pedido>> mld = new MutableLiveData<>();
-        this.api.anularPedido(id).enqueue(new Callback<GenericResponse<Pedido>>() {
+        this.api.anularPedido(id).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<GenericResponse<Pedido>> call, Response<GenericResponse<Pedido>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     mld.setValue(response.body());
                 }
             }
