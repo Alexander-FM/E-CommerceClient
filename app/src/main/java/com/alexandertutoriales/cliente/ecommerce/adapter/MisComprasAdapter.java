@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.DetalleMisComprasActivity;
+import com.alexandertutoriales.cliente.ecommerce.communication.AnularPedidoComunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
@@ -25,13 +26,17 @@ import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.ViewHolder> {
+    private final AnularPedidoComunication anularPedidoComunication;
     private final Communication communication;
     private final List<PedidoConDetallesDTO> pedidos;
 
-    public MisComprasAdapter(List<PedidoConDetallesDTO> pedidos, Communication communication) {
+    public MisComprasAdapter(List<PedidoConDetallesDTO> pedidos, Communication communication, AnularPedidoComunication anularPedidoComunication) {
         this.pedidos = pedidos;
         this.communication = communication;
+        this.anularPedidoComunication = anularPedidoComunication;
     }
 
     @NonNull
@@ -84,6 +89,30 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                 i.putExtra("detailsPurchases", g.toJson(dto.getDetallePedidos()));
                 communication.showDetails(i);//Esto es solo para dar una animación.
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    anularPedido(dto.getPedido().getId());
+                    return true;
+                }
+            });
+        }
+        private void anularPedido(int id) {
+            new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.WARNING_TYPE).setTitleText("Aviso del sistema !")
+                    .setContentText("¿Estás seguro de cancelar el pedido solicitado?, Una vez cancelado no podrás deshacer los cambios")
+                    .setCancelText("No, Cancelar!").setConfirmText("Sí, Confirmar")
+                    .showCancelButton(true)
+                    .setCancelClickListener(sDialog -> {
+                sDialog.dismissWithAnimation();
+                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Operación cancelada")
+                        .setContentText("No cancelaste ningún pedido")
+                        .show();
+            }).setConfirmClickListener(sDialog -> {
+                anularPedidoComunication.anularPedido(id);
+                sDialog.dismissWithAnimation();
+                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo !")
+                        .setContentText("El pedido ha sido cancelado");
+            }).show();
         }
     }
 }

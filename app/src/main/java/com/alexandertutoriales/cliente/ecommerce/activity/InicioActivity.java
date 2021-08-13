@@ -1,6 +1,7 @@
 package com.alexandertutoriales.cliente.ecommerce.activity;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,8 +16,11 @@ import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.databinding.ActivityInicioBinding;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -25,6 +29,7 @@ import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -41,6 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class InicioActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
+    private BadgeDrawable badgeDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class InicioActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
@@ -70,6 +77,7 @@ public class InicioActivity extends AppCompatActivity {
         loadData();
     }
 
+    @SuppressLint("UnsafeExperimentalUsageError")
     private void loadData() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         final Gson g = new GsonBuilder()
@@ -93,6 +101,9 @@ public class InicioActivity extends AppCompatActivity {
                     //.networkPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.foto_rota)
                     .into(imgFoto);
         }
+        BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
+        badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
 
     @Override
@@ -141,4 +152,6 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
+
+
 }

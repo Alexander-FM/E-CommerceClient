@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.MisComprasAdapter;
+import com.alexandertutoriales.cliente.ecommerce.communication.AnularPedidoComunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
@@ -31,7 +32,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 
-public class MisComprasFragment extends androidx.fragment.app.Fragment implements Communication {
+public class MisComprasFragment extends androidx.fragment.app.Fragment implements Communication, AnularPedidoComunication {
     private PedidoViewModel viewModel;
     private RecyclerView rcvPedidos;
     private MisComprasAdapter adapter;
@@ -60,7 +61,7 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
     }
 
     private void initAdapater() {
-        adapter = new MisComprasAdapter(new ArrayList<>(), this);
+        adapter = new MisComprasAdapter(new ArrayList<>(), this, this);
         rcvPedidos.setLayoutManager(new GridLayoutManager(getContext(), 1));
         rcvPedidos.setAdapter(adapter);
     }
@@ -78,8 +79,6 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
                 adapter.updateItems(response.getBody());
             });
         }
-
-
     }
 
     @Override
@@ -87,5 +86,14 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
         getActivity().startActivity(i);
         getActivity().overridePendingTransition(R.anim.above_in, R.anim.above_out);
         //Para obtener la actividad que encapsula al fragment.
+    }
+
+    @Override
+    public void anularPedido(int id) {
+        this.viewModel.anularPedido(id).observe(getViewLifecycleOwner(), response -> {
+            if(response.getRpta() == 1){
+                loadData();
+            }
+        });
     }
 }

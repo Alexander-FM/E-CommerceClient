@@ -6,14 +6,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
+import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
@@ -24,10 +24,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<PlatillosPorCategoriaAdapter.ViewHolder> {
+    private final MostrarBadge mostrarBadgeCommunication;
     private List<Platillo> listadoPlatillosPorCategoria;
 
-    public PlatillosPorCategoriaAdapter(List<Platillo> listadoPlatillosPorCategoria) {
+    public PlatillosPorCategoriaAdapter(List<Platillo> listadoPlatillosPorCategoria, MostrarBadge mostrarBadgeCommunication) {
         this.listadoPlatillosPorCategoria = listadoPlatillosPorCategoria;
+        this.mostrarBadgeCommunication = mostrarBadgeCommunication;
     }
 
     @Override
@@ -79,7 +81,11 @@ public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<Platillos
             namePlatilloC.setText(p.getNombre());
             txtPricePlatilloC.setText(String.format(Locale.ENGLISH, "S/%.2f", p.getPrecio()));
             btnOrdenarPC.setOnClickListener(v -> {
-                Toast.makeText(this.itemView.getContext(), "Haz presionado el boton ordenar", Toast.LENGTH_SHORT).show();
+                DetallePedido detallePedido = new DetallePedido();
+                detallePedido.setPlatillo(p);
+                detallePedido.setCantidad(1);
+                detallePedido.setPrecio(p.getPrecio());
+                mostrarBadgeCommunication.add(detallePedido);
             });
         }
     }

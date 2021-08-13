@@ -6,20 +6,25 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatillosPorCategoriaAdapter;
+import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
-import com.alexandertutoriales.cliente.ecommerce.viewmodel.ClienteViewModel;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PlatilloViewModel;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity implements MostrarBadge {
     private PlatilloViewModel platilloViewModel;
     private PlatillosPorCategoriaAdapter adapter;
     private List<Platillo> platillos = new ArrayList<>();
@@ -49,7 +54,7 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        adapter = new PlatillosPorCategoriaAdapter(platillos);
+        adapter = new PlatillosPorCategoriaAdapter(platillos, this);
         rcvPlatillosPorCategoria = findViewById(R.id.rcvPlatillosPorCategoria);
         rcvPlatillosPorCategoria.setAdapter(adapter);
         rcvPlatillosPorCategoria.setLayoutManager(new LinearLayoutManager(this));
@@ -62,5 +67,19 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity {
         platilloViewModel.listarPlatillosPorCategoria(idC).observe(this, response -> {
             adapter.updateItems(response.getBody());
         });
+    }
+
+    @SuppressLint("UnsafeExperimentalUsageError")
+    @Override
+    public void add(DetallePedido dp) {
+        successMessage(Carrito.agregarPlatillos(dp));
+        BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
+        badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
+    }
+    public void successMessage(String message) {
+        new SweetAlertDialog(this,
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                .setContentText(message).show();
     }
 }

@@ -15,7 +15,7 @@ import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.DetallePlatilloActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
-import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
+import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
@@ -35,11 +35,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<PlatillosRecomendadosAdapter.ViewHolder> {
     private final Communication communication;
+    private final MostrarBadge mostrarBadgeComunication;
     private List<Platillo> platillos;
 
-    public PlatillosRecomendadosAdapter(List<Platillo> platillos, Communication communication) {
+    public PlatillosRecomendadosAdapter(List<Platillo> platillos, Communication communication, MostrarBadge mostrarBadgeComunication) {
         this.platillos = platillos;
         this.communication = communication;
+        this.mostrarBadgeComunication = mostrarBadgeComunication;
     }
 
     @NotNull
@@ -91,7 +93,7 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
                 detallePedido.setPlatillo(p);
                 detallePedido.setCantidad(1);
                 detallePedido.setPrecio(p.getPrecio());
-                successMessage(Carrito.agregarPlatillos(detallePedido));
+                mostrarBadgeComunication.add(detallePedido);
             });
             //Cuando pulses sobre la tarjeta te aparecerá el detalle de ese platillo
             itemView.setOnClickListener(v -> {

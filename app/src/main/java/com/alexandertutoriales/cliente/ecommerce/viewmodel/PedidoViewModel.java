@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.GenerarPedidoDTO;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
@@ -31,6 +32,10 @@ public class PedidoViewModel extends AndroidViewModel {
 
     public LiveData<GenericResponse<GenerarPedidoDTO>> guardarPedido(GenerarPedidoDTO dto) {
         return repository.save(dto);
+    }
+
+    public LiveData<GenericResponse<Pedido>> anularPedido(int id){
+        return repository.anularPedido(id);
     }
 
 }
