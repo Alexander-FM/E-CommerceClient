@@ -99,7 +99,11 @@
                         android:layout_height="35dp"
                         android:layout_toStartOf="@id/btnAdd"
                         android:fontFamily="@font/san_francisco"
-                        android:inputType="number"
+                        android:inputType="none"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:cursorVisible="false"
                         android:text="5"
                         android:textAlignment="center"
                         android:textSize="15sp" />
