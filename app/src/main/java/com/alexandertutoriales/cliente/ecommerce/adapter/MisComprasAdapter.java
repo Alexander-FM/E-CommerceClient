@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,7 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                     txtValueAmount = this.itemView.findViewById(R.id.txtValueAmount),
                     txtValueOrder = this.itemView.findViewById(R.id.txtValueOrder);
             txtValueCodPurchases.setText("C000" + Integer.toString(dto.getPedido().getId()));
+            final Button btnExportInvoice = this.itemView.findViewById(R.id.btnExportInvoice);
             txtValueDatePurchases.setText((dto.getPedido().getFechaCompra()).toString());
             txtValueAmount.setText(String.format(Locale.ENGLISH, "S/%.2f", dto.getPedido().getMonto()));
             txtValueOrder.setText(dto.getPedido().isAnularPedido() ? "Pedido cancelado" : "Despachado, en proceso de envio...");
@@ -93,18 +95,23 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                 anularPedido(dto.getPedido().getId());
                 return true;
             });
+            btnExportInvoice.setOnClickListener(v -> {
+                String fileName = "invoice" + dto.getPedido().getId() + ".pdf";
+                communication.exportInvoice(dto.getPedido().getCliente().getId(), dto.getPedido().getId(), fileName);
+            });
         }
+
         private void anularPedido(int id) {
             new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.WARNING_TYPE).setTitleText("Aviso del sistema !")
                     .setContentText("¿Estás seguro de cancelar el pedido solicitado?, Una vez cancelado no podrás deshacer los cambios")
                     .setCancelText("No, Cancelar!").setConfirmText("Sí, Confirmar")
                     .showCancelButton(true)
                     .setConfirmClickListener(sDialog -> {
-                sDialog.dismissWithAnimation();
-                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo")
-                        .setContentText(anularPedidoComunication.anularPedido(id))
-                        .show();
-            }).setCancelClickListener(sDialog -> {
+                        sDialog.dismissWithAnimation();
+                        new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo")
+                                .setContentText(anularPedidoComunication.anularPedido(id))
+                                .show();
+                    }).setCancelClickListener(sDialog -> {
                 sDialog.dismissWithAnimation();
                 new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Operación Cancelada !")
                         .setContentText("No cancelaste ningún pedido")

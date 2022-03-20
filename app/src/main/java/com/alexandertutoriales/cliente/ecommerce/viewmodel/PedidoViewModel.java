@@ -17,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
+
 public class PedidoViewModel extends AndroidViewModel {
 
     private final PedidoRepository repository;
@@ -36,6 +38,16 @@ public class PedidoViewModel extends AndroidViewModel {
 
     public LiveData<GenericResponse<Pedido>> anularPedido(int id){
         return repository.anularPedido(id);
+    }
+
+    /**
+     * export complaint
+     * @param idCli
+     * @param idOrden
+     * @return a file pdf
+     */
+    public LiveData<GenericResponse<ResponseBody>> exportComplaint(int idCli, int idOrden){
+        return repository.exportComplaint(idCli, idOrden);
     }
 
 }

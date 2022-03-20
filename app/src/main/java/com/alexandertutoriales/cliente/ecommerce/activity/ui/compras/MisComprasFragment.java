@@ -1,15 +1,19 @@
 package com.alexandertutoriales.cliente.ecommerce.activity.ui.compras;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,14 +26,19 @@ import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PedidoViewModel;
+import com.google.android.gms.common.internal.ResourceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class MisComprasFragment extends androidx.fragment.app.Fragment implements Communication, AnularPedidoComunication {
@@ -73,7 +82,7 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
                 .registerTypeAdapter(Time.class, new TimeSerializer())
                 .create();
         String usuarioJson = sp.getString("UsuarioJson", null);
-        if(usuarioJson != null){
+        if (usuarioJson != null) {
             final Usuario u = g.fromJson(usuarioJson, Usuario.class);
             this.viewModel.listarComprasPorCliente(u.getCliente().getId()).observe(getViewLifecycleOwner(), response -> {
                 adapter.updateItems(response.getBody());
@@ -89,12 +98,67 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
     }
 
     @Override
+    public void exportInvoice(int idCli, int idOrden, String fileName) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            viewModel.exportComplaint(idCli, idOrden).observe(getViewLifecycleOwner(), response -> {
+                if (response.getRpta() == 1) {
+                    try {
+                        boolean folderCreated = true;
+                        File path = requireContext().getExternalFilesDir("/pedidos");
+                        if (!path.exists()) {
+                            if (!path.mkdir()) {
+                                folderCreated = false;
+                                Toast.makeText(requireContext(), "No se pudo crear la carpeta para guardar los archivos, intentalo más tarde", Toast.LENGTH_LONG);
+                            }
+                        }
+                        if (folderCreated) {
+                            byte[] bytes = response.getBody().bytes();
+                            File file = new File(path, fileName);
+                            FileOutputStream fileOutputStream = new FileOutputStream(file);
+                            fileOutputStream.write(bytes);
+                            fileOutputStream.close();
+                            Toast.makeText(requireContext(), "Archivo guardado en: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                            //Previsualizar el PDF
+                        }
+
+                    } catch (Exception e) {
+                        errorMessage("No se pudo guardar el archivo en el dispositivo");
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(requireContext(), response.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            messageWithConfirmation();
+        }
+    }
+
+    @Override
     public String anularPedido(int id) {
         this.viewModel.anularPedido(id).observe(getViewLifecycleOwner(), response -> {
-            if(response.getRpta() == 1){
+            if (response.getRpta() == 1) {
                 loadData();
             }
         });
         return "El pedido ha sido cancelado";
+    }
+
+    public void errorMessage(String message) {
+        new SweetAlertDialog(requireContext(),
+                SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
+    }
+
+    public void messageWithConfirmation() {
+        new SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Concedenos el permiso?")
+                .setContentText("Debido a que vamos a descargar un archivo, requirimos el " +
+                        "acceso al almacenamiento para poder guardarlo ")
+                .setConfirmText("Sí, Conceder!")
+                .setConfirmClickListener(sDialog -> {
+            // Showing simple toast message to user
+            Toast.makeText(requireContext(), " Vale ", Toast.LENGTH_SHORT).show();
+            sDialog.dismissWithAnimation();
+        }).show();
     }
 }
