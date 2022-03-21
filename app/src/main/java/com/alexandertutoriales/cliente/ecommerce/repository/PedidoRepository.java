@@ -112,7 +112,7 @@ public class PedidoRepository {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("exportComplaint", t.getMessage());
+                Log.e("exportInvoice", t.getMessage());
                 t.printStackTrace();
             }
         });

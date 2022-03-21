@@ -96,8 +96,10 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                 return true;
             });
             btnExportInvoice.setOnClickListener(v -> {
-                String fileName = "invoice" + dto.getPedido().getId() + ".pdf";
-                communication.exportInvoice(dto.getPedido().getCliente().getId(), dto.getPedido().getId(), fileName);
+                int idCli = dto.getPedido().getCliente().getId();
+                int idOrden = dto.getPedido().getId();
+                String fileName = "invoice" + "00" + dto.getPedido().getId() + ".pdf";
+                communication.exportInvoice(idCli, idOrden, fileName);
             });
         }
 

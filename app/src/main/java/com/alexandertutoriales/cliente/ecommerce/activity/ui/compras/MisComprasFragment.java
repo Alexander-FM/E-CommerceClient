@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -42,6 +45,13 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class MisComprasFragment extends androidx.fragment.app.Fragment implements Communication, AnularPedidoComunication {
+    private ActivityResultLauncher<String> perReqLuncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+        if(result){
+            successMessage("Gracias por concedernos el permiso,oprime el boton nuevamente");
+        }else{
+            errorMessage("Permiso denegado,no podemos continuar");
+        }
+    });
     private PedidoViewModel viewModel;
     private RecyclerView rcvPedidos;
     private MisComprasAdapter adapter;
@@ -130,7 +140,13 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
                 }
             });
         } else {
-            messageWithConfirmation();
+            new SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Concedemos el permiso")
+                    .setContentText("Debido a que vamos a descargar un archivo,requerimos del acceso al almacenamiento interno para poder guardarlo")
+                    .setConfirmButton("Vale", sweetAlertDialog -> {
+                        sweetAlertDialog.dismissWithAnimation();
+                        perReqLuncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }).setCancelButton("Quizas mas tarde", SweetAlertDialog::dismissWithAnimation).show();
         }
     }
 
@@ -149,16 +165,8 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
                 SweetAlertDialog.ERROR_TYPE).setTitleText("Oops...").setContentText(message).show();
     }
 
-    public void messageWithConfirmation() {
-        new SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Concedenos el permiso?")
-                .setContentText("Debido a que vamos a descargar un archivo, requirimos el " +
-                        "acceso al almacenamiento para poder guardarlo ")
-                .setConfirmText("Sí, Conceder!")
-                .setConfirmClickListener(sDialog -> {
-            // Showing simple toast message to user
-            Toast.makeText(requireContext(), " Vale ", Toast.LENGTH_SHORT).show();
-            sDialog.dismissWithAnimation();
-        }).show();
+    public void successMessage(String message) {
+        new SweetAlertDialog(requireContext(),
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("¡Buen Trabajo!").setContentText(message).show();
     }
 }

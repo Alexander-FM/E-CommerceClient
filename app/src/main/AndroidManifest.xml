@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppMovil"
+        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.PlatillosCarritoActivity"></activity>
         <activity android:name=".activity.DetallePlatilloActivity" />

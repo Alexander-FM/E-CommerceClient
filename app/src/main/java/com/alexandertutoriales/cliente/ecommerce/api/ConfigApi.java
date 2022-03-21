@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfigApi {
     public static final String baseUrlE = "http://10.0.2.2:9090";
+    public static final String ipAlexander = "http://192.168.101.17:9090";//Ip de mi emulador
     private static Retrofit retrofit;
     private static String token = "";
 
