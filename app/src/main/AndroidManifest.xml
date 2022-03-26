@@ -11,15 +11,18 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_app"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppMovil"
-        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.PlatillosCarritoActivity"></activity>
+        <activity
+            android:name=".activity.VerInvoiceActivity"
+            android:exported="false" />
+        <activity android:name=".activity.PlatillosCarritoActivity" />
         <activity android:name=".activity.DetallePlatilloActivity" />
         <activity android:name=".activity.ListarPlatillosPorCategoriaActivity" />
         <activity android:name=".activity.ui.compras.DetalleMisComprasActivity" />

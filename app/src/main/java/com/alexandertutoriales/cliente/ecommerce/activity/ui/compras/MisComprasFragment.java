@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
+import com.alexandertutoriales.cliente.ecommerce.activity.VerInvoiceActivity;
 import com.alexandertutoriales.cliente.ecommerce.adapter.MisComprasAdapter;
 import com.alexandertutoriales.cliente.ecommerce.communication.AnularPedidoComunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
@@ -30,6 +31,7 @@ import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PedidoViewModel;
 import com.google.android.gms.common.internal.ResourceUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,9 +48,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MisComprasFragment extends androidx.fragment.app.Fragment implements Communication, AnularPedidoComunication {
     private ActivityResultLauncher<String> perReqLuncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
-        if(result){
+        if (result) {
             successMessage("Gracias por concedernos el permiso,oprime el boton nuevamente");
-        }else{
+        } else {
             errorMessage("Permiso denegado,no podemos continuar");
         }
     });
@@ -129,6 +131,18 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
                             fileOutputStream.close();
                             Toast.makeText(requireContext(), "Archivo guardado en: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
                             //Previsualizar el PDF
+                            new MaterialAlertDialogBuilder(requireContext()).setTitle("Exportar Denuncia")
+                                    .setMessage("Denuncia guardada correctamente en la siguiente ubicación: "
+                                            + file.getAbsolutePath() + " ¿Deseas visualizarlo ahora?")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Sí", (dialog, which) -> {
+                                        dialog.dismiss();
+                                        Intent i = new Intent(requireContext(), VerInvoiceActivity.class);
+                                        i.putExtra("pdf", bytes);
+                                        startActivity(i);
+                                    }).setNegativeButton("Quizás más tarde", (dialog, which) -> {
+                                dialog.dismiss();
+                            }).show();
                         }
 
                     } catch (Exception e) {
