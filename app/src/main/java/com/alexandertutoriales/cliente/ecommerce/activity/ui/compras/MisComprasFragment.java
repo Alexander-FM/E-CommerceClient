@@ -131,8 +131,8 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
                             fileOutputStream.close();
                             Toast.makeText(requireContext(), "Archivo guardado en: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
                             //Previsualizar el PDF
-                            new MaterialAlertDialogBuilder(requireContext()).setTitle("Exportar Denuncia")
-                                    .setMessage("Denuncia guardada correctamente en la siguiente ubicación: "
+                            new MaterialAlertDialogBuilder(requireContext()).setTitle("Exportar Factura")
+                                    .setMessage("Factura guardada correctamente en la siguiente ubicación: "
                                             + file.getAbsolutePath() + " ¿Deseas visualizarlo ahora?")
                                     .setCancelable(false)
                                     .setPositiveButton("Sí", (dialog, which) -> {

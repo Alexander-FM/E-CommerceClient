@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             app:navigationIcon="@drawable/ic_volver_atras"
             app:navigationIconTint="@color/white"
-            app:title="Ver denuncia"
+            app:title="Ver Factura"
             app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
