@@ -22,9 +22,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/purple_500"
+                android:background="@color/pink_200"
                 app:navigationIcon="@drawable/ic_volver_atras"
-                app:title="Platillos por Categoría"
+                app:title="Productos por Categoría"
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
     </LinearLayout>
@@ -45,7 +45,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/san_francisco"
-                android:text="Listado de Platillos"
+                android:text="Listado de Productos"
                 android:textColor="#fff"
                 android:textSize="24sp" />
 

@@ -18,7 +18,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
             android:src="@drawable/food_img3" />
 
         <RelativeLayout
@@ -35,8 +34,10 @@
                 android:fontFamily="@font/san_francisco"
                 android:text="Seco De Cabrito"
                 android:textColor="#000"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <ImageView
                 android:id="@+id/iv1"

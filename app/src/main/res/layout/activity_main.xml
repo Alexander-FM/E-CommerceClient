@@ -15,14 +15,14 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="273dp"
-            android:background="@drawable/blue_bg">
+            android:background="@drawable/pink_bg">
 
             <ImageView
                 android:layout_width="300dp"
-                android:layout_height="120dp"
+                android:layout_height="160dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="55dp"
-                android:src="@drawable/logo_negocio" />
+                android:src="@drawable/logo_bisuteria" />
         </FrameLayout>
     </LinearLayout>
     <LinearLayout
@@ -30,7 +30,8 @@
         android:id="@+id/linearParte2"
         android:layout_below="@+id/linearParte1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -101,7 +102,8 @@
             android:fontFamily="@font/poppins_medium"
             android:text="@string/label_start_session"
             android:drawableTint="#fff"
-            android:drawableEnd="@drawable/ic_login"/>
+            android:drawableEnd="@drawable/ic_login"
+            android:backgroundTint="@color/pink_700"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -117,7 +119,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/san_francisco"
             android:textSize="18sp"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/pink_700"
             android:textStyle="bold"
             android:gravity="center|center_horizontal"
             android:text="@string/label_nuevoUser"/>

@@ -17,7 +17,7 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/menu_configuracion" />
     </group>
-    <item android:title="@string/nav_administracion">
+    <item android:title="@string/nav_administracion" android:id="@+id/titleAdmin">
         <menu>
             <group android:checkableBehavior="single">
                 <item

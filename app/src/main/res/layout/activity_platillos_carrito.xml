@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/purple_500"
+                android:background="@color/pink_200"
                 app:navigationIcon="@drawable/ic_volver_atras"
                 app:title="Bolsa de Compras"
                 app:titleTextColor="@color/white" />
@@ -50,7 +50,7 @@
                     android:fontFamily="@font/san_francisco"
                     android:gravity="center"
                     android:text="Resumen de tu orden"
-                    android:textColor="#2e2e2e"
+                    android:textColor="@color/branch"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                     android:layout_width="250dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="#2e2e2e"
+                    android:backgroundTint="@color/branch"
                     android:text="Finalizar Compra"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"

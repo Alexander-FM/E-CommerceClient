@@ -22,9 +22,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/purple_500"
+                android:background="@color/pink_200"
                 app:navigationIcon="@drawable/ic_volver_atras"
-                app:title="Detalle Platillo"
+                app:title="Detalle Producto"
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
     </LinearLayout>
@@ -45,7 +45,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:elevation="8dp"
                     app:cardCornerRadius="15dp">
 
@@ -70,8 +70,9 @@
                                 android:id="@+id/tvNamePlatilloDetalle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
                                 android:fontFamily="@font/san_francisco"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"
                                 android:text="Ensalada Norteña"
                                 android:textColor="#000"
                                 android:textSize="20sp"
@@ -116,6 +117,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
+                                android:backgroundTint="@color/pink_700"
                                 android:drawableEnd="@drawable/ic_add_shop"
                                 android:text="@string/add_cart" />
 
@@ -123,7 +125,7 @@
                                 android:id="@+id/btnComprar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:backgroundTint="#DA2E2E"
+                                android:backgroundTint="@color/branch"
                                 android:drawableEnd="@drawable/ic_money"
                                 android:text="@string/buy_item" />
                         </LinearLayout>

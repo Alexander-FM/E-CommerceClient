@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     private SliderView svCarrusel;
     private SliderAdapter sliderAdapter;
     private List<Platillo> platillos = new ArrayList<>();
+    private LinearLayout llCategorias;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         categoriaViewModel = vmp.get(CategoriaViewModel.class);
         svCarrusel = v.findViewById(R.id.svCarrusel);
         gvCategorias = v.findViewById(R.id.gvCategorias);
+        llCategorias = v.findViewById(R.id.llCategorias);
     }
 
     private void initAdapter() {
@@ -102,6 +105,12 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
                 categoriaAdapter.clear();
                 categoriaAdapter.addAll(response.getBody());
                 categoriaAdapter.notifyDataSetChanged();
+                int numColumnsCategorias = categoriaAdapter.getCount();
+                gvCategorias.setNumColumns(numColumnsCategorias);
+                int dynamicWidth  = 270 * numColumnsCategorias;
+                ViewGroup.LayoutParams params = llCategorias.getLayoutParams();
+                params.width = dynamicWidth;
+                llCategorias.setLayoutParams(params);
             } else {
                 System.out.println("Error al obtener las categorias activas");
             }
@@ -109,10 +118,8 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         });
 
         List<SliderItem> lista = new ArrayList<>();
-        lista.add(new SliderItem(R.drawable.platillos_tipicos, "Los Mejores Platillos"));
-        lista.add(new SliderItem(R.drawable.postres_ricos, "Los Mejores Postres Peruanos"));
-        lista.add(new SliderItem(R.drawable.postres_muysabrosos, ""));
-        lista.add(new SliderItem(R.drawable.peru_postres, ""));
+        lista.add(new SliderItem(R.drawable.relojes_ellos, "Relojes para ellos"));
+        lista.add(new SliderItem(R.drawable.relojes_ellas, "Relojes para ellas"));
         sliderAdapter.updateItem(lista);
 
     }

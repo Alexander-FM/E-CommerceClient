@@ -47,6 +47,7 @@ public class InicioActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
     private BadgeDrawable badgeDrawable;
+    private String usuarioJson = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,12 @@ public class InicioActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
 
+    private void hideItemsNavigationView(NavigationView navigationView, Usuario usuario){
+        Menu nav_menu = navigationView.getMenu();
+        nav_menu.findItem(R.id.titleAdmin).setVisible(false);
+        System.out.println(usuario.getId());
     }
 
     @Override
@@ -84,7 +90,7 @@ public class InicioActivity extends AppCompatActivity {
                 .registerTypeAdapter(Date.class, new DateSerializer())
                 .registerTypeAdapter(Time.class, new TimeSerializer())
                 .create();
-        String usuarioJson = sp.getString("UsuarioJson", null);
+        usuarioJson = sp.getString("UsuarioJson", null);
         if (usuarioJson != null) {
             final Usuario u = g.fromJson(usuarioJson, Usuario.class);
             final View vistaheader = binding.navView.getHeaderView(0);
@@ -100,6 +106,7 @@ public class InicioActivity extends AppCompatActivity {
                     .error(R.drawable.image_not_found)
                     //.networkPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).error(R.drawable.foto_rota)
                     .into(imgFoto);
+            hideItemsNavigationView(binding.navView, u);
         }
         BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
         badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
@@ -108,7 +115,6 @@ public class InicioActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.inicio, menu);
         return true;
     }
@@ -152,6 +158,4 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
-
-
 }

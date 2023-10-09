@@ -16,7 +16,6 @@
             android:id="@+id/imgPlatillo"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/food_two" />
 
@@ -34,8 +33,10 @@
                 android:fontFamily="@font/san_francisco"
                 android:text="Seco De Cabrito"
                 android:textColor="#000"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <ImageView
                 android:id="@+id/iv1"
@@ -51,7 +52,7 @@
                 android:layout_below="@id/iv1"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/san_francisco"
-                android:text="Platillo Recomendado"
+                android:text="Producto Recomendado"
                 android:textColor="#2e2e2e"
                 android:textSize="14dp" />
 
@@ -62,9 +63,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#FF8500"
+                android:backgroundTint="@color/berry"
                 android:fontFamily="@font/san_francisco"
-                android:text="Ordenar"
+                android:text="Comprar"
                 android:textColor="#fff"
                 android:textSize="11dp"
                 android:textStyle="bold" />

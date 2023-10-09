@@ -10,7 +10,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="insideInset"
+        android:scrollbarThumbVertical="@drawable/scrollview_thumb"
+        android:scrollbarTrackVertical="@drawable/vertical_scrollview">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,20 +56,48 @@
                 android:textColor="#fff"
                 android:textSize="24dp" />
 
-            <GridView
-                android:id="@+id/gvCategorias"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:numColumns="3" />
+                android:scrollbarStyle="insideInset"
+                android:scrollbarSize="4dp"
+                android:scrollbarThumbHorizontal="@drawable/scrollview_thumb"
+                android:scrollbarTrackHorizontal="@drawable/horizontal_scrollview">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/llCategorias"
+                        android:layout_width="515dp"
+                        android:layout_height="wrap_content">
+                        <!-- Nota: Las propiedades numColumns del GridView, y el layout_width
+                        del LinearLayout se controla en el InicioFragment -->
+                        <GridView
+                            android:id="@+id/gvCategorias"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:horizontalSpacing="1dp"
+                            android:columnWidth="100dp"
+                            android:numColumns="2"
+                            android:scrollbarAlwaysDrawHorizontalTrack="true"
+                            android:scrollbarAlwaysDrawVerticalTrack="true"
+                            android:scrollbars="horizontal"
+                            android:stretchMode="none"
+                            android:verticalSpacing="1dp"/>
+                    </LinearLayout>
+                </FrameLayout>
+            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/san_francisco"
-                android:text="Platillos Recomendados"
+                android:text="Productos Recomendados"
                 android:textColor="#fff"
                 android:textSize="24dp" />
 
@@ -78,8 +109,11 @@
                     android:id="@+id/rcvPlatillosRecomendados"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp" />
 
             </RelativeLayout>
         </LinearLayout>

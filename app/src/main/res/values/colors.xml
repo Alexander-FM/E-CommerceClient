@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#CC3C3C</color>
     <color name="azulBajo">#2A3742</color>
+    <color name="pink_200">#DCABAB</color>
+    <color name="pink_700">#C97E7E</color>
+    <color name="berry">#EC96A4</color>
+    <color name="branch">#5D535E</color>
+    <color name="lavender_gray">#9A9EAB</color>
+    <color name="yellow">#DFE166</color>
+
 </resources>
