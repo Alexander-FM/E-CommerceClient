@@ -10,21 +10,14 @@ public class Carrito {
 
     //Método para agregar productos al carrito(bolsa)
     public static String agregarPlatillos(DetallePedido detallePedido) {
-        int index = 0;
-        boolean b = false;
         for (DetallePedido dp : detallePedidos) {
             if (dp.getPlatillo().getId() == detallePedido.getPlatillo().getId()) {
-                detallePedidos.set(index, detallePedido);
-                b = true;
-                return "El platillo ha sido agregado al carrito, se actualizará la cantidad";
+                dp.setCantidad(dp.getCantidad() + detallePedido.getCantidad());
+                return "El producto ha sido agregado al carrito, se actualizará la cantidad";
             }
-            index++;
         }
-        if (!b) {
-            detallePedidos.add(detallePedido);
-            return "El platillo ha sido agregado al carrito con éxito";
-        }
-        return ". . . . ";
+        detallePedidos.add(detallePedido);
+        return "El producto ha sido agregado al carrito con éxito";
     }
 
     //Método para eliminar un platillo del carrito(bolsa)
@@ -38,7 +31,7 @@ public class Carrito {
         }
         if (dpE != null) {
             detallePedidos.remove(dpE);
-            System.out.println("Se elimino el platillo del detalle de pedido");
+            System.out.println("Se elimino el producto del detalle de pedido");
         }
     }
 

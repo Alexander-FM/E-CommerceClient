@@ -75,7 +75,7 @@ public class DetallePlatilloActivity extends AppCompatActivity {
                     .error(R.drawable.image_not_found)
                     .into(this.imgPlatilloDetalle);
         } else {
-            System.out.println("Error al obtener los detalles del platillo");
+            System.out.println("Error al obtener los detalles dEl producto");
         }
 
         //Agregar platillos al carrito
@@ -91,7 +91,7 @@ public class DetallePlatilloActivity extends AppCompatActivity {
 
     public void successMessage(String message) {
         new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                 .setContentText(message).show();
     }
 }

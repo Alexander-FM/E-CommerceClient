@@ -110,7 +110,7 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                     .showCancelButton(true)
                     .setConfirmClickListener(sDialog -> {
                         sDialog.dismissWithAnimation();
-                        new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo")
+                        new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema")
                                 .setContentText(anularPedidoComunication.anularPedido(id))
                                 .show();
                     }).setCancelClickListener(sDialog -> {

@@ -181,6 +181,6 @@ public class MisComprasFragment extends androidx.fragment.app.Fragment implement
 
     public void successMessage(String message) {
         new SweetAlertDialog(requireContext(),
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("¡Buen Trabajo!").setContentText(message).show();
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("¡Aviso del sistema!").setContentText(message).show();
     }
 }

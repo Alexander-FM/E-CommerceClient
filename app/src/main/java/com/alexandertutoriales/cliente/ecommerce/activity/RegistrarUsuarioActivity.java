@@ -506,7 +506,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
 
     public void successMessage(String message) {
         new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                 .setContentText(message).show();
     }
 

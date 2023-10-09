@@ -108,7 +108,7 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
         }
         public void successMessage(String message) {
             new SweetAlertDialog(itemView.getContext(),
-                    SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                    SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                     .setContentText(message).show();
         }
     }

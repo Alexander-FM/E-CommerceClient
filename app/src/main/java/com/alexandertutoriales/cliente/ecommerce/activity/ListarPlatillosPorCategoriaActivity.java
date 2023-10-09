@@ -79,7 +79,7 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity imple
     }
     public void successMessage(String message) {
         new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                 .setContentText(message).show();
     }
 }

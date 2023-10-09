@@ -143,8 +143,8 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             }).setConfirmClickListener(sweetAlertDialog -> {
                 c.eliminarDetalle(idPlatillo);
                 sweetAlertDialog.dismissWithAnimation();
-                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo !")
-                        .setContentText("Excelente, el platillo acaba de ser eliminado de tu bolsa de compras")
+                new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema !")
+                        .setContentText("Excelente, el producto acaba de ser eliminado de tu bolsa de compras")
                         .show();
             }).show();
         }

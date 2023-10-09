@@ -147,7 +147,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
 
     public void successMessage(String message) {
         new SweetAlertDialog(this.getContext(),
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                 .setContentText(message).show();
     }
 
