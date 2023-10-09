@@ -98,6 +98,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
                 if (dp.getCantidad() != 10) {//Si el valor todavía no llega a 10, que siga aumentando
                     dp.addOne();
                     PlatilloCarritoAdapter.this.notifyDataSetChanged();
+                    c.mostrarTotalPagar(detalles);
                 }
             });
             /*Disminuir Cantidad*/
@@ -105,6 +106,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
                 if (dp.getCantidad() != 1) {
                     dp.removeOne();
                     PlatilloCarritoAdapter.this.notifyDataSetChanged();
+                    c.mostrarTotalPagar(detalles);
                 }
             });
 
@@ -138,7 +140,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
                     .showCancelButton(true).setCancelClickListener(sDialog -> {
                 sDialog.dismissWithAnimation();
                 new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("Operación cancelada")
-                        .setContentText("No eliminaste ningún platillo de tu bolsa de compras")
+                        .setContentText("No eliminaste ningún producto de tu bolsa de compras")
                         .show();
             }).setConfirmClickListener(sweetAlertDialog -> {
                 c.eliminarDetalle(idPlatillo);

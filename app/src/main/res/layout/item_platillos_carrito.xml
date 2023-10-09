@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:backgroundTint="@color/lavender_gray"
+        android:backgroundTint="@color/pink_200"
         android:elevation="5dp"
         app:cardCornerRadius="10dp">
 
@@ -51,10 +51,12 @@
 
                     <TextView
                         android:id="@+id/tvNombrePlatilloDC"
-                        android:layout_width="wrap_content"
+                        android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
+                        android:ellipsize="end"
                         android:fontFamily="@font/san_francisco"
+                        android:maxLines="2"
                         android:text="Seco de Cabrito"
                         android:textColor="#302E2E"
                         android:textSize="18sp"
@@ -85,36 +87,54 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/btnDecrease"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvbtnDecrease"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toStartOf="@id/edtCantidad"
-                        android:background="#F4F2F2"
-                        android:src="@drawable/ic_remove_item" />
+                        android:elevation="5dp"
+                        app:cardCornerRadius="6dp">
+
+                        <ImageView
+                            android:id="@+id/btnDecrease"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@id/edtCantidad"
+                            android:background="#F4F2F2"
+                            android:src="@drawable/ic_remove_item" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <EditText
                         android:id="@+id/edtCantidad"
                         android:layout_width="50dp"
                         android:layout_height="35dp"
-                        android:layout_toStartOf="@id/btnAdd"
-                        android:fontFamily="@font/san_francisco"
-                        android:inputType="none"
-                        android:editable="false"
-                        android:focusable="false"
+                        android:layout_toStartOf="@id/cvbtnAdd"
                         android:clickable="false"
                         android:cursorVisible="false"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:fontFamily="@font/san_francisco"
+                        android:inputType="none"
                         android:text="5"
                         android:textAlignment="center"
                         android:textSize="15sp" />
 
-                    <ImageView
-                        android:id="@+id/btnAdd"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvbtnAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:background="#F4F2F2"
-                        android:src="@drawable/ic_add_item" />
+                        android:elevation="5dp"
+                        app:cardCornerRadius="6dp">
+
+                        <ImageView
+                            android:id="@+id/btnAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#F4F2F2"
+                            android:src="@drawable/ic_add_item" />
+                    </com.google.android.material.card.MaterialCardView>
+
 
                 </RelativeLayout>
             </LinearLayout>

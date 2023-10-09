@@ -36,12 +36,14 @@ import java.sql.Time;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PlatillosCarritoActivity extends AppCompatActivity implements CarritoComunication {
     private PedidoViewModel pedidoViewModel;
     private PlatilloCarritoAdapter adapter;
     private Button btnFinalizarCompra;
     private RecyclerView rcvBolsaCompras;
+    private TextView tvMontoTotal;
     final Gson g = new GsonBuilder()
             .registerTypeAdapter(Date.class, new DateSerializer())
             .registerTypeAdapter(Time.class, new TimeSerializer())
@@ -65,6 +67,8 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         });
         rcvBolsaCompras = findViewById(R.id.rcvBolsaCompras);
         btnFinalizarCompra = findViewById(R.id.btnFinalizarCompra);
+        tvMontoTotal = findViewById(R.id.tvMontoTotal);
+        mostrarTotalPagar(Carrito.getDetallePedidos());
         btnFinalizarCompra.setOnClickListener(v -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String pref = preferences.getString("UsuarioJson", "");
@@ -107,7 +111,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         dto.setDetallePedido(detallePedidos);
         this.pedidoViewModel.guardarPedido(dto).observe(this, response -> {
             if (response.getRpta() == 1) {
-                toastCorrecto("Pedido registrado con éxito");
+                toastCorrecto("Compra registrada con éxito");
                 Carrito.limpiar();
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
@@ -129,7 +133,14 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
     @Override
     public void eliminarDetalle(int idP) {
         Carrito.eliminar(idP);
+        mostrarTotalPagar(Carrito.getDetallePedidos());
         this.adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void mostrarTotalPagar(List<DetallePedido> detallePedido) {
+        Double montoPagar = detallePedido.stream().mapToDouble(dp -> dp.getPlatillo().getPrecio() * dp.getCantidad()).sum();
+        tvMontoTotal.setText(String.format(Locale.ENGLISH, "S/%.2f", montoPagar));
     }
 
     public void toastIncorrecto(String texto) {
