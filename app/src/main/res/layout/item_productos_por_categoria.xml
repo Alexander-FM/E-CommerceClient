@@ -65,7 +65,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#FF8500"
+                android:backgroundTint="@color/pink_700"
                 android:fontFamily="@font/san_francisco"
                 android:text="Ordenar"
                 android:textColor="#fff"

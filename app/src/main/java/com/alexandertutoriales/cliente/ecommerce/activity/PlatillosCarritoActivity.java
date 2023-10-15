@@ -2,10 +2,12 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
+import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.MisComprasFragment;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatilloCarritoAdapter;
 import com.alexandertutoriales.cliente.ecommerce.communication.CarritoComunication;
 import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
@@ -113,9 +116,11 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
             if (response.getRpta() == 1) {
                 toastCorrecto("Compra registrada con éxito");
                 Carrito.limpiar();
+                Intent i = new Intent();
+                i.putExtra("redirectToMisCompras", true);
+                setResult(Activity.RESULT_OK, i);
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
-
             } else {
                 toastIncorrecto("Demonios!, No se pudo registrar el pedido");
             }

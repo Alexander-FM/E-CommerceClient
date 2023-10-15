@@ -107,7 +107,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
                 categoriaAdapter.notifyDataSetChanged();
                 int numColumnsCategorias = categoriaAdapter.getCount();
                 gvCategorias.setNumColumns(numColumnsCategorias);
-                int dynamicWidth  = 270 * numColumnsCategorias;
+                int dynamicWidth  = 285 * numColumnsCategorias;
                 ViewGroup.LayoutParams params = llCategorias.getLayoutParams();
                 params.width = dynamicWidth;
                 llCategorias.setLayoutParams(params);

@@ -6,13 +6,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.MenuItem;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.alexandertutoriales.cliente.ecommerce.R;
+import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.MisComprasFragment;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.databinding.ActivityInicioBinding;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
@@ -21,21 +31,12 @@ import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -46,8 +47,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class InicioActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
-    private BadgeDrawable badgeDrawable;
     private String usuarioJson = null;
+    private NavController navController;
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getData().getBooleanExtra("redirectToMisCompras", false)) {
+                    navController.navigate(R.id.nav_mis_compras);
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +73,12 @@ public class InicioActivity extends AppCompatActivity {
                 R.id.nav_inicio, R.id.nav_mis_compras, R.id.nav_configuracion)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_inicio);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    private void hideItemsNavigationView(NavigationView navigationView, Usuario usuario){
+    private void hideItemsNavigationView(NavigationView navigationView, Usuario usuario) {
         Menu nav_menu = navigationView.getMenu();
         nav_menu.findItem(R.id.titleAdmin).setVisible(false);
         System.out.println(usuario.getId());
@@ -133,8 +140,9 @@ public class InicioActivity extends AppCompatActivity {
     }
 
     private void mostrarBolsa() {
-        Intent i = new Intent(this, PlatillosCarritoActivity.class);
-        startActivity(i);
+        /*Intent i = new Intent(this, PlatillosCarritoActivity.class);
+        startActivity(i);*/
+        launcher.launch(new Intent(this, PlatillosCarritoActivity.class));
         overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
 
