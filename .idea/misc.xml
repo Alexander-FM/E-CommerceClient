@@ -20,6 +20,8 @@
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/drawable/nav_header_inicio_pink.xml" value="0.1225" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/drawable/scrollview_thumb.xml" value="0.18" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/drawable/side_nav_bar.xml" value="0.1225" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/drawable/text_corner.xml" value="0.1435" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/drawable/text_corner_warning.xml" value="0.1435" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/drawable/vertical_scrollview.xml" value="0.1435" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_detalle_mis_compras.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_detalle_platillo.xml" value="0.2526041666666667" />
@@ -30,7 +32,9 @@
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_registrar_usuario.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_ver_invoice.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/content_inicio.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/custom_toast.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/custom_toast_check.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/custom_toast_warning.xml" value="0.264" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/dropdown_item.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/fragment_configuracion.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/fragment_inicio.xml" value="0.2526041666666667" />

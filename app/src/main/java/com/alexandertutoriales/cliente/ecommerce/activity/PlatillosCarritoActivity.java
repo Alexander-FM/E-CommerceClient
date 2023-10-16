@@ -37,6 +37,7 @@ import com.google.gson.GsonBuilder;
 
 import java.sql.Time;
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,8 +66,11 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         Toolbar toolbar = this.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
         toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
-            this.finish();
-            this.overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
+            Intent i = new Intent();
+            i.putExtra("redirectToMisCompras", false);
+            setResult(Activity.RESULT_OK, i);
+            finish();
+            overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
         });
         rcvBolsaCompras = findViewById(R.id.rcvBolsaCompras);
         btnFinalizarCompra = findViewById(R.id.btnFinalizarCompra);
@@ -109,7 +113,8 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         java.util.Date date = new java.util.Date();
         dto.getPedido().setFechaCompra(new Date(date.getTime()));
         dto.getPedido().setAnularPedido(false);
-        dto.getPedido().setMonto(getTotalV(detallePedidos));
+        dto.getPedido().setMonto(detallePedidos.stream().mapToDouble(dp ->
+                dp.getPlatillo().getPrecio() * dp.getCantidad()).sum());
         dto.getCliente().setId(idC);
         dto.setDetallePedido(detallePedidos);
         this.pedidoViewModel.guardarPedido(dto).observe(this, response -> {
@@ -127,14 +132,6 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         });
     }
 
-    private double getTotalV(List<DetallePedido> detalles) {
-        float total = 0;
-        for (DetallePedido dp : detalles) {
-            total += dp.getTotal();
-        }
-        return total;
-    }
-
     @Override
     public void eliminarDetalle(int idP) {
         Carrito.eliminar(idP);
@@ -145,7 +142,10 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
     @Override
     public void mostrarTotalPagar(List<DetallePedido> detallePedido) {
         Double montoPagar = detallePedido.stream().mapToDouble(dp -> dp.getPlatillo().getPrecio() * dp.getCantidad()).sum();
-        tvMontoTotal.setText(String.format(Locale.ENGLISH, "S/%.2f", montoPagar));
+        Locale locale = new Locale("es", "PE"); // Especifica el idioma y país según tu preferencia
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        String formattedTotal = currencyFormatter.format(montoPagar);
+        tvMontoTotal.setText(formattedTotal);
     }
 
     public void toastIncorrecto(String texto) {

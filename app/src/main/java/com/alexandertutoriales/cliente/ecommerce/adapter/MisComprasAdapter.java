@@ -91,16 +91,29 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
                 i.putExtra("detailsPurchases", g.toJson(dto.getDetallePedidos()));
                 communication.showDetails(i);//Esto es solo para dar una animación.
             });
+
             itemView.setOnLongClickListener(v -> {
-                anularPedido(dto.getPedido().getId());
-                return true;
+                if (!dto.getPedido().isAnularPedido()) {
+                    anularPedido(dto.getPedido().getId());
+                    return true;
+                } else {
+                    new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.ERROR_TYPE).setTitleText("¡Aviso del sistema!")
+                            .setContentText("El pedido ya ha sido cancelado, no puede deshacer los cambios")
+                            .show();
+                }
+                return false;
             });
-            btnExportInvoice.setOnClickListener(v -> {
-                int idCli = dto.getPedido().getCliente().getId();
-                int idOrden = dto.getPedido().getId();
-                String fileName = "invoice" + "00" + dto.getPedido().getId() + ".pdf";
-                communication.exportInvoice(idCli, idOrden, fileName);
-            });
+
+            if (dto.getPedido().isAnularPedido()) {
+                btnExportInvoice.setVisibility(View.GONE);
+            } else {
+                btnExportInvoice.setOnClickListener(v -> {
+                    int idCli = dto.getPedido().getCliente().getId();
+                    int idOrden = dto.getPedido().getId();
+                    String fileName = "invoice" + "00" + dto.getPedido().getId() + ".pdf";
+                    communication.exportInvoice(idCli, idOrden, fileName);
+                });
+            }
         }
 
         private void anularPedido(int id) {

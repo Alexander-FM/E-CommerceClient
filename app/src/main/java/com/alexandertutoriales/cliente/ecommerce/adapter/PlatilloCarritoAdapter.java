@@ -82,8 +82,8 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         public void setItem(final DetallePedido dp) {
             this.tvNombrePlatilloDC.setText(dp.getPlatillo().getNombre());
             this.tvPrecioPDC.setText(String.format(Locale.ENGLISH, "S/%.2f", dp.getPrecio()));
-            int cant=dp.getCantidad();
-            this.edtCantidad.setText(Integer.toString(cant));
+            int cant = dp.getCantidad();
+            this.edtCantidad.setText(Integer.toString(dp.getCantidad()));
             String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + dp.getPlatillo().getFoto().getFileName();
             Picasso picasso = new Picasso.Builder(itemView.getContext())
                     .downloader(new OkHttp3Downloader(ConfigApi.getClient()))
@@ -95,10 +95,16 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             //------------------Actualizar Cantidad del Carrito-------------------------------//
             /*Aumentar Cantidad*/
             btnAdd.setOnClickListener(v -> {
-                if (dp.getCantidad() != 10) {//Si el valor todavía no llega a 10, que siga aumentando
-                    dp.addOne();
-                    PlatilloCarritoAdapter.this.notifyDataSetChanged();
-                    c.mostrarTotalPagar(detalles);
+                if (dp.getCantidad() != dp.getPlatillo().getStock()) {
+                    if (dp.getCantidad() != 10) {
+                        dp.addOne();
+                        PlatilloCarritoAdapter.this.notifyDataSetChanged();
+                        c.mostrarTotalPagar(detalles);
+                    } else {
+                        toastWarning("No puedes llevar más de 10 productos");
+                    }
+                } else {
+                    toastWarning("¡Ups! No hay stock suficiente");
                 }
             });
             /*Disminuir Cantidad*/
@@ -107,6 +113,8 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
                     dp.removeOne();
                     PlatilloCarritoAdapter.this.notifyDataSetChanged();
                     c.mostrarTotalPagar(detalles);
+                } else {
+                    toastWarning("Mínimo puede llevar 1 producto");
                 }
             });
 
@@ -131,6 +139,20 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             toast.setDuration(Toast.LENGTH_LONG);
             toast.setView(layouView);
             toast.show();
+        }
+
+        public void toastWarning(String texto) {
+            LayoutInflater layoutInflater = LayoutInflater.from(itemView.getContext());
+            View layouView = layoutInflater.inflate(R.layout.custom_toast_warning, (ViewGroup) itemView.findViewById(R.id.layout_base_1));
+            TextView textView = layouView.findViewById(R.id.textoinfo);
+            textView.setText(texto);
+
+            Toast toast = new Toast(itemView.getContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layouView);
+            toast.show();
+
         }
 
         private void showMsg(int idPlatillo) {
