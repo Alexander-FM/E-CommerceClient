@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.CategoriaAdapter;
@@ -39,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -54,6 +57,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     private SliderAdapter sliderAdapter;
     private List<Platillo> platillos = new ArrayList<>();
     private LinearLayout llCategorias;
+    private SwipeRefreshLayout swipeFragmentInicio;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +81,11 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         svCarrusel = v.findViewById(R.id.svCarrusel);
         gvCategorias = v.findViewById(R.id.gvCategorias);
         llCategorias = v.findViewById(R.id.llCategorias);
+        TypedValue tv = new TypedValue();
+        swipeFragmentInicio = v.findViewById(R.id.swipeFragmentInicio);
+        requireContext().getTheme().resolveAttribute(R.color.pink_700, tv, false);
+        swipeFragmentInicio.setColorSchemeColors(tv.data);
+        swipeFragmentInicio.setOnRefreshListener(() -> loadData(v));
     }
 
     private void initAdapter() {
@@ -97,6 +106,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     }
 
     private void loadData(View view) {
+        swipeFragmentInicio.setRefreshing(true);
         platilloViewModel.listarPlatillosRecomendados().observe(getViewLifecycleOwner(), response -> {
             adapter.updateItems(response.getBody());
         });
@@ -114,7 +124,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
             } else {
                 System.out.println("Error al obtener las categorias activas");
             }
-
+            swipeFragmentInicio.setRefreshing(false);
         });
 
         List<SliderItem> lista = new ArrayList<>();
