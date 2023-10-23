@@ -1,18 +1,19 @@
 package com.alexandertutoriales.cliente.ecommerce.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
-import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.google.gson.Gson;
@@ -35,6 +36,7 @@ public class DetallePlatilloActivity extends AppCompatActivity {
             .registerTypeAdapter(Time.class, new TimeSerializer())
             .create();
     private Platillo platillo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,6 @@ public class DetallePlatilloActivity extends AppCompatActivity {
             System.out.println("Error al obtener los detalles dEl producto");
         }
 
-        //Agregar platillos al carrito
         this.btnAgregarCarrito.setOnClickListener(v -> {
             DetallePedido detallePedido = new DetallePedido();
             detallePedido.setPlatillo(platillo);
@@ -87,11 +88,30 @@ public class DetallePlatilloActivity extends AppCompatActivity {
             successMessage(Carrito.agregarPlatillos(detallePedido));
         });
 
+        this.btnComprar.setOnClickListener(v -> {
+            DetallePedido detallePedido = new DetallePedido();
+            detallePedido.setPlatillo(platillo);
+            detallePedido.setCantidad(1);
+            detallePedido.setPrecio(platillo.getPrecio());
+            successMessageWithConfirmation(Carrito.agregarPlatillos(detallePedido));
+
+        });
+
     }
 
     public void successMessage(String message) {
         new SweetAlertDialog(this,
-                SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
+                SweetAlertDialog.SUCCESS_TYPE).setTitleText(R.string.aviso_sistema)
                 .setContentText(message).show();
+    }
+
+    public void successMessageWithConfirmation(String message) {
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(R.string.aviso_sistema)
+                .setContentText(message).setConfirmText("¡Vamos!")
+                .setConfirmClickListener(sweetAlertDialog -> {
+                    sweetAlertDialog.dismissWithAnimation();
+                    this.startActivity(new Intent(this, PlatillosCarritoActivity.class));
+                }).show();
     }
 }
