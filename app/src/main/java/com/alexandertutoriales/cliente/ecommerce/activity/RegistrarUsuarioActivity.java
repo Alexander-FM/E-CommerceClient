@@ -9,14 +9,18 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,12 +29,18 @@ import android.widget.Toast;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Dispositivo;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DocumentoAlmacenado;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.ClienteViewModel;
+import com.alexandertutoriales.cliente.ecommerce.viewmodel.DispositivoViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.DocumentoAlmacenadoViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.UsuarioViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,6 +57,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
     private File f;
     private ClienteViewModel clienteViewModel;
     private UsuarioViewModel usuarioViewModel;
+    private DispositivoViewModel dispositivoViewModel;
     private DocumentoAlmacenadoViewModel documentoAlmacenadoViewModel;
     private Button btnSubirImagen, btnGuardarDatos;
     private CircleImageView imageUser;
@@ -57,6 +68,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             txtInputTipoDoc, txtInputNumeroDocU, txtInputDepartamento, txtInputProvincia,
             txtInputDistrito, txtInputTelefonoU, txtInputDireccionU, txtInputEmailUser, txtInputPasswordUser;
     private final static int LOCATION_REQUEST_CODE = 23;
+    Dispositivo dispositivoSaved = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +88,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     LOCATION_REQUEST_CODE);
         }
+        this.registerDevice();
     }
 
     @Override
@@ -334,6 +347,9 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                                 u.setEmail(edtEmailUser.getText().toString());
                                 u.setClave(edtPasswordUser.getText().toString());
                                 u.setVigencia(true);
+                                if (dispositivoSaved != null) {
+                                    u.setDispositivo(dispositivoSaved);
+                                }
                                 u.setCliente(new Cliente(idC));//Aquí hay un constructor en la entidad Cliente que como parámetro recibe un id.
                                 this.usuarioViewModel.save(u).observe(this, uResponse -> {
                                     Toast.makeText(this, uResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -378,9 +394,9 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         dropDepartamento = dropdownDepartamento.getText().toString();
         dropProvincia = dropdownProvincia.getText().toString();
         dropDistrito = dropdownDistrito.getText().toString();
-        if(this.f==null){
+        if (this.f == null) {
             errorMessage("debe selecionar una foto de perfil");
-            retorno=false;
+            retorno = false;
         }
         if (nombres.isEmpty()) {
             txtInputNameUser.setError("Ingresar nombres");
@@ -484,7 +500,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
         this.clienteViewModel = vmp.get(ClienteViewModel.class);
         this.usuarioViewModel = vmp.get(UsuarioViewModel.class);
         this.documentoAlmacenadoViewModel = vmp.get(DocumentoAlmacenadoViewModel.class);
-
+        this.dispositivoViewModel = vmp.get(DispositivoViewModel.class);
     }
 
     private void cargarImagen() {
@@ -533,5 +549,43 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
             cursor.close();
         }
         return result;
+    }
+
+    private void registerDevice() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    // Get new FCM registration token
+                    String token = task.getResult();
+
+                    // El token de registro puede cambiar en las siguientes situaciones:
+                    // La app se restablece en un dispositivo nuevo.
+                    // El usuario desinstala y vuelve a instalar la app.
+                    // El usuario borra los datos de la app.
+                    //String tokenSaved = getSharedPreferences("SP_FILE", 0).getString("DEVICE_ID", null);
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    String tokenSaved = preferences.getString("DEVICE_ID", "");
+                    // Si el codigo recibido es distinto al ultimo que tenía lo envio al
+                    // servidor, una vez que nos devuelve el okey, lo guardo. sino hubo cambios
+                    // en el token sigo no hago nada. el registro es una sola vez, por mas que
+                    // invoque el método registerDevice siempre me devolverá el mismo. Puede cambiar el token por eso lo hacemos.
+                    if (token != null && !token.equals(tokenSaved)) {
+                        // Registramos el token en el servidor
+                        Dispositivo dispositivo = new Dispositivo();
+                        dispositivo.setDeviceId(token);
+                        this.dispositivoViewModel.registerDevice(dispositivo).observe(this, dResponse -> {
+                            if (dResponse.getRpta() == 1) {
+                                dispositivoSaved = dResponse.getBody();
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("DEVICE_ID", dispositivoSaved.getDeviceId());
+                                editor.apply();
+                            }
+                        });
+                    }
+                    Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
+                });
     }
 }

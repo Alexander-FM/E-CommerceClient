@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.api;
 
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Dispositivo;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
@@ -29,6 +30,7 @@ public class ConfigApi {
     private static DocumentoAlmacenadoApi daApi;
     private static CategoriaApi categoriaApi;
     private static PedidoApi pedidoApi;
+    private static DispositivoApi dispositivoApi;
 
     static {
         initClient();
@@ -79,35 +81,47 @@ public class ConfigApi {
         }
         return usuarioApi;
     }
-    public static ClienteApi getClienteApi(){
-        if(clienteApi == null){
+
+    public static ClienteApi getClienteApi() {
+        if (clienteApi == null) {
             clienteApi = retrofit.create(ClienteApi.class);
         }
         return clienteApi;
     }
-    public static PlatilloApi getPlatilloApi(){
-        if(platilloApi == null){
+
+    public static PlatilloApi getPlatilloApi() {
+        if (platilloApi == null) {
             platilloApi = retrofit.create(PlatilloApi.class);
         }
         return platilloApi;
     }
+
     public static DocumentoAlmacenadoApi getDocumentoAlmacenadoApi() {
         if (daApi == null) {
             daApi = retrofit.create(DocumentoAlmacenadoApi.class);
         }
         return daApi;
     }
-    public static CategoriaApi getCategoriaApi(){
-        if(categoriaApi == null){
+
+    public static CategoriaApi getCategoriaApi() {
+        if (categoriaApi == null) {
             categoriaApi = retrofit.create(CategoriaApi.class);
         }
         return categoriaApi;
     }
-    public static PedidoApi getPedidoApi(){
-        if(pedidoApi == null){
+
+    public static PedidoApi getPedidoApi() {
+        if (pedidoApi == null) {
             pedidoApi = retrofit.create(PedidoApi.class);
         }
         return pedidoApi;
+    }
+
+    public static DispositivoApi getDispositivoApi() {
+        if (dispositivoApi == null) {
+            dispositivoApi = retrofit.create(DispositivoApi.class);
+        }
+        return dispositivoApi;
     }
 }
 

@@ -1,9 +1,11 @@
 package com.alexandertutoriales.cliente.ecommerce.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,11 @@ import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
+import com.alexandertutoriales.cliente.ecommerce.viewmodel.DispositivoViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.UsuarioViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtMail, edtPassword;
     private Button btnIniciarSesion;
     private UsuarioViewModel viewModel;
+    private DispositivoViewModel dispositivoViewModel;
     private TextView txtRegistrarUsuario;
 
     @Override
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         btnIniciarSesion.setOnClickListener(v -> {
             viewModel.login(edtMail.getText().toString(), edtPassword.getText().toString()).observe(this, response -> {
-                if(response.getRpta() == 1){
+                if (response.getRpta() == 1) {
                     toastCorrecto(response.getMessage());
                     Usuario u = response.getBody();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);//getPreferences(Context.MODE_PRIVATE);
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     edtMail.setText("");
                     edtPassword.setText("");
                     startActivity(new Intent(this, InicioActivity.class));
-                }else{
+                } else {
                     toastIncorrecto(response.getMessage());
                 }
             });
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(UsuarioViewModel.class);
+        dispositivoViewModel = new ViewModelProvider(this).get(DispositivoViewModel.class);
     }
 
     public void toastIncorrecto(String texto) {
@@ -108,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         toast.setView(layouView);
         toast.show();
     }
+
     //DETECTAR SI HAY UNA SESION ACTIVA
     @Override
     protected void onStart() {
@@ -121,6 +130,37 @@ public class MainActivity extends AppCompatActivity {
             this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
     }
+
+    private void registerDevice() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // El token de registro puede cambiar en las siguientes situaciones:
+                        // La app se restablece en un dispositivo nuevo.
+                        // El usuario desinstala y vuelve a instalar la app.
+                        // El usuario borra los datos de la app.
+                        String tokenSaved = getSharedPreferences("SP_FILE", 0).getString("DEVICE_ID", null);
+                        // Si el codigo recibido es distinto al ultimo que tenía lo envio al
+                        // servidor, una vez que nos devuelve el okey, lo guardo. sino hubo cambios
+                        // en el token sigo no hago nada. el registro es una sola vez, por mas que
+                        // invoque el método registerDevice siempre me devolverá el mismo. Puede cambiar el token por eso lo hacemos.
+                        if (token != null && (tokenSaved == null || !token.equals(tokenSaved))) {
+                            // Registramos el token en el servidor
+
+                        }
+                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     @Override
     public void onBackPressed() {
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setTitleText("has oprimido el botón atrás")

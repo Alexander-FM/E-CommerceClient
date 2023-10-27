@@ -6,6 +6,7 @@ public class Usuario {
     private String clave;
     private boolean vigencia;
     private Cliente cliente;
+    private Dispositivo dispositivo;
 
     public int getId() {
         return id;
@@ -45,5 +46,13 @@ public class Usuario {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Dispositivo getDispositivo() {
+        return dispositivo;
+    }
+
+    public void setDispositivo(Dispositivo dispositivo) {
+        this.dispositivo = dispositivo;
     }
 }

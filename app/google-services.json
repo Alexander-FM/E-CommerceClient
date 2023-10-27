@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "494449979573",
+    "project_id": "appecommercenotifications",
+    "storage_bucket": "appecommercenotifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494449979573:android:90d9500f5265397a1fcefc",
+        "android_client_info": {
+          "package_name": "com.alexandertutoriales.cliente.ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBolygG1Zwh764F5_gYRs4INoKFE3JjZ5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
