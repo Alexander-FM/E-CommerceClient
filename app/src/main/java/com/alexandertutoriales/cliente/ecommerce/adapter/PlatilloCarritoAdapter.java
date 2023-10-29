@@ -82,7 +82,6 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         public void setItem(final DetallePedido dp) {
             this.tvNombrePlatilloDC.setText(dp.getPlatillo().getNombre());
             this.tvPrecioPDC.setText(String.format(Locale.ENGLISH, "S/%.2f", dp.getPrecio()));
-            int cant = dp.getCantidad();
             this.edtCantidad.setText(Integer.toString(dp.getCantidad()));
             String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + dp.getPlatillo().getFoto().getFileName();
             Picasso picasso = new Picasso.Builder(itemView.getContext())

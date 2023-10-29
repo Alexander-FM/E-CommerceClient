@@ -115,7 +115,18 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         dto.getPedido().setAnularPedido(false);
         dto.getPedido().setMonto(detallePedidos.stream().mapToDouble(dp ->
                 dp.getPlatillo().getPrecio() * dp.getCantidad()).sum());
-        dto.getCliente().setId(idC);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String usuarioJson = sp.getString("UsuarioJson", null);
+        final Gson g = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Time.class, new TimeSerializer())
+                .create();
+        if (usuarioJson != null) {
+            final Usuario u = g.fromJson(usuarioJson, Usuario.class);
+            dto.setCliente(u.getCliente());
+        } else {
+            dto.getCliente().setId(idC);
+        }
         dto.setDetallePedido(detallePedidos);
         this.pedidoViewModel.guardarPedido(dto).observe(this, response -> {
             if (response.getRpta() == 1) {
