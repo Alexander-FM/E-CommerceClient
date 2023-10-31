@@ -95,7 +95,7 @@ Este proyecto est√° bajo la licencia de MIT. Consulta el archivo LICENSE para m√
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-## Pantallazos
+# Pantallazos
 ![Registrar Usuario 1-2](https://acortar.link/sArgV5)
 ![Registrar Usuario 2-2](https://acortar.link/6klNvS)
 ![Inicio](https://acortar.link/w2r3sy)
