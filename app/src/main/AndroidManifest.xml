@@ -19,16 +19,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppMovil"
         android:usesCleartextTraffic="true">
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification
-        messages. See README(https://goo.gl/l4GJaQ) for more. -->
+        <activity
+            android:name=".activity.OfertaProductosActivity"
+            android:exported="false" />
+        <!--
+         Set custom default icon. This is used when no icon is set for incoming notification
+        messages. See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_baseline_notifications" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/pink_700" />
+
         <activity
             android:name=".activity.VerInvoiceActivity"
             android:exported="false" />
@@ -41,7 +49,8 @@
             android:name=".activity.InicioActivity"
             android:label="@string/title_activity_inicio"
             android:theme="@style/Theme.AppMovil.NoActionBar" />
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

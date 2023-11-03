@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.annotation:annotation:1.0.2'
 
     //-----------------Dependencias----------------------------------//
 
@@ -101,6 +102,11 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
+
+    // Circle Indicator (To fix the xml preview "Missing classes" error)
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0'
 
 }
 

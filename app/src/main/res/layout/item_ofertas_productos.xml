@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvMisCompras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:id="@+id/rlImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgProductoOferta"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/relojes_ellas" />
+
+            <TextView
+                android:id="@+id/tvProductoOferta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgProductoOferta"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/san_francisco"
+                android:gravity="start"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="Reloj de mujer turki"
+                android:textColor="#2E2E2E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvPrecioOferta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProductoOferta"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/san_francisco"
+                android:gravity="start"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="S/ 1,699"
+                android:textColor="#2E2E2E"
+                android:textSize="16sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDescuento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tvPrecioOferta"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_toRightOf="@+id/tvPrecioOferta"
+                app:cardBackgroundColor="#DF1313"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:id="@+id/tvDescuento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:text="-39%"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvPrecioAntes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPrecioOferta"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/san_francisco"
+                android:foreground="@drawable/text_tachado"
+                android:gravity="start"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="S/ 2,699"
+                android:textColor="#2E2E2E"
+                android:textSize="13sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardEnvioRapido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPrecioAntes"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="2dp"
+                app:cardBackgroundColor="#2E2E2E"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:id="@+id/tvEnvioRapido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/san_francisco"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:text="ENVIO RÁPIDO"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:id="@+id/llRetiraTuCompra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardEnvioRapido"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Agrega un TextView con la marca de verificación (check) -->
+                <TextView
+                    android:id="@+id/checkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="✔"
+                    android:textColor="#4CAF50"
+                    android:textSize="18sp" />
+
+                <!-- Agrega un TextView con el texto "Retira tu compra" -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/san_francisco"
+                    android:text="Retira tu compra" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llDespachoDomicilio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llRetiraTuCompra"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/checkDespachoDomicilio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="✔"
+                    android:textColor="#3F51B5"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/san_francisco"
+                    android:text="Despacho a Domicilio" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnComprarProductoOferta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llDespachoDomicilio"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/pink_700"
+                android:drawableEnd="@drawable/ic_add_shop"
+                android:text="Agregar al carrito"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

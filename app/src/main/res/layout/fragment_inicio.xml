@@ -60,8 +60,8 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbarStyle="insideInset"
                 android:scrollbarSize="4dp"
+                android:scrollbarStyle="insideInset"
                 android:scrollbarThumbHorizontal="@drawable/scrollview_thumb"
                 android:scrollbarTrackHorizontal="@drawable/horizontal_scrollview">
 
@@ -80,14 +80,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="8dp"
-                            android:horizontalSpacing="1dp"
                             android:columnWidth="100dp"
+                            android:horizontalSpacing="1dp"
                             android:numColumns="2"
                             android:scrollbarAlwaysDrawHorizontalTrack="true"
                             android:scrollbarAlwaysDrawVerticalTrack="true"
                             android:scrollbars="horizontal"
                             android:stretchMode="none"
-                            android:verticalSpacing="1dp"/>
+                            android:verticalSpacing="1dp" />
                     </LinearLayout>
                 </FrameLayout>
             </HorizontalScrollView>
@@ -116,6 +116,49 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp" />
 
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/san_francisco"
+                android:text="Ofertas"
+                android:textColor="#fff"
+                android:textSize="24dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvOfertas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:scrollbars="horizontal"/>
+
+                <!--<androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="10dp">
+
+                    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                        android:id="@+id/carruselOfertas"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        app:showCaption="false"
+                        app:showIndicator="true"
+                        app:showNavigationButtons="false" />
+                </androidx.cardview.widget.CardView>-->
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

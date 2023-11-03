@@ -31,6 +31,8 @@ public class ConfigApi {
     private static CategoriaApi categoriaApi;
     private static PedidoApi pedidoApi;
     private static DispositivoApi dispositivoApi;
+    private static OfertaApi ofertaApi;
+    private static OfertaProductoApi ofertaProductoApi;
 
     static {
         initClient();
@@ -122,6 +124,20 @@ public class ConfigApi {
             dispositivoApi = retrofit.create(DispositivoApi.class);
         }
         return dispositivoApi;
+    }
+
+    public static OfertaApi getOfertaApi() {
+        if (ofertaApi == null) {
+            ofertaApi = retrofit.create(OfertaApi.class);
+        }
+        return ofertaApi;
+    }
+
+    public static OfertaProductoApi getOfertaProductoApi() {
+        if (ofertaProductoApi == null) {
+            ofertaProductoApi = retrofit.create(OfertaProductoApi.class);
+        }
+        return ofertaProductoApi;
     }
 }
 

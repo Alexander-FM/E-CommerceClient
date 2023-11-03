@@ -16,20 +16,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.CategoriaAdapter;
+import com.alexandertutoriales.cliente.ecommerce.adapter.OfertasAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatillosRecomendadosAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.SliderAdapter;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.SliderItem;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Oferta;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.CategoriaViewModel;
+import com.alexandertutoriales.cliente.ecommerce.viewmodel.OfertaViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PlatilloViewModel;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
@@ -41,7 +45,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -49,13 +52,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class InicioFragment extends Fragment implements Communication, MostrarBadge {
     private PlatilloViewModel platilloViewModel;
     private CategoriaViewModel categoriaViewModel;
+    private OfertaViewModel ofertaViewModel;
     private CategoriaAdapter categoriaAdapter;
+    private OfertasAdapter ofertasAdapter;
     private GridView gvCategorias;
     private RecyclerView rcvPlatillosRecomendados;
+    private RecyclerView rcvOfertas;
     private PlatillosRecomendadosAdapter adapter;
     private SliderView svCarrusel;
     private SliderAdapter sliderAdapter;
     private List<Platillo> platillos = new ArrayList<>();
+    private List<Oferta> ofertas = new ArrayList<>();
     private LinearLayout llCategorias;
     private SwipeRefreshLayout swipeFragmentInicio;
 
@@ -76,8 +83,12 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         ViewModelProvider vmp = new ViewModelProvider(this);
         rcvPlatillosRecomendados = v.findViewById(R.id.rcvPlatillosRecomendados);
         rcvPlatillosRecomendados.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        rcvOfertas = v.findViewById(R.id.rcvOfertas);
+        //rcvOfertas.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        rcvOfertas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         platilloViewModel = vmp.get(PlatilloViewModel.class);
         categoriaViewModel = vmp.get(CategoriaViewModel.class);
+        ofertaViewModel = vmp.get(OfertaViewModel.class);
         svCarrusel = v.findViewById(R.id.svCarrusel);
         gvCategorias = v.findViewById(R.id.gvCategorias);
         llCategorias = v.findViewById(R.id.llCategorias);
@@ -91,6 +102,8 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     private void initAdapter() {
         adapter = new PlatillosRecomendadosAdapter(platillos, this, this);
         rcvPlatillosRecomendados.setAdapter(adapter);
+        ofertasAdapter = new OfertasAdapter(ofertas, this);
+        rcvOfertas.setAdapter(ofertasAdapter);
         sliderAdapter = new SliderAdapter(getContext());
         svCarrusel.setSliderAdapter(sliderAdapter);
         svCarrusel.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
@@ -117,12 +130,20 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
                 categoriaAdapter.notifyDataSetChanged();
                 int numColumnsCategorias = categoriaAdapter.getCount();
                 gvCategorias.setNumColumns(numColumnsCategorias);
-                int dynamicWidth  = 285 * numColumnsCategorias;
+                int dynamicWidth = 285 * numColumnsCategorias;
                 ViewGroup.LayoutParams params = llCategorias.getLayoutParams();
                 params.width = dynamicWidth;
                 llCategorias.setLayoutParams(params);
             } else {
                 System.out.println("Error al obtener las categorias activas");
+            }
+            swipeFragmentInicio.setRefreshing(false);
+        });
+        ofertaViewModel.listarOfertasActivas().observe(getViewLifecycleOwner(), response -> {
+            if (response.getRpta() == 1) {
+                ofertasAdapter.updateItems(response.getBody());
+            } else {
+                System.out.println("Error al obtener las ofertas activas");
             }
             swipeFragmentInicio.setRefreshing(false);
         });
@@ -146,7 +167,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
 
     }
 
-    @SuppressLint("UnsafeExperimentalUsageError")
+    @SuppressLint({"UnsafeOptInUsageError"})
     @Override
     public void add(DetallePedido dp) {
         successMessage(Carrito.agregarPlatillos(dp));
