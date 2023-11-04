@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,7 @@ import java.util.Locale;
 public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductosAdapter.ViewHolder> implements Filterable {
     private final Communication communication;
     private final MostrarBadge mostrarBadgeComunication;
-    private List<OfertaProducto> ofertaProductos;
+    private final List<OfertaProducto> ofertaProductos;
     private List<OfertaProducto> ofertaProductosFiltrados = new ArrayList<>();
 
     public OfertaProductosAdapter(List<OfertaProducto> ofertaProductos, Communication communication, MostrarBadge mostrarBadgeComunication) {
@@ -63,6 +64,7 @@ public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductos
         return this.ofertaProductosFiltrados.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateItems(List<OfertaProducto> producto) {
         this.ofertaProductos.clear();
         this.ofertaProductos.addAll(producto);
@@ -97,6 +99,7 @@ public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductos
                 return filterResults;
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 if (results != null && results.values != null) {
