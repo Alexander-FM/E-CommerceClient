@@ -155,7 +155,7 @@ public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductos
                         .registerTypeAdapter(Date.class, new DateSerializer())
                         .registerTypeAdapter(Time.class, new TimeSerializer())
                         .create();
-                i.putExtra("detalleproducto", g.toJson(p.getIdPlatillo()));
+                i.putExtra("detallePlatillo", g.toJson(p.getIdPlatillo()));
                 communication.showDetails(i);//Esto es solo para dar una animación.
             });
         }
