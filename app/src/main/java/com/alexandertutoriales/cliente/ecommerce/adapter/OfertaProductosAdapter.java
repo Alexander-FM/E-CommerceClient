@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.DetallePlatilloActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
@@ -38,13 +39,15 @@ import java.util.Locale;
 public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductosAdapter.ViewHolder> implements Filterable {
     private final Communication communication;
     private final MostrarBadge mostrarBadgeComunication;
+    private final BadgeDrawableCommunication badgeDrawableCommunication;
     private final List<OfertaProducto> ofertaProductos;
     private List<OfertaProducto> ofertaProductosFiltrados = new ArrayList<>();
 
-    public OfertaProductosAdapter(List<OfertaProducto> ofertaProductos, Communication communication, MostrarBadge mostrarBadgeComunication) {
-        this.ofertaProductos = ofertaProductos;
+    public OfertaProductosAdapter(List<OfertaProducto> ofertaProductos, Communication communication, MostrarBadge mostrarBadgeComunication, BadgeDrawableCommunication badgeDrawableCommunication) {
         this.communication = communication;
         this.mostrarBadgeComunication = mostrarBadgeComunication;
+        this.badgeDrawableCommunication = badgeDrawableCommunication;
+        this.ofertaProductos = ofertaProductos;
     }
 
     @NotNull
@@ -146,6 +149,7 @@ public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductos
                 detallePedido.setCantidad(1);
                 detallePedido.setPrecio(p.getPrecioAhora());
                 mostrarBadgeComunication.add(detallePedido);
+                badgeDrawableCommunication.updateBadge();
             });
             //Cuando pulses sobre la tarjeta te aparecerá el detalle de ese producto
             itemView.setOnClickListener(v -> {

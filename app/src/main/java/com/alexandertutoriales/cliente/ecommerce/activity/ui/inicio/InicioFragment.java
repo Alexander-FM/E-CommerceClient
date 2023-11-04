@@ -23,6 +23,7 @@ import com.alexandertutoriales.cliente.ecommerce.adapter.CategoriaAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.OfertasAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatillosRecomendadosAdapter;
 import com.alexandertutoriales.cliente.ecommerce.adapter.SliderAdapter;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.SliderItem;
@@ -48,7 +49,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class InicioFragment extends Fragment implements Communication, MostrarBadge {
+public class InicioFragment extends Fragment implements Communication, MostrarBadge, BadgeDrawableCommunication {
     private PlatilloViewModel platilloViewModel;
     private CategoriaViewModel categoriaViewModel;
     private OfertaViewModel ofertaViewModel;
@@ -64,6 +65,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     private List<Oferta> ofertas = new ArrayList<>();
     private LinearLayout llCategorias;
     private SwipeRefreshLayout swipeFragmentInicio;
+    private BadgeDrawable badgeDrawable;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -96,10 +98,11 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         requireContext().getTheme().resolveAttribute(R.color.pink_700, tv, false);
         swipeFragmentInicio.setColorSchemeColors(tv.data);
         swipeFragmentInicio.setOnRefreshListener(() -> loadData(v));
+        badgeDrawable = BadgeDrawable.create(this.getContext());
     }
 
     private void initAdapter() {
-        adapter = new PlatillosRecomendadosAdapter(platillos, this, this);
+        adapter = new PlatillosRecomendadosAdapter(platillos, this, this, this);
         rcvPlatillosRecomendados.setAdapter(adapter);
         ofertasAdapter = new OfertasAdapter(ofertas, this);
         rcvOfertas.setAdapter(ofertasAdapter);
@@ -166,13 +169,9 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
 
     }
 
-    @SuppressLint({"UnsafeOptInUsageError"})
     @Override
     public void add(DetallePedido dp) {
         successMessage(Carrito.agregarPlatillos(dp));
-        BadgeDrawable badgeDrawable = BadgeDrawable.create(this.getContext());
-        badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
-        BadgeUtils.attachBadgeDrawable(badgeDrawable, getActivity().findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
 
     public void successMessage(String message) {
@@ -181,4 +180,19 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
                 .setContentText(message).show();
     }
 
+    @Override
+    public void updateBadge() {
+        if (Carrito.getDetallePedidos().size() > 0) {
+            badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
+        } else {
+            badgeDrawable.setNumber(0);
+        }
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, getActivity().findViewById(R.id.toolbar), R.id.bolsaCompras);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateBadge();
+    }
 }

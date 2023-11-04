@@ -27,6 +27,7 @@
     <string name="buy_item">Comprar</string>
     <string name="aviso_sistema">¡Aviso del sistema!</string>
     <string name="product_added">El producto ha sido añadido al carrito</string>
+    <string name="bolsa_de_compras">Bolsa de Compras</string>
     <string-array name="tipoDoc">
         <item>DNI</item>
         <item>RUC</item>

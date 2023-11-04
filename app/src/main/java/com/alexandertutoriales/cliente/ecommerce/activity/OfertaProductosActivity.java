@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.OfertaProductosAdapter;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
@@ -24,11 +27,13 @@ import com.alexandertutoriales.cliente.ecommerce.viewmodel.OfertaProductoViewMod
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class OfertaProductosActivity extends AppCompatActivity implements Communication, MostrarBadge {
+public class OfertaProductosActivity extends AppCompatActivity implements Communication, MostrarBadge, BadgeDrawableCommunication {
     private OfertaProductoViewModel ofertaProductoViewModel;
     private OfertaProductosAdapter ofertaProductosAdapter;
     private RecyclerView rcvOfertaProductos;
@@ -61,6 +66,7 @@ public class OfertaProductosActivity extends AppCompatActivity implements Commun
         getApplicationContext().getTheme().resolveAttribute(R.color.pink_700, tv, false);
         swipeOfertaProductosActivity.setColorSchemeColors(tv.data);
         swipeOfertaProductosActivity.setOnRefreshListener(this::loadData);
+        badgeDrawable = BadgeDrawable.create(this);
     }
 
     private void initViewModel() {
@@ -69,7 +75,7 @@ public class OfertaProductosActivity extends AppCompatActivity implements Commun
     }
 
     private void initAdapter() {
-        ofertaProductosAdapter = new OfertaProductosAdapter(new ArrayList<>(), this, this);
+        ofertaProductosAdapter = new OfertaProductosAdapter(new ArrayList<>(), this, this, this);
         rcvOfertaProductos.setAdapter(ofertaProductosAdapter);
     }
 
@@ -123,14 +129,43 @@ public class OfertaProductosActivity extends AppCompatActivity implements Commun
     @Override
     public void add(DetallePedido dp) {
         successMessage(Carrito.agregarPlatillos(dp));
-        BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
-        badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
-        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
 
     public void successMessage(String message) {
         new SweetAlertDialog(this,
                 SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                 .setContentText(message).show();
+    }
+
+    @Override
+    public void updateBadge() {
+        if (Carrito.getDetallePedidos().size() > 0) {
+            badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
+        } else {
+            badgeDrawable.setNumber(0);
+        }
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.inicio, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.bolsaCompras:
+                this.mostrarBolsa();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void mostrarBolsa() {
+        Intent i = new Intent(this, PlatillosCarritoActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
 }

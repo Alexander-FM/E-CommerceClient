@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.DetallePlatilloActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
@@ -34,12 +35,14 @@ import java.util.List;
 public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<PlatillosRecomendadosAdapter.ViewHolder> {
     private final Communication communication;
     private final MostrarBadge mostrarBadgeComunication;
+    private final BadgeDrawableCommunication badgeDrawableCommunication;
     private final List<Platillo> platillos;
 
-    public PlatillosRecomendadosAdapter(List<Platillo> platillos, Communication communication, MostrarBadge mostrarBadgeComunication) {
-        this.platillos = platillos;
+    public PlatillosRecomendadosAdapter(List<Platillo> platillos, Communication communication, MostrarBadge mostrarBadgeComunication, BadgeDrawableCommunication badgeDrawableCommunication) {
         this.communication = communication;
         this.mostrarBadgeComunication = mostrarBadgeComunication;
+        this.badgeDrawableCommunication = badgeDrawableCommunication;
+        this.platillos = platillos;
     }
 
     @NotNull
@@ -93,6 +96,7 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
                 detallePedido.setCantidad(1);
                 detallePedido.setPrecio(p.getPrecio());
                 mostrarBadgeComunication.add(detallePedido);
+                badgeDrawableCommunication.updateBadge();
             });
             //Cuando pulses sobre la tarjeta te aparecerá el detalle de ese platillo
             itemView.setOnClickListener(v -> {

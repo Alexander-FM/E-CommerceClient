@@ -35,6 +35,7 @@
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_platillos_carrito.xml" value="0.264" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_registrar_usuario.xml" value="0.11145833333333334" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/activity_ver_invoice.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/app_bar_inicio.xml" value="0.1359375" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/content_inicio.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/custom_toast.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/custom_toast_check.xml" value="0.2526041666666667" />
@@ -55,7 +56,9 @@
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/nav_header_inicio.xml" value="0.264" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/layout/scrollview_thumb.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/menu/activity_main_drawer.xml" value="0.2526041666666667" />
-        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/menu/inicio.xml" value="0.1" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/menu/bolsaComprasMenuItem.xml" value="0.1359375" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/menu/bolsa_compras_menu_item.xml" value="0.264" />
+        <entry key="..\:/Users/lfuenmed/Documents/TESIS/E-CommerceClient/app/src/main/res/menu/inicio.xml" value="0.2" />
       </map>
     </option>
   </component>
