@@ -5,32 +5,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/swipeOfertaProductosActivity"
     tools:context=".activity.OfertaProductosActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbarStyle="insideInset"
-        android:scrollbarThumbVertical="@drawable/scrollview_thumb"
-        android:scrollbarTrackVertical="@drawable/vertical_scrollview">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/lltoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/pink_200"
+                    app:navigationIcon="@drawable/ic_volver_atras"
+                    app:title="Ofertas"
+                    app:titleTextColor="@color/white" />
+            </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_below="@id/lltoolbar"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="15dp">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/textinputSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@null" />
+        </androidx.cardview.widget.CardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardSearch"
+            android:scrollbarStyle="insideInset"
+            android:scrollbarThumbVertical="@drawable/scrollview_thumb"
+            android:scrollbarTrackVertical="@drawable/vertical_scrollview">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvOfertaProductos"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="8dp" />
-
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp" />
             </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </RelativeLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
