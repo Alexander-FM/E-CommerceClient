@@ -3,15 +3,10 @@ package com.alexandertutoriales.cliente.ecommerce.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.alexandertutoriales.cliente.ecommerce.api.CategoriaApi;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.api.DispositivoApi;
 import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Cliente;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Dispositivo;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

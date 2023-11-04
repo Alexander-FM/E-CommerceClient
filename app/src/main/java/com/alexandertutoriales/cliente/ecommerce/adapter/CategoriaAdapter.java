@@ -9,9 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.activity.ListarPlatillosPorCategoriaActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
@@ -19,20 +16,21 @@ import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class CategoriaAdapter extends ArrayAdapter<Categoria> {
     private final String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/";
 
-    public CategoriaAdapter(@NonNull Context context, int resource, @NonNull List<Categoria> objects) {
+    public CategoriaAdapter(@NotNull Context context, int resource, @NotNull List<Categoria> objects) {
         super(context, resource, objects);
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NotNull ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_categorias, parent, false);
 

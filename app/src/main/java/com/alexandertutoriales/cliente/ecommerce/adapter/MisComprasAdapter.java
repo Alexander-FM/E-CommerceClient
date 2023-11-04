@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
@@ -40,17 +39,16 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
         this.anularPedidoComunication = anularPedidoComunication;
     }
 
-    @NonNull
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         final View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_mis_compras, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.setItem(this.pedidos.get(position));
     }
 
@@ -67,7 +65,7 @@ public class MisComprasAdapter extends RecyclerView.Adapter<MisComprasAdapter.Vi
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NotNull View itemView) {
             super(itemView);
         }
 

@@ -16,7 +16,6 @@ import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.GenerarPedidoDTO;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
 
-import com.alexandertutoriales.cliente.ecommerce.utils.Global.*;
 import java.util.List;
 
 import okhttp3.ResponseBody;

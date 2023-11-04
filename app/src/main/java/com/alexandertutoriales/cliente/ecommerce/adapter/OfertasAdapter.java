@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
-import com.alexandertutoriales.cliente.ecommerce.activity.ListarPlatillosPorCategoriaActivity;
 import com.alexandertutoriales.cliente.ecommerce.activity.OfertaProductosActivity;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.Communication;
@@ -24,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class OfertasAdapter extends RecyclerView.Adapter<OfertasAdapter.ViewHolder> {
-    private List<Oferta> listaOfertas;
+    private final List<Oferta> listaOfertas;
     private final Communication communication;
 
     public OfertasAdapter(List<Oferta> listaOfertas, Communication communication) {
@@ -32,15 +31,16 @@ public class OfertasAdapter extends RecyclerView.Adapter<OfertasAdapter.ViewHold
         this.communication = communication;
     }
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ofertas,
                 parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.setItem(this.listaOfertas.get(position));
     }
 
@@ -49,6 +49,7 @@ public class OfertasAdapter extends RecyclerView.Adapter<OfertasAdapter.ViewHold
         return this.listaOfertas.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateItems(List<Oferta> ofertas) {
         this.listaOfertas.clear();
         this.listaOfertas.addAll(ofertas);
@@ -59,7 +60,7 @@ public class OfertasAdapter extends RecyclerView.Adapter<OfertasAdapter.ViewHold
         private final ImageView banner;
         private final TextView descripcionOferta;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NotNull View itemView) {
             super(itemView);
             this.banner = itemView.findViewById(R.id.imageOferta);
             this.descripcionOferta = itemView.findViewById(R.id.descripcionOferta);

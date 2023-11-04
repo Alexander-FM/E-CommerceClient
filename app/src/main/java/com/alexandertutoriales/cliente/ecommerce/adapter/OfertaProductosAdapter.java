@@ -137,7 +137,6 @@ public class OfertaProductosAdapter extends RecyclerView.Adapter<OfertaProductos
                     .into(imgProductoOferta);
             tvProductoOferta.setText(p.getIdPlatillo().getNombre());
             tvPrecioOferta.setText(String.format(Locale.ENGLISH, "S/%.2f", p.getPrecioAhora()));
-            //tvDescuento.setText(Integer.toString(p.getDescuento()).concat("%"));
             tvDescuento.setText(String.format(Locale.ENGLISH, "%d%%", p.getDescuento()));
             tvPrecioAntes.setText(String.format(Locale.ENGLISH, "S/%.2f", p.getIdPlatillo().getPrecio()));
 

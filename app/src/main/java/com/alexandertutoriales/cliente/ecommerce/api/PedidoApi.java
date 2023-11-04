@@ -2,7 +2,6 @@ package com.alexandertutoriales.cliente.ecommerce.api;
 
 import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.GenerarPedidoDTO;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
 

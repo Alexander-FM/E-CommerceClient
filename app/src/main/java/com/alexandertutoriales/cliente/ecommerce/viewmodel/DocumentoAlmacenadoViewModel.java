@@ -2,7 +2,6 @@ package com.alexandertutoriales.cliente.ecommerce.viewmodel;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -18,7 +17,7 @@ import okhttp3.RequestBody;
 public class DocumentoAlmacenadoViewModel extends AndroidViewModel {
     private final DocumentoAlmacenadoRepository repository;
 
-    public DocumentoAlmacenadoViewModel(@NonNull @NotNull Application application) {
+    public DocumentoAlmacenadoViewModel(@NotNull Application application) {
         super(application);
         this.repository = DocumentoAlmacenadoRepository.getInstance();
     }

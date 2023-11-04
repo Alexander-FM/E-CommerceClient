@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
-    private Context context;
-    private List<SliderItem> mSliderItems = new ArrayList<>();
+    private final Context context;
+    private final List<SliderItem> mSliderItems = new ArrayList<>();
 
     public SliderAdapter(Context context) {
         this.context = context;
@@ -44,12 +44,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                 .fitCenter()
                 .into(viewHolder.imageViewBackground);
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
+        viewHolder.itemView.setOnClickListener(v -> Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -64,7 +59,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         this.notifyDataSetChanged();
     }
 
-    protected class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
+    protected static class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
         ImageView imageViewBackground;

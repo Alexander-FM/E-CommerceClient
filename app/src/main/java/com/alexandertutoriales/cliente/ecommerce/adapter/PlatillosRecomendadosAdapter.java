@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
@@ -31,12 +31,10 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<PlatillosRecomendadosAdapter.ViewHolder> {
     private final Communication communication;
     private final MostrarBadge mostrarBadgeComunication;
-    private List<Platillo> platillos;
+    private final List<Platillo> platillos;
 
     public PlatillosRecomendadosAdapter(List<Platillo> platillos, Communication communication, MostrarBadge mostrarBadgeComunication) {
         this.platillos = platillos;
@@ -46,13 +44,13 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
 
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_products, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.setItem(this.platillos.get(position));
     }
 
@@ -61,6 +59,7 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
         return this.platillos.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateItems(List<Platillo> platillo) {
         this.platillos.clear();
         this.platillos.addAll(platillo);
@@ -69,7 +68,7 @@ public class PlatillosRecomendadosAdapter extends RecyclerView.Adapter<Platillos
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NotNull View itemView) {
             super(itemView);
         }
 

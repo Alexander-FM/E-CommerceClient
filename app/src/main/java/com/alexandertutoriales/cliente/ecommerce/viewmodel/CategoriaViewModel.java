@@ -2,7 +2,6 @@ package com.alexandertutoriales.cliente.ecommerce.viewmodel;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class CategoriaViewModel extends AndroidViewModel {
     private final CategoriaRepository repository;
 
-    public CategoriaViewModel(@NonNull Application application) {
+    public CategoriaViewModel(@NotNull Application application) {
         super(application);
         this.repository = CategoriaRepository.getInstance();
     }

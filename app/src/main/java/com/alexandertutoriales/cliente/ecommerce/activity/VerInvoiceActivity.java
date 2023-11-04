@@ -1,10 +1,9 @@
 package com.alexandertutoriales.cliente.ecommerce.activity;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.github.barteksc.pdfviewer.PDFView;

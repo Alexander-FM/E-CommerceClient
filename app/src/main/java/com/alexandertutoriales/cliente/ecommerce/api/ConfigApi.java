@@ -1,8 +1,5 @@
 package com.alexandertutoriales.cliente.ecommerce.api;
 
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Dispositivo;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Pedido;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.PedidoConDetallesDTO;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.facebook.stetho.okhttp3.StethoInterceptor;

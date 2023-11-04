@@ -2,7 +2,6 @@ package com.alexandertutoriales.cliente.ecommerce.api;
 
 import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 
 import java.util.List;
 

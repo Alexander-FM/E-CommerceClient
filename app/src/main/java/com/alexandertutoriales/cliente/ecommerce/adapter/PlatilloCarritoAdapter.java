@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.communication.CarritoComunication;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
-import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +37,15 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         this.c = c;
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_platillos_carrito, parent, false);
         return new ViewHolder(v, this.c);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.setItem(this.detalles.get(position));
     }
 
@@ -53,7 +54,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         return this.detalles.size();
     }
 
-    //Actualizamos la cantidad del carrito.
+    @SuppressLint("NotifyDataSetChanged")
     public void updateItems(ArrayList<DetallePedido> detallePedidos) {
         this.detalles.clear();
         this.detalles.addAll(detallePedidos);
@@ -67,7 +68,7 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
         private final TextView tvNombrePlatilloDC, tvPrecioPDC;
         private final CarritoComunication c;
 
-        public ViewHolder(@NonNull View itemView, CarritoComunication c) {
+        public ViewHolder(@NotNull View itemView, CarritoComunication c) {
             super(itemView);
             this.c = c;
             this.imgPlatilloDC = itemView.findViewById(R.id.imgPlatilloDC);
@@ -79,10 +80,11 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
             this.tvPrecioPDC = itemView.findViewById(R.id.tvPrecioPDC);
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         public void setItem(final DetallePedido dp) {
             this.tvNombrePlatilloDC.setText(dp.getPlatillo().getNombre());
             this.tvPrecioPDC.setText(String.format(Locale.ENGLISH, "S/%.2f", dp.getPrecio()));
-            this.edtCantidad.setText(Integer.toString(dp.getCantidad()));
+            this.edtCantidad.setText(String.format(Locale.ENGLISH, "%d", dp.getCantidad()));
             String url = ConfigApi.baseUrlE + "/api/documento-almacenado/download/" + dp.getPlatillo().getFoto().getFileName();
             Picasso picasso = new Picasso.Builder(itemView.getContext())
                     .downloader(new OkHttp3Downloader(ConfigApi.getClient()))
@@ -119,25 +121,9 @@ public class PlatilloCarritoAdapter extends RecyclerView.Adapter<PlatilloCarrito
 
             //-------------- Eliminar platillo de la bolsa de compras ---------------------//
             this.btnEliminarPCarrito.setOnClickListener(v -> {
-                //1º Forma Simple
-                /*toastCorrecto("Platillo eliminado exitosamente");
-                c.eliminarDetalle(dp.getPlatillo().getId());*/
-                //2º Forma Cool
+                //2º Mostrarmos una alerta antes de eliminar el producto
                 showMsg(dp.getPlatillo().getId());
             });
-        }
-
-        public void toastCorrecto(String texto) {
-            LayoutInflater layoutInflater = LayoutInflater.from(itemView.getContext());
-            View layouView = layoutInflater.inflate(R.layout.custom_toast_check, (ViewGroup) itemView.findViewById(R.id.layout_base_2));
-            TextView textView = layouView.findViewById(R.id.textoinfo2);
-            textView.setText(texto);
-
-            Toast toast = new Toast(itemView.getContext());
-            toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.BOTTOM, 0, 200);
-            toast.setDuration(Toast.LENGTH_LONG);
-            toast.setView(layouView);
-            toast.show();
         }
 
         public void toastWarning(String texto) {

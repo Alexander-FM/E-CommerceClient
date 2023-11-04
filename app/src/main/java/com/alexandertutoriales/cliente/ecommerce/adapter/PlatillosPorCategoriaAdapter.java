@@ -1,5 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
@@ -25,22 +25,23 @@ import java.util.Locale;
 
 public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<PlatillosPorCategoriaAdapter.ViewHolder> {
     private final MostrarBadge mostrarBadgeCommunication;
-    private List<Platillo> listadoPlatillosPorCategoria;
+    private final List<Platillo> listadoPlatillosPorCategoria;
 
     public PlatillosPorCategoriaAdapter(List<Platillo> listadoPlatillosPorCategoria, MostrarBadge mostrarBadgeCommunication) {
         this.listadoPlatillosPorCategoria = listadoPlatillosPorCategoria;
         this.mostrarBadgeCommunication = mostrarBadgeCommunication;
     }
 
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_productos_por_categoria,
                 parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.setItem(this.listadoPlatillosPorCategoria.get(position));
     }
 
@@ -49,6 +50,7 @@ public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<Platillos
         return this.listadoPlatillosPorCategoria.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateItems(List<Platillo> platillosByCategoria) {
         this.listadoPlatillosPorCategoria.clear();
         this.listadoPlatillosPorCategoria.addAll(platillosByCategoria);
@@ -60,7 +62,7 @@ public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<Platillos
         private final TextView namePlatilloC, txtPricePlatilloC;
         private final Button btnOrdenarPC;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NotNull View itemView) {
             super(itemView);
             this.imgPlatilloC = itemView.findViewById(R.id.imgPlatilloC);
             this.namePlatilloC = itemView.findViewById(R.id.namePlatilloC);

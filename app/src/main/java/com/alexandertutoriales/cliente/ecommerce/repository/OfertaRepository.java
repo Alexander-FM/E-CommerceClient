@@ -3,8 +3,8 @@ package com.alexandertutoriales.cliente.ecommerce.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.alexandertutoriales.cliente.ecommerce.api.OfertaApi;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.api.OfertaApi;
 import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Oferta;
 

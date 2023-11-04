@@ -1,12 +1,5 @@
 package com.alexandertutoriales.cliente.ecommerce.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,23 +13,27 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alexandertutoriales.cliente.ecommerce.R;
-import com.alexandertutoriales.cliente.ecommerce.activity.ui.compras.MisComprasFragment;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatilloCarritoAdapter;
 import com.alexandertutoriales.cliente.ecommerce.communication.CarritoComunication;
-import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.dto.GenerarPedidoDTO;
+import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.PedidoViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;

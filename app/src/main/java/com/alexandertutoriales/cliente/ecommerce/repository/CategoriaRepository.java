@@ -7,7 +7,6 @@ import com.alexandertutoriales.cliente.ecommerce.api.CategoriaApi;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
 import com.alexandertutoriales.cliente.ecommerce.entity.GenericResponse;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Categoria;
-import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 
 import java.util.List;
 

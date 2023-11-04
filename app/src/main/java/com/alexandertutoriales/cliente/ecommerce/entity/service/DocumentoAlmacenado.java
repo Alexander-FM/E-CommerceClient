@@ -1,7 +1,6 @@
 package com.alexandertutoriales.cliente.ecommerce.entity.service;
 
 import okhttp3.MultipartBody;
-import retrofit2.http.Multipart;
 
 public class DocumentoAlmacenado {
     private long id;

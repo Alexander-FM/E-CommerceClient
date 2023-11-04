@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
@@ -28,17 +27,16 @@ public class DetalleMisComprasAdapter extends RecyclerView.Adapter<DetalleMisCom
         this.detalles = detalles;
     }
 
-    @NonNull
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         final View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_detalle_mis_compras, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.setItem(this.detalles.get(position));
     }
 
@@ -58,7 +56,7 @@ public class DetalleMisComprasAdapter extends RecyclerView.Adapter<DetalleMisCom
         private final ImageView imgProduct;
         private final TextView txtValueCodDetailPurchases, txtValuePlatillo, txtValueQuantity, txtValuePrecioPlatillo;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NotNull View itemView) {
             super(itemView);
             this.imgProduct = itemView.findViewById(R.id.imgProduct);
             this.txtValueCodDetailPurchases = itemView.findViewById(R.id.txtValueCodDetailPurchases);
