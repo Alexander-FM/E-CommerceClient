@@ -20,38 +20,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <!-- OFFERS -->
+            <TextView
+                android:id="@+id/tvOfertas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/san_francisco"
+                android:text="Ofertas"
+                android:textColor="#fff"
+                android:textSize="24dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvOfertas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="8dp"
+                    android:scrollbars="horizontal" />
+            </RelativeLayout>
+            <!-- ./ OFFERS -->
+
+            <!-- FOR HIM -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/san_francisco"
+                android:text="Para él"
+                android:textColor="#fff"
+                android:textSize="24dp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="15dp">
 
-                <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/svCarrusel"
+                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                    android:id="@+id/carruselOfertas"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    app:sliderAnimationDuration="600"
-                    app:sliderAutoCycleDirection="back_and_forth"
-                    app:sliderAutoCycleEnabled="true"
-                    app:sliderIndicatorAnimationDuration="600"
-                    app:sliderIndicatorGravity="center_horizontal|bottom"
-                    app:sliderIndicatorMargin="15dp"
-                    app:sliderIndicatorOrientation="horizontal"
-                    app:sliderIndicatorPadding="3dp"
-                    app:sliderIndicatorRadius="2dp"
-                    app:sliderIndicatorSelectedColor="#5A5A5A"
-                    app:sliderIndicatorUnselectedColor="#FFF"
-                    app:sliderScrollTimeInSec="1"
-                    app:sliderStartAutoCycle="true" />
-
+                    app:showCaption="true"
+                    app:showIndicator="true"
+                    app:carouselType="SHOWCASE"
+                    app:carouselGravity="CENTER"
+                    app:autoPlay="true"
+                    app:scaleOnScroll="false"
+                    app:scalingFactor="0.15"
+                    app:infiniteCarousel="true"
+                    app:showNavigationButtons="false" />
             </androidx.cardview.widget.CardView>
+            <!-- ../ FOR HIM -->
 
+            <!-- CATEGORIES -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="10dp"
                 android:fontFamily="@font/san_francisco"
                 android:text="Categorías"
                 android:textColor="#fff"
@@ -91,12 +122,49 @@
                     </LinearLayout>
                 </FrameLayout>
             </HorizontalScrollView>
+            <!-- ./ CATEGORIES -->
 
+            <!-- FOR HER -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="8dp"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/san_francisco"
+                android:text="Para ella"
+                android:textColor="#fff"
+                android:textSize="24dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp">
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/svCarrusel"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true" />
+            </androidx.cardview.widget.CardView>
+            <!-- ../ FOR HER -->
+
+            <!-- PRODUCTS -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:fontFamily="@font/san_francisco"
                 android:text="Productos Recomendados"
                 android:textColor="#fff"
@@ -111,55 +179,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_margin="8dp" />
 
             </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/san_francisco"
-                android:text="Ofertas"
-                android:textColor="#fff"
-                android:textSize="24dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcvOfertas"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:scrollbars="horizontal"/>
-
-                <!--<androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                        android:id="@+id/carruselOfertas"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        app:showCaption="false"
-                        app:showIndicator="true"
-                        app:showNavigationButtons="false" />
-                </androidx.cardview.widget.CardView>-->
-            </RelativeLayout>
+            <!-- ./ PRODUCTS -->
         </LinearLayout>
     </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

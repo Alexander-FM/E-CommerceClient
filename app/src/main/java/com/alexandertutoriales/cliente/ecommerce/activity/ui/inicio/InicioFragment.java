@@ -1,6 +1,5 @@
 package com.alexandertutoriales.cliente.ecommerce.activity.ui.inicio;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -40,6 +40,8 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,6 +68,8 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     private LinearLayout llCategorias;
     private SwipeRefreshLayout swipeFragmentInicio;
     private BadgeDrawable badgeDrawable;
+    private TextView tvOfertas;
+    private ImageCarousel carruselOfertas;
 
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         super.onViewCreated(view, savedInstanceState);
         init(view);
         initAdapter();
-        loadData(view);
+        loadData();
     }
 
     private void init(View v) {
@@ -97,8 +101,10 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         swipeFragmentInicio = v.findViewById(R.id.swipeFragmentInicio);
         requireContext().getTheme().resolveAttribute(R.color.pink_700, tv, false);
         swipeFragmentInicio.setColorSchemeColors(tv.data);
-        swipeFragmentInicio.setOnRefreshListener(() -> loadData(v));
+        swipeFragmentInicio.setOnRefreshListener(this::loadData);
         badgeDrawable = BadgeDrawable.create(this.getContext());
+        tvOfertas = v.findViewById(R.id.tvOfertas);
+        carruselOfertas = v.findViewById(R.id.carruselOfertas);
     }
 
     private void initAdapter() {
@@ -120,10 +126,17 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         gvCategorias.setAdapter(categoriaAdapter);
     }
 
-    private void loadData(View view) {
+    private void loadData() {
         swipeFragmentInicio.setRefreshing(true);
-        platilloViewModel.listarPlatillosRecomendados().observe(getViewLifecycleOwner(), response -> {
-            adapter.updateItems(response.getBody());
+        ofertaViewModel.listarOfertasActivas().observe(getViewLifecycleOwner(), response -> {
+            if (response.getRpta() == 1) {
+                ofertasAdapter.updateItems(response.getBody());
+                tvOfertas.setVisibility(View.VISIBLE);
+            } else {
+                ofertasAdapter.updateItems(response.getBody());
+                tvOfertas.setVisibility(View.GONE);
+            }
+            swipeFragmentInicio.setRefreshing(false);
         });
         categoriaViewModel.listarCategorias().observe(getViewLifecycleOwner(), response -> {
             if (response.getRpta() == 1) {
@@ -141,19 +154,26 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
             }
             swipeFragmentInicio.setRefreshing(false);
         });
-        ofertaViewModel.listarOfertasActivas().observe(getViewLifecycleOwner(), response -> {
-            if (response.getRpta() == 1) {
-                ofertasAdapter.updateItems(response.getBody());
-            } else {
-                System.out.println("Error al obtener las ofertas activas");
-            }
-            swipeFragmentInicio.setRefreshing(false);
+        platilloViewModel.listarPlatillosRecomendados().observe(getViewLifecycleOwner(), response -> {
+            adapter.updateItems(response.getBody());
         });
 
         List<SliderItem> lista = new ArrayList<>();
-        lista.add(new SliderItem(R.drawable.relojes_ellos, "Relojes para ellos"));
+        lista.add(new SliderItem(R.drawable.bisuteria, "El complemento perfecto para ella"));
         lista.add(new SliderItem(R.drawable.relojes_ellas, "Relojes para ellas"));
+        lista.add(new SliderItem(R.drawable.anillos, "Los mejores anillos"));
+        lista.add(new SliderItem(R.drawable.bisuteria2, "El complemento perfecto para ella"));
+        lista.add(new SliderItem(R.drawable.anillos2, "Revisa nuestras ofertas en anillos"));
         sliderAdapter.updateItem(lista);
+
+        carruselOfertas.registerLifecycle(getViewLifecycleOwner().getLifecycle());
+        List<CarouselItem> list = new ArrayList<>();
+        list.add(new CarouselItem(R.drawable.bisuteriahombres, "El complemento perfecto para ellos"));
+        list.add(new CarouselItem(R.drawable.relojes_ellos, "Relojes para ellos"));
+        list.add(new CarouselItem(R.drawable.bisuteriahombres2, "Pulsera para ellos"));
+        list.add(new CarouselItem(R.drawable.bisuteriahombres3, "Brazalelete de oro para él"));
+        list.add(new CarouselItem(R.drawable.bisuteriahombre4, "Todo lo que él necesita está aquí"));
+        carruselOfertas.setData(list);
 
     }
 
