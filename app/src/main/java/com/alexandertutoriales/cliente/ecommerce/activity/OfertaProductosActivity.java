@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -149,18 +150,20 @@ public class OfertaProductosActivity extends AppCompatActivity implements Commun
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.inicio, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bolsa_compras_menu_item, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.bolsaCompras:
                 this.mostrarBolsa();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void mostrarBolsa() {
