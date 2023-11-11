@@ -2,19 +2,25 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.OptIn;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
 import com.alexandertutoriales.cliente.ecommerce.utils.Carrito;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.OkHttp3Downloader;
@@ -26,7 +32,7 @@ import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class DetallePlatilloActivity extends MenuBaseActivity {
+public class DetallePlatilloActivity extends MenuBaseActivity implements BadgeDrawableCommunication {
     private ImageView imgPlatilloDetalle;
     private Button btnAgregarCarrito, btnComprar;
     private TextView tvNamePlatilloDetalle, tvPrecioPlatilloDetalle, tvDescripcionPlatilloDetalle;
@@ -35,6 +41,7 @@ public class DetallePlatilloActivity extends MenuBaseActivity {
             .registerTypeAdapter(Time.class, new TimeSerializer())
             .create();
     private Platillo platillo;
+    private BadgeDrawable badgeDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class DetallePlatilloActivity extends MenuBaseActivity {
         this.tvNamePlatilloDetalle = findViewById(R.id.tvNamePlatilloDetalle);
         this.tvPrecioPlatilloDetalle = findViewById(R.id.tvPrecioPlatilloDetalle);
         this.tvDescripcionPlatilloDetalle = findViewById(R.id.tvDescripcionPlatilloDetalle);
+        badgeDrawable = BadgeDrawable.create(this);
 
     }
 
@@ -86,6 +94,7 @@ public class DetallePlatilloActivity extends MenuBaseActivity {
             detallePedido.setCantidad(1);
             detallePedido.setPrecio(platillo.getPrecio());
             successMessage(Carrito.agregarPlatillos(detallePedido));
+            updateBadge();
         });
 
         this.btnComprar.setOnClickListener(v -> {
@@ -94,7 +103,7 @@ public class DetallePlatilloActivity extends MenuBaseActivity {
             detallePedido.setCantidad(1);
             detallePedido.setPrecio(platillo.getPrecio());
             successMessageWithConfirmation(Carrito.agregarPlatillos(detallePedido));
-
+            updateBadge();
         });
 
     }
@@ -113,5 +122,19 @@ public class DetallePlatilloActivity extends MenuBaseActivity {
                     sweetAlertDialog.dismissWithAnimation();
                     this.startActivity(new Intent(this, PlatillosCarritoActivity.class));
                 }).show();
+    }
+
+    @OptIn(markerClass = com.google.android.material.badge.ExperimentalBadgeUtils.class)
+    @Override
+    public void updateBadge() {
+        badgeDrawable.setNumber(Math.max(Carrito.getDetallePedidos().size(), 0));
+        Log.d("Badge", "Número en el distintivo: " + badgeDrawable.getNumber());
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateBadge();
     }
 }

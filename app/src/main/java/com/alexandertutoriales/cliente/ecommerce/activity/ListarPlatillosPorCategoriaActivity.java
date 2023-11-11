@@ -3,6 +3,7 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.OptIn;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.adapter.PlatillosPorCategoriaAdapter;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
@@ -23,11 +25,12 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implements MostrarBadge {
+public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implements MostrarBadge, BadgeDrawableCommunication {
     private PlatilloViewModel platilloViewModel;
     private PlatillosPorCategoriaAdapter adapter;
     private List<Platillo> platillos = new ArrayList<>();
     private RecyclerView rcvPlatillosPorCategoria;
+    private BadgeDrawable badgeDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implem
             this.finish();
             this.overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
         });
+        badgeDrawable = BadgeDrawable.create(this);
     }
 
     private void initViewModel() {
@@ -56,7 +60,7 @@ public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implem
     }
 
     private void initAdapter() {
-        adapter = new PlatillosPorCategoriaAdapter(platillos, this);
+        adapter = new PlatillosPorCategoriaAdapter(platillos, this, this);
         rcvPlatillosPorCategoria = findViewById(R.id.rcvPlatillosPorCategoria);
         rcvPlatillosPorCategoria.setAdapter(adapter);
         rcvPlatillosPorCategoria.setLayoutManager(new LinearLayoutManager(this));
@@ -68,6 +72,7 @@ public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implem
         int idC = getIntent().getIntExtra("idC", 0);//Recibimos el idCategoría.
         platilloViewModel.listarPlatillosPorCategoria(idC).observe(this, response -> {
             adapter.updateItems(response.getBody());
+            updateBadge();
         });
     }
 
@@ -75,14 +80,24 @@ public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implem
     @Override
     public void add(DetallePedido dp) {
         successMessage(Carrito.agregarPlatillos(dp));
-        BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
-        badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
-        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
 
     public void successMessage(String message) {
         new SweetAlertDialog(this,
                 SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")
                 .setContentText(message).show();
+    }
+
+    @OptIn(markerClass = com.google.android.material.badge.ExperimentalBadgeUtils.class)
+    @Override
+    public void updateBadge() {
+        badgeDrawable.setNumber(Math.max(Carrito.getDetallePedidos().size(), 0));
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateBadge();
     }
 }

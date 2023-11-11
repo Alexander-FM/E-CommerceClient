@@ -81,6 +81,7 @@ public class OfertaProductosActivity extends MenuBaseActivity implements Communi
         int idOferta = getIntent().getIntExtra("idOferta", 0);//Recibimos el idOferta.
         ofertaProductoViewModel.listarOfertasProductos(idOferta).observe(this, response -> {
             ofertaProductosAdapter.updateItems(response.getBody());
+            updateBadge();
             swipeOfertaProductosActivity.setRefreshing(false);
         });
     }

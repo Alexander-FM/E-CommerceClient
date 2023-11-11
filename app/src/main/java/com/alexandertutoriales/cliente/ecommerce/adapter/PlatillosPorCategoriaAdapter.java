@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
 import com.alexandertutoriales.cliente.ecommerce.api.ConfigApi;
+import com.alexandertutoriales.cliente.ecommerce.communication.BadgeDrawableCommunication;
 import com.alexandertutoriales.cliente.ecommerce.communication.MostrarBadge;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.DetallePedido;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Platillo;
@@ -25,10 +26,14 @@ import java.util.Locale;
 
 public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<PlatillosPorCategoriaAdapter.ViewHolder> {
     private final MostrarBadge mostrarBadgeCommunication;
+    private final BadgeDrawableCommunication badgeDrawableCommunication;
     private final List<Platillo> listadoPlatillosPorCategoria;
 
-    public PlatillosPorCategoriaAdapter(List<Platillo> listadoPlatillosPorCategoria, MostrarBadge mostrarBadgeCommunication) {
+    public PlatillosPorCategoriaAdapter(List<Platillo> listadoPlatillosPorCategoria,
+                                        BadgeDrawableCommunication badgeDrawableCommunication,
+                                        MostrarBadge mostrarBadgeCommunication) {
         this.listadoPlatillosPorCategoria = listadoPlatillosPorCategoria;
+        this.badgeDrawableCommunication = badgeDrawableCommunication;
         this.mostrarBadgeCommunication = mostrarBadgeCommunication;
     }
 
@@ -88,6 +93,7 @@ public class PlatillosPorCategoriaAdapter extends RecyclerView.Adapter<Platillos
                 detallePedido.setCantidad(1);
                 detallePedido.setPrecio(p.getPrecio());
                 mostrarBadgeCommunication.add(detallePedido);
+                badgeDrawableCommunication.updateBadge();
             });
         }
     }
