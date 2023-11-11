@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.OptIn;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -85,7 +86,7 @@ public class InicioActivity extends MenuBaseActivity {
         super.onStart();
         loadData();
     }
-
+    @OptIn(markerClass = com.google.android.material.badge.ExperimentalBadgeUtils.class)
     @SuppressLint("UnsafeExperimentalUsageError")
     private void loadData() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 
+import androidx.annotation.OptIn;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -133,13 +134,10 @@ public class OfertaProductosActivity extends MenuBaseActivity implements Communi
                 .setContentText(message).show();
     }
 
+    @OptIn(markerClass = com.google.android.material.badge.ExperimentalBadgeUtils.class)
     @Override
     public void updateBadge() {
-        if (Carrito.getDetallePedidos().size() > 0) {
-            badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
-        } else {
-            badgeDrawable.setNumber(0);
-        }
+        badgeDrawable.setNumber(Math.max(Carrito.getDetallePedidos().size(), 0));
         BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
 

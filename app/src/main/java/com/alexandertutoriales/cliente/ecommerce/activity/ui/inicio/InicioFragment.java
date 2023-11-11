@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.OptIn;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -63,8 +64,8 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
     private PlatillosRecomendadosAdapter adapter;
     private SliderView svCarrusel;
     private SliderAdapter sliderAdapter;
-    private List<Platillo> platillos = new ArrayList<>();
-    private List<Oferta> ofertas = new ArrayList<>();
+    private final List<Platillo> platillos = new ArrayList<>();
+    private final List<Oferta> ofertas = new ArrayList<>();
     private LinearLayout llCategorias;
     private SwipeRefreshLayout swipeFragmentInicio;
     private BadgeDrawable badgeDrawable;
@@ -154,9 +155,8 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
             }
             swipeFragmentInicio.setRefreshing(false);
         });
-        platilloViewModel.listarPlatillosRecomendados().observe(getViewLifecycleOwner(), response -> {
-            adapter.updateItems(response.getBody());
-        });
+        platilloViewModel.listarPlatillosRecomendados().observe(getViewLifecycleOwner(), response ->
+                adapter.updateItems(response.getBody()));
 
         List<SliderItem> lista = new ArrayList<>();
         lista.add(new SliderItem(R.drawable.bisuteria, "El complemento perfecto para ella"));
@@ -200,13 +200,10 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
                 .setContentText(message).show();
     }
 
+    @OptIn(markerClass = com.google.android.material.badge.ExperimentalBadgeUtils.class)
     @Override
     public void updateBadge() {
-        if (Carrito.getDetallePedidos().size() > 0) {
-            badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
-        } else {
-            badgeDrawable.setNumber(0);
-        }
+        badgeDrawable.setNumber(Math.max(Carrito.getDetallePedidos().size(), 0));
         BadgeUtils.attachBadgeDrawable(badgeDrawable, getActivity().findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
 
