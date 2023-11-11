@@ -6,7 +6,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
@@ -27,7 +26,7 @@ import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class DetallePlatilloActivity extends AppCompatActivity {
+public class DetallePlatilloActivity extends MenuBaseActivity {
     private ImageView imgPlatilloDetalle;
     private Button btnAgregarCarrito, btnComprar;
     private TextView tvNamePlatilloDetalle, tvPrecioPlatilloDetalle, tvDescripcionPlatilloDetalle;
@@ -47,6 +46,7 @@ public class DetallePlatilloActivity extends AppCompatActivity {
 
     private void init() {
         Toolbar toolbar = this.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
         toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
             this.finish();

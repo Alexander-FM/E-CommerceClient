@@ -7,13 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,15 +34,13 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.sql.Date;
 import java.sql.Time;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class InicioActivity extends AppCompatActivity {
+public class InicioActivity extends MenuBaseActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
     private String usuarioJson = null;
@@ -118,42 +114,6 @@ public class InicioActivity extends AppCompatActivity {
         BadgeDrawable badgeDrawable = BadgeDrawable.create(this);
         badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
         BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.inicio, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.cerrarSesion:
-                this.logout();
-                break;
-            case R.id.bolsaCompras:
-                this.mostrarBolsa();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void mostrarBolsa() {
-        /*Intent i = new Intent(this, PlatillosCarritoActivity.class);
-        startActivity(i);*/
-        launcher.launch(new Intent(this, PlatillosCarritoActivity.class));
-        overridePendingTransition(R.anim.left_in, R.anim.left_out);
-    }
-
-    //Método para cerrar sesión
-    private void logout() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);//getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove("UsuarioJson");
-        editor.apply();
-        this.finish();
-        this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
 
     @Override

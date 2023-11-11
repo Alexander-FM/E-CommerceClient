@@ -3,7 +3,6 @@ package com.alexandertutoriales.cliente.ecommerce.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,11 +23,12 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity implements MostrarBadge {
+public class ListarPlatillosPorCategoriaActivity extends MenuBaseActivity implements MostrarBadge {
     private PlatilloViewModel platilloViewModel;
     private PlatillosPorCategoriaAdapter adapter;
     private List<Platillo> platillos = new ArrayList<>();
     private RecyclerView rcvPlatillosPorCategoria;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +39,10 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity imple
         initAdapter();
         loadData();
     }
-    private void init(){
+
+    private void init() {
         Toolbar toolbar = this.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
         toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
             this.finish();
@@ -77,6 +79,7 @@ public class ListarPlatillosPorCategoriaActivity extends AppCompatActivity imple
         badgeDrawable.setNumber(Carrito.getDetallePedidos().size());
         BadgeUtils.attachBadgeDrawable(badgeDrawable, findViewById(R.id.toolbar), R.id.bolsaCompras);
     }
+
     public void successMessage(String message) {
         new SweetAlertDialog(this,
                 SweetAlertDialog.SUCCESS_TYPE).setTitleText("Aviso del sistema!")

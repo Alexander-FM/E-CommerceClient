@@ -4,12 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,13 +24,11 @@ import com.alexandertutoriales.cliente.ecommerce.viewmodel.OfertaProductoViewMod
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class OfertaProductosActivity extends AppCompatActivity implements Communication, MostrarBadge, BadgeDrawableCommunication {
+public class OfertaProductosActivity extends MenuBaseActivity implements Communication, MostrarBadge, BadgeDrawableCommunication {
     private OfertaProductoViewModel ofertaProductoViewModel;
     private OfertaProductosAdapter ofertaProductosAdapter;
     private RecyclerView rcvOfertaProductos;
@@ -55,6 +49,7 @@ public class OfertaProductosActivity extends AppCompatActivity implements Commun
 
     private void init() {
         Toolbar toolbar = this.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); // Configura el Toolbar como la barra de acciones de la actividad y permite que el menú se infle y funcione correctamente.
         toolbar.setNavigationIcon(R.drawable.ic_volver_atras);
         toolbar.setNavigationOnClickListener(v -> {//Reemplazo con lamba
             this.finish();
@@ -149,26 +144,8 @@ public class OfertaProductosActivity extends AppCompatActivity implements Commun
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bolsa_compras_menu_item, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.bolsaCompras:
-                this.mostrarBolsa();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void mostrarBolsa() {
-        Intent i = new Intent(this, PlatillosCarritoActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.anim.left_in, R.anim.left_out);
+    protected void onResume() {
+        super.onResume();
+        updateBadge();
     }
 }
