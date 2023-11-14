@@ -95,6 +95,15 @@
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+                <ProgressBar
+                    android:id="@+id/progress_horizontal"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:minHeight="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/pink_200"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

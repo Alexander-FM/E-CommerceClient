@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
     private Button btnFinalizarCompra;
     private RecyclerView rcvBolsaCompras;
     private TextView tvMontoTotal;
+    private ProgressBar progressBar;
     final Gson g = new GsonBuilder()
             .registerTypeAdapter(Date.class, new DateSerializer())
             .registerTypeAdapter(Time.class, new TimeSerializer())
@@ -72,6 +76,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         rcvBolsaCompras = findViewById(R.id.rcvBolsaCompras);
         btnFinalizarCompra = findViewById(R.id.btnFinalizarCompra);
         tvMontoTotal = findViewById(R.id.tvMontoTotal);
+        progressBar = findViewById(R.id.progress_horizontal);
         mostrarTotalPagar(Carrito.getDetallePedidos());
         btnFinalizarCompra.setOnClickListener(v -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -82,7 +87,7 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
                 if (Carrito.getDetallePedidos().isEmpty()) {
                     toastIncorrecto("¡Ups!, La bolsa de compras está vacia.");
                 } else {
-                    toastCorrecto("Procesando pedido...");
+                    progressBar.setVisibility(View.VISIBLE);
                     registrarPedido(idC);
                 }
             } else {
@@ -105,6 +110,9 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
     }
 
     private void registrarPedido(int idC) {
+        toastCorrecto("Procesando pedido...");
+        btnFinalizarCompra.setEnabled(false);
+        btnFinalizarCompra.setAlpha(0.3f);
         ArrayList<DetallePedido> detallePedidos = Carrito.getDetallePedidos();
         GenerarPedidoDTO dto = new GenerarPedidoDTO();
         java.util.Date date = new java.util.Date();
@@ -125,8 +133,14 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
             dto.getCliente().setId(idC);
         }
         dto.setDetallePedido(detallePedidos);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> toastCorrecto("¡Aguarda...! Estamos enviando la factura a tu correo electrónico. La paciencia siempre trae recompensas."), 4000); // 4000 milisegundos = 4 segundos
+        handler.postDelayed(() -> toastCorrecto("La paciencia es una virtud, y tú estás a punto de ser recompensado. ¡Mantén la esperanza!"), 2000); // 3000 milisegundos = 2 segundos
+        handler.postDelayed(() -> toastCorrecto("¡Espera un momento más! Grandes cosas están en camino, y lo mejor siempre tarda un poco más"), 1000); // 1000 milisegundos =  segundo
         this.pedidoViewModel.guardarPedido(dto).observe(this, response -> {
+            toastCorrecto("Gracias por la espera. La factura ha sido enviada a tu correo electrónico");
             if (response.getRpta() == 1) {
+                progressBar.setVisibility(View.GONE);
                 toastCorrecto("Compra registrada con éxito");
                 Carrito.limpiar();
                 Intent i = new Intent();

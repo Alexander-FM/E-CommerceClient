@@ -127,4 +127,9 @@ public class InicioActivity extends MenuBaseActivity {
     @Override
     public void onBackPressed() {
     }
+
+    @Override
+    protected void showShoppingCart() {
+        launcher.launch(new Intent(this, PlatillosCarritoActivity.class));
+    }
 }
