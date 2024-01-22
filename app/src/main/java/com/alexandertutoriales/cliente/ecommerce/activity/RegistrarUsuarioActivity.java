@@ -561,7 +561,6 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                     // La app se restablece en un dispositivo nuevo.
                     // El usuario desinstala y vuelve a instalar la app.
                     // El usuario borra los datos de la app.
-                    //String tokenSaved = getSharedPreferences("SP_FILE", 0).getString("DEVICE_ID", null);
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                     String tokenSaved = preferences.getString("DEVICE_ID", "");
                     // Si el codigo recibido es distinto al ultimo que tenía lo envio al

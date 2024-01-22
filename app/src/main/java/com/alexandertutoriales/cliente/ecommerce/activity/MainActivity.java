@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexandertutoriales.cliente.ecommerce.R;
+import com.alexandertutoriales.cliente.ecommerce.entity.service.Dispositivo;
 import com.alexandertutoriales.cliente.ecommerce.entity.service.Usuario;
 import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private UsuarioViewModel viewModel;
     private DispositivoViewModel dispositivoViewModel;
     private TextView txtRegistrarUsuario;
+    Dispositivo dispositivoSaved = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,35 +131,42 @@ public class MainActivity extends AppCompatActivity {
             this.startActivity(new Intent(this, InicioActivity.class));
             this.overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
+        this.registerDevice();
     }
 
     private void registerDevice() {
         FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // El token de registro puede cambiar en las siguientes situaciones:
-                        // La app se restablece en un dispositivo nuevo.
-                        // El usuario desinstala y vuelve a instalar la app.
-                        // El usuario borra los datos de la app.
-                        String tokenSaved = getSharedPreferences("SP_FILE", 0).getString("DEVICE_ID", null);
-                        // Si el codigo recibido es distinto al ultimo que tenía lo envio al
-                        // servidor, una vez que nos devuelve el okey, lo guardo. sino hubo cambios
-                        // en el token sigo no hago nada. el registro es una sola vez, por mas que
-                        // invoque el método registerDevice siempre me devolverá el mismo. Puede cambiar el token por eso lo hacemos.
-                        if (token != null && (tokenSaved == null || !token.equals(tokenSaved))) {
-                            // Registramos el token en el servidor
-
-                        }
-                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
                     }
+                    // Get new FCM registration token
+                    String token = task.getResult();
+
+                    // El token de registro puede cambiar en las siguientes situaciones:
+                    // La app se restablece en un dispositivo nuevo.
+                    // El usuario desinstala y vuelve a instalar la app.
+                    // El usuario borra los datos de la app.
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    String tokenSaved = preferences.getString("DEVICE_ID", "");                        // Si el codigo recibido es distinto al ultimo que tenía lo envio al
+                    // servidor, una vez que nos devuelve el okey, lo guardo. sino hubo cambios
+                    // en el token sigo no hago nada. el registro es una sola vez, por mas que
+                    // invoque el método registerDevice siempre me devolverá el mismo. Puede cambiar el token por eso lo hacemos.
+                    if (token != null && (!token.equals(tokenSaved))) {
+                        // Registramos el token en el servidor
+                        Dispositivo dispositivo = new Dispositivo();
+                        dispositivo.setDeviceId(token);
+                        dispositivoViewModel.registerDevice(dispositivo).observe(MainActivity.this, dResponse -> {
+                            if (dResponse.getRpta() == 1) {
+                                dispositivoSaved = dResponse.getBody();
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("DEVICE_ID", dispositivoSaved.getDeviceId());
+                                editor.apply();
+                            }
+                        });
+                    }
+                    Toast.makeText(MainActivity.this, token, Toast.LENGTH_LONG).show();
                 });
     }
 
