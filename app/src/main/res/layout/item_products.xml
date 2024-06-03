@@ -63,7 +63,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="@color/berry"
+                android:backgroundTint="@color/red"
                 android:fontFamily="@font/san_francisco"
                 android:text="Comprar"
                 android:textColor="#fff"

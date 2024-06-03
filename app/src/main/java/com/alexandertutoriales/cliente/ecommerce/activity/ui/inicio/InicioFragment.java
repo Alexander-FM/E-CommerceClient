@@ -100,7 +100,7 @@ public class InicioFragment extends Fragment implements Communication, MostrarBa
         llCategorias = v.findViewById(R.id.llCategorias);
         TypedValue tv = new TypedValue();
         swipeFragmentInicio = v.findViewById(R.id.swipeFragmentInicio);
-        requireContext().getTheme().resolveAttribute(R.color.pink_700, tv, false);
+        requireContext().getTheme().resolveAttribute(R.color.red_700, tv, false);
         swipeFragmentInicio.setColorSchemeColors(tv.data);
         swipeFragmentInicio.setOnRefreshListener(this::loadData);
         badgeDrawable = BadgeDrawable.create(this.getContext());

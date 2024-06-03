@@ -7,10 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red">#CC3C3C</color>
+    <color name="red">#C13C3C</color>
     <color name="azulBajo">#2A3742</color>
-    <color name="pink_200">#DCABAB</color>
-    <color name="pink_700">#C97E7E</color>
+    <color name="red_700">#E21C2A</color>
     <color name="berry">#EC96A4</color>
     <color name="branch">#5D535E</color>
     <color name="lavender_gray">#9A9EAB</color>

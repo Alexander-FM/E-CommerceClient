@@ -22,7 +22,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/pink_200"
+                android:background="@color/red"
                 app:navigationIcon="@drawable/ic_volver_atras"
                 app:title="Registrar Usuario"
                 app:titleTextColor="@color/white" />
@@ -85,7 +85,7 @@
                             android:drawableEnd="@drawable/ic_add_photo"
                             android:fontFamily="@font/san_francisco"
                             android:text="Subir Imagen"
-                            android:backgroundTint="@color/pink_700"
+                            android:backgroundTint="@color/red_700"
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -455,7 +455,7 @@
                                     android:drawableEnd="@drawable/ic_save"
                                     android:fontFamily="@font/san_francisco"
                                     android:text="Guardar Datos"
-                                    android:backgroundTint="@color/pink_700"
+                                    android:backgroundTint="@color/red_700"
                                     android:textColor="@color/white" />
                             </LinearLayout>
                         </LinearLayout>

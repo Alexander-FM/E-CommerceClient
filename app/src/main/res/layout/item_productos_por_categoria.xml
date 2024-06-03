@@ -65,7 +65,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="@color/pink_700"
+                android:backgroundTint="@color/red_700"
                 android:fontFamily="@font/san_francisco"
                 android:text="Comprar"
                 android:textColor="#fff"

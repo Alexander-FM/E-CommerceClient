@@ -60,7 +60,7 @@ public class OfertaProductosActivity extends MenuBaseActivity implements Communi
         rcvOfertaProductos.setLayoutManager(new GridLayoutManager(this, 2));
         TypedValue tv = new TypedValue();
         swipeOfertaProductosActivity = findViewById(R.id.swipeOfertaProductosActivity);
-        getApplicationContext().getTheme().resolveAttribute(R.color.pink_700, tv, false);
+        getApplicationContext().getTheme().resolveAttribute(R.color.red_700, tv, false);
         swipeOfertaProductosActivity.setColorSchemeColors(tv.data);
         swipeOfertaProductosActivity.setOnRefreshListener(this::loadData);
         badgeDrawable = BadgeDrawable.create(this);

@@ -48,6 +48,7 @@
 
             <!-- FOR HIM -->
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -57,6 +58,7 @@
                 android:textSize="24dp" />
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -126,6 +128,7 @@
 
             <!-- FOR HER -->
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -135,6 +138,7 @@
                 android:textSize="24dp" />
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

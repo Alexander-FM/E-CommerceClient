@@ -22,7 +22,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/pink_200"
+                android:background="@color/red"
                 app:navigationIcon="@drawable/ic_volver_atras"
                 app:title="Detalle Producto"
                 app:titleTextColor="@color/white" />
@@ -117,7 +117,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
-                                android:backgroundTint="@color/pink_700"
+                                android:backgroundTint="@color/red_700"
                                 android:drawableEnd="@drawable/ic_add_shop"
                                 android:text="@string/add_cart" />
 

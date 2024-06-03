@@ -50,6 +50,7 @@ public class MenuBaseActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove("UsuarioJson");
         editor.remove("DEVICE_ID");
+        editor.remove("ID");
         editor.apply();
         // Cierra todas las actividades y sale de la aplicación
         finishAffinity();

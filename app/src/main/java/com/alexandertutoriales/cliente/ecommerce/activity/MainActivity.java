@@ -25,8 +25,6 @@ import com.alexandertutoriales.cliente.ecommerce.utils.DateSerializer;
 import com.alexandertutoriales.cliente.ecommerce.utils.TimeSerializer;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.DispositivoViewModel;
 import com.alexandertutoriales.cliente.ecommerce.viewmodel.UsuarioViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -162,11 +160,13 @@ public class MainActivity extends AppCompatActivity {
                                 dispositivoSaved = dResponse.getBody();
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.putString("DEVICE_ID", dispositivoSaved.getDeviceId());
+                                editor.putInt("ID", dispositivoSaved.getId());
                                 editor.apply();
                             }
                         });
+                    } else {
+                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_LONG).show();
                     }
-                    Toast.makeText(MainActivity.this, token, Toast.LENGTH_LONG).show();
                 });
     }
 
