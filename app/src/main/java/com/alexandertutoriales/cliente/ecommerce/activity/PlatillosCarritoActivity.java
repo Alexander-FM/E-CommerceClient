@@ -134,9 +134,10 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
         }
         dto.setDetallePedido(detallePedidos);
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> toastCorrecto("¡Aguarda...! Estamos enviando la factura a tu correo electrónico. La paciencia siempre trae recompensas."), 4000); // 4000 milisegundos = 4 segundos
+        handler.postDelayed(() -> toastCorrecto("¡Aguarda...! Estamos enviando la factura a tu correo electrónico. La paciencia siempre trae recompensas."), 6000); // 4000 milisegundos = 4 segundos
+        handler.postDelayed(() -> toastCorrecto("¡Un poco más...! Estamos generando el código QR en tu factura electrónica"), 4000); // 4000 milisegundos = 4 segundos
         handler.postDelayed(() -> toastCorrecto("La paciencia es una virtud, y tú estás a punto de ser recompensado. ¡Mantén la esperanza!"), 2000); // 3000 milisegundos = 2 segundos
-        handler.postDelayed(() -> toastCorrecto("¡Espera un momento más! Grandes cosas están en camino, y lo mejor siempre tarda un poco más"), 1000); // 1000 milisegundos =  segundo
+        handler.postDelayed(() -> toastCorrecto("¡Espera un momento más! grandes cosas están en camino, y lo mejor siempre tarda un poco más"), 2000); // 1000 milisegundos =  segundo
         this.pedidoViewModel.guardarPedido(dto).observe(this, response -> {
             toastCorrecto("Gracias por la espera. La factura ha sido enviada a tu correo electrónico");
             if (response.getRpta() == 1) {
