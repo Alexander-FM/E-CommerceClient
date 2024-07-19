@@ -22,7 +22,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/pink_200"
+                android:background="@color/red"
                 app:navigationIcon="@drawable/ic_volver_atras"
                 app:title="Productos por Categoría"
                 app:titleTextColor="@color/white" />

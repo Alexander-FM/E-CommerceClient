@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/pink_200"
+                android:background="@color/red"
                 app:navigationIcon="@drawable/ic_volver_atras"
                 app:title="Bolsa de Compras"
                 app:titleTextColor="@color/white" />
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:indeterminate="true"
-                    android:indeterminateTint="@color/pink_200"
+                    android:indeterminateTint="@color/red"
                     android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>

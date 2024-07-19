@@ -35,7 +35,7 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/pink_700" />
+            android:resource="@color/red_700" />
 
         <activity
             android:name=".activity.VerInvoiceActivity"

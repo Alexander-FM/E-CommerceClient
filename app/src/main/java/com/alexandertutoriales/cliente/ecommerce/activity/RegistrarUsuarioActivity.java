@@ -573,14 +573,26 @@ public class RegistrarUsuarioActivity extends AppCompatActivity {
                         dispositivo.setDeviceId(token);
                         this.dispositivoViewModel.registerDevice(dispositivo).observe(this, dResponse -> {
                             if (dResponse.getRpta() == 1) {
-                                dispositivoSaved = dResponse.getBody();
+                                this.dispositivoSaved = dResponse.getBody();
                                 SharedPreferences.Editor editor = preferences.edit();
+                                editor.putInt("ID", dispositivoSaved.getId());
                                 editor.putString("DEVICE_ID", dispositivoSaved.getDeviceId());
                                 editor.apply();
                             }
                         });
+                    } else {
+                        Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
+                        final String deviceId = preferences.getString("DEVICE_ID", "");
+                        final int id = preferences.getInt("ID", 0);
+                        if (!"".equals(deviceId) && id != 0) {
+                            this.dispositivoSaved = new Dispositivo();
+                            this.dispositivoSaved.setDeviceId(deviceId);
+                            this.dispositivoSaved.setId(id);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Ocurrio un error al " +
+                                    "guardar el id del dispositivo", Toast.LENGTH_LONG).show();
+                        }
                     }
-                    Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
                 });
     }
 }

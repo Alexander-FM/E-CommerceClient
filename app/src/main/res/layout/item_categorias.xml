@@ -37,6 +37,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/san_francisco"
                 android:padding="5dp"
+                android:maxLines="1"
                 />
             <!--<TextView
                 android:visibility="invisible"
