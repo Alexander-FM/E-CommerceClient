@@ -128,9 +128,9 @@ public class PlatillosCarritoActivity extends AppCompatActivity implements Carri
                 .create();
         if (usuarioJson != null) {
             final Usuario u = g.fromJson(usuarioJson, Usuario.class);
-            dto.setCliente(u.getCliente());
+            dto.getPedido().setCliente(u.getCliente());
         } else {
-            dto.getCliente().setId(idC);
+            dto.getPedido().getCliente().setId(idC);
         }
         dto.setDetallePedido(detallePedidos);
         Handler handler = new Handler(Looper.getMainLooper());
